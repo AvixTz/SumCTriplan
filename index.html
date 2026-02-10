@@ -1,0 +1,1703 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>סיכום תיק השקעות לקוח</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d1b2e;
+    --navy-mid: #152540;
+    --navy-light: #1e3355;
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --silver: #a8b5c4;
+    --white: #f4f6fa;
+    --green: #2ecc71;
+    --red: #e74c3c;
+    --orange: #f39c12;
+    --text-muted: #8899aa;
+    --border: rgba(201,168,76,0.25);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Heebo', sans-serif;
+    background: #eef1f6;
+    color: var(--navy);
+    direction: rtl;
+  }
+
+  /* ===== APP SHELL ===== */
+  .app {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ===== TABS ===== */
+  .tabs-bar {
+    background: var(--navy);
+    display: flex;
+    padding: 0 2rem;
+    gap: 0.5rem;
+    border-bottom: 2px solid var(--gold);
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .app-logo {
+    color: var(--gold);
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    padding: 1rem 0;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .app-logo span { color: var(--white); font-weight: 300; }
+
+  .tab-btn {
+    background: none;
+    border: none;
+    color: var(--silver);
+    font-family: 'Heebo', sans-serif;
+    font-size: 0.9rem;
+    padding: 1rem 1.5rem;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    margin-bottom: -2px;
+  }
+  .tab-btn:hover { color: var(--white); }
+  .tab-btn.active { color: var(--gold); border-bottom-color: var(--gold); font-weight: 600; }
+
+  .tab-content { display: none; flex: 1; }
+  .tab-content.active { display: block; }
+
+  /* ===== FORM ===== */
+  .form-page {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  .form-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #d0d7e3;
+  }
+
+  .form-header h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 0.3rem;
+  }
+  .form-header p { color: var(--text-muted); font-size: 0.9rem; }
+
+  .section-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    border: 1px solid #e2e8f0;
+  }
+
+  .section-card h2 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.7rem;
+    border-bottom: 2px solid var(--gold);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .section-icon {
+    width: 28px; height: 28px;
+    background: var(--navy);
+    color: var(--gold);
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .form-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .form-grid.cols-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+  .form-grid.cols-1 { grid-template-columns: 1fr; }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .field.full { grid-column: 1 / -1; }
+
+  label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #4a5568;
+    letter-spacing: 0.02em;
+  }
+
+  input, select, textarea {
+    font-family: 'Heebo', sans-serif;
+    font-size: 0.9rem;
+    padding: 0.55rem 0.8rem;
+    border: 1.5px solid #d1dae6;
+    border-radius: 8px;
+    background: #f8fafc;
+    color: var(--navy);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    direction: rtl;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(201,168,76,0.12);
+    background: white;
+  }
+
+  textarea { resize: vertical; min-height: 70px; }
+
+  .toggle-section {
+    background: #f0f4fa;
+    border-radius: 8px;
+    padding: 0.8rem 1rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .toggle-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+  }
+
+  .toggle-header label { cursor: pointer; font-size: 0.9rem; font-weight: 600; }
+
+  .toggle-body { display: none; margin-top: 1rem; }
+  .toggle-body.open { display: block; }
+
+  /* Savings blocks */
+  .savings-list { display: flex; flex-direction: column; gap: 1rem; }
+
+  .saving-block {
+    background: #f8fafc;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 1rem;
+    position: relative;
+  }
+
+  .saving-block-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.8rem;
+  }
+
+  .saving-block-title {
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--navy);
+    background: var(--navy);
+    color: var(--gold);
+    padding: 0.2rem 0.7rem;
+    border-radius: 20px;
+  }
+
+  .btn-remove {
+    background: none;
+    border: 1.5px solid #e74c3c;
+    color: #e74c3c;
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'Heebo', sans-serif;
+    font-size: 0.75rem;
+    transition: all 0.2s;
+  }
+  .btn-remove:hover { background: #e74c3c; color: white; }
+
+  .btn-add {
+    background: none;
+    border: 2px dashed var(--gold);
+    color: var(--gold);
+    padding: 0.7rem 1.5rem;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: 'Heebo', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    width: 100%;
+    transition: all 0.2s;
+    margin-top: 0.5rem;
+  }
+  .btn-add:hover { background: rgba(201,168,76,0.08); }
+
+  .csv-actions {
+    display: flex;
+    gap: 0.8rem;
+    justify-content: center;
+    margin-top: 0.8rem;
+  }
+
+  .btn-csv-export, .btn-csv-import {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.55rem 1.4rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+
+  .btn-csv-export {
+    background: #27ae60;
+    color: #fff;
+  }
+
+  .btn-csv-export:hover { background: #219a52; transform: translateY(-1px); }
+
+  .btn-csv-import {
+    background: #2980b9;
+    color: #fff;
+  }
+
+  .btn-csv-import:hover { background: #2471a3; transform: translateY(-1px); }
+
+  /* Compact summary table */
+  .compact-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+    direction: rtl;
+    margin-bottom: 0.5rem;
+  }
+
+  .compact-table thead tr { background: var(--navy); }
+
+  .compact-table thead th {
+    color: var(--gold);
+    font-weight: 600;
+    padding: 0.55rem 0.7rem;
+    text-align: right;
+    font-size: 0.72rem;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+
+  .compact-table tbody tr:nth-child(even) { background: #f7fafd; }
+  .compact-table tbody tr:hover { background: #eef4fb; }
+  .compact-table tbody tr { border-bottom: 1px solid #e8edf5; }
+
+  .compact-table tbody td {
+    padding: 0.5rem 0.7rem;
+    color: var(--navy);
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+
+  .compact-table .loan-flag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+    background: #fff0ec;
+    color: #c0392b;
+    border-radius: 4px;
+    padding: 0.1rem 0.4rem;
+    font-size: 0.68rem;
+    font-weight: 700;
+  }
+
+  @media print {
+    .csv-actions { display: none !important; }
+    .compact-table { font-size: 7pt !important; }
+    .compact-table thead th { padding: 3pt 5pt !important; font-size: 6.5pt !important; }
+    .compact-table tbody td { padding: 3pt 5pt !important; }
+  }
+
+  .btn-generate {
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+    color: var(--navy);
+    border: none;
+    padding: 1rem 3rem;
+    border-radius: 50px;
+    cursor: pointer;
+    font-family: 'Heebo', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    display: block;
+    margin: 2rem auto 0;
+    transition: all 0.2s;
+    box-shadow: 0 4px 20px rgba(201,168,76,0.35);
+    letter-spacing: 0.03em;
+  }
+  .btn-generate:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(201,168,76,0.45);
+  }
+
+  /* ===== REPORT ===== */
+  #report-container {
+    padding: 2rem 1rem;
+    min-height: 100vh;
+    background: #eef1f6;
+  }
+
+  .report-empty {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--text-muted);
+  }
+  .report-empty svg { margin-bottom: 1rem; opacity: 0.3; }
+
+  /* REPORT STYLES */
+  .report {
+    max-width: 1170px;
+    margin: 0 auto;
+    font-family: 'Heebo', sans-serif;
+    direction: rtl;
+  }
+
+  /* Report Header */
+  .report-header {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+    border-radius: 16px 16px 0 0;
+    padding: 2.5rem 2.5rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .report-header::before {
+    content: '';
+    position: absolute;
+    top: -50px; left: -50px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(201,168,76,0.08);
+  }
+
+  .report-header::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: 100px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: rgba(201,168,76,0.05);
+  }
+
+  .report-header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    position: relative;
+    z-index: 1;
+  }
+
+  .report-client-info h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    color: white;
+    line-height: 1.2;
+    margin-bottom: 0.3rem;
+  }
+
+  .report-client-id {
+    color: var(--gold);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+  }
+
+  .report-date-badge {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    text-align: center;
+  }
+  .report-date-badge .date-label { color: var(--silver); font-size: 0.7rem; margin-bottom: 0.2rem; }
+  .report-date-badge .date-value { color: white; font-size: 0.9rem; font-weight: 600; }
+
+  /* Summary banner */
+  .summary-banner {
+    background: var(--navy-mid);
+    padding: 1.5rem 2.5rem;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    border-bottom: 2px solid var(--gold);
+  }
+
+  .summary-stat {
+    padding: 0 1.5rem;
+    border-left: 1px solid rgba(255,255,255,0.08);
+  }
+  .summary-stat:last-child { border-left: none; }
+  .summary-stat:first-child { padding-right: 0; }
+
+  .stat-label {
+    color: var(--silver);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 0.35rem;
+  }
+
+  .stat-value {
+    color: var(--gold);
+    font-size: 1.4rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .stat-sub {
+    color: #6b7e8f;
+    font-size: 0.72rem;
+    margin-top: 0.2rem;
+  }
+
+  /* Report body */
+  .report-body {
+    background: white;
+    padding: 2rem 2.5rem;
+    border-radius: 0 0 16px 16px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.12);
+  }
+
+  .report-section {
+    margin-bottom: 2rem;
+  }
+
+  .report-section-title {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--navy);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .report-section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #e2e8f0;
+  }
+
+  .report-section-title .dot {
+    width: 8px; height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* Savings cards */
+  .savings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 1rem;
+  }
+
+  .saving-card {
+    border: 1.5px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+  .saving-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+
+  .saving-card-header {
+    background: var(--navy);
+    padding: 0.85rem 1.1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .saving-card-header .company { color: var(--gold); font-weight: 700; font-size: 0.95rem; }
+  .saving-card-header .policy { color: var(--silver); font-size: 0.75rem; }
+
+  .saving-card-status {
+    padding: 0.2rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.72rem;
+    font-weight: 600;
+  }
+
+  .status-active { background: rgba(46,204,113,0.2); color: #27ae60; }
+  .status-pending { background: rgba(243,156,18,0.2); color: #e67e22; }
+  .status-cancelled { background: rgba(231,76,60,0.2); color: #c0392b; }
+  .status-redeemed { background: rgba(108,122,137,0.2); color: #607080; }
+
+  .saving-card-body { padding: 1rem 1.1rem; }
+
+  .card-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.45rem 0;
+    border-bottom: 1px solid #f0f4fa;
+  }
+  .card-row:last-child { border-bottom: none; }
+
+  .card-row .key {
+    font-size: 0.78rem;
+    color: #6b7e8f;
+    font-weight: 500;
+  }
+
+  .card-row .val {
+    font-size: 0.82rem;
+    color: var(--navy);
+    font-weight: 600;
+    text-align: left;
+  }
+
+  .liquidity-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.15rem 0.6rem;
+    border-radius: 12px;
+  }
+
+  .liquid { background: rgba(46,204,113,0.15); color: #27ae60; }
+  .not-liquid { background: rgba(231,76,60,0.12); color: #c0392b; }
+
+  /* Loan rows */
+  .loan-block {
+    background: #fff8ec;
+    border: 1.5px solid #f5dfa0;
+    border-radius: 10px;
+    padding: 0.9rem 1.1rem;
+    margin-top: 0.6rem;
+  }
+
+  .loan-title {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #b7760d;
+    margin-bottom: 0.6rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .loan-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem 1rem;
+  }
+
+  .loan-item .k { font-size: 0.7rem; color: #9a7235; }
+  .loan-item .v { font-size: 0.82rem; font-weight: 600; color: #6b4c12; }
+
+  /* Bottom summary */
+  .bottom-summary {
+    background: linear-gradient(135deg, #f8fafc 0%, #eef2f8 100%);
+    border: 1.5px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .bottom-stat {
+    text-align: center;
+    padding: 0.8rem;
+  }
+
+  .bottom-stat .bs-label {
+    font-size: 0.72rem;
+    color: #6b7e8f;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .bottom-stat .bs-value {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--navy);
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+
+  .bottom-stat .bs-value.green { color: #27ae60; }
+  .bottom-stat .bs-value.red { color: #c0392b; }
+  .bottom-stat .bs-value.gold { color: var(--gold); }
+  .bottom-stat .bs-sub { font-size: 0.72rem; color: #8899aa; }
+
+  .report-footer {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-note { font-size: 0.72rem; color: #aab5c5; }
+  .agent-sig { font-size: 0.82rem; font-weight: 600; color: var(--navy); }
+
+  /* ===== PRINT - MATCHES SCREEN EXACTLY ===== */
+  @media print {
+    @page {
+      size: A4 landscape;
+      margin: 8mm 10mm;
+    }
+
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+    body { background: white !important; font-size: 9pt; }
+
+    .tabs-bar, .btn-print, #tab-form-content { display: none !important; }
+    .tab-content { display: block !important; }
+
+    #report-container {
+      background: white !important;
+      padding: 0 !important;
+    }
+
+    /* Report wrapper - full width */
+    .report { max-width: 100% !important; margin: 0 !important; }
+
+    /* Header */
+    .report-header {
+      border-radius: 4pt 4pt 0 0 !important;
+      padding: 10pt 12pt 8pt !important;
+    }
+    .report-header h1 { font-size: 16pt !important; }
+    .report-client-id { font-size: 8pt !important; }
+    .date-label { font-size: 6.5pt !important; }
+    .date-value { font-size: 10pt !important; }
+
+    /* Summary banner */
+    .summary-banner { padding: 6pt 12pt !important; }
+    .stat-label { font-size: 6.5pt !important; }
+    .stat-value { font-size: 13pt !important; }
+    .stat-sub { font-size: 6pt !important; }
+
+    /* Report body */
+    .report-body {
+      padding: 8pt 10pt !important;
+      box-shadow: none !important;
+      border-radius: 0 0 4pt 4pt !important;
+    }
+
+    .report-section { margin-bottom: 8pt !important; break-inside: avoid; }
+    .report-section-title { margin-bottom: 5pt !important; font-size: 7.5pt !important; }
+
+    /* Cards grid - 3 columns in landscape */
+    .cards-grid {
+      display: grid !important;
+      grid-template-columns: repeat(3, 1fr) !important;
+      gap: 5pt !important;
+      margin-top: 4pt !important;
+    }
+
+    .saving-card { break-inside: avoid !important; border: 1pt solid #dde3ec !important; }
+    .saving-card-header { padding: 5pt 7pt !important; }
+    .saving-card-header .company { font-size: 7.5pt !important; }
+    .saving-card-header .policy { font-size: 6pt !important; }
+    .saving-card-body { padding: 5pt 7pt !important; }
+    .card-row { padding: 2.5pt 0 !important; }
+    .card-row .key { font-size: 6.5pt !important; }
+    .card-row .val { font-size: 7pt !important; }
+
+    .loan-block { padding: 4pt 6pt !important; margin-top: 4pt !important; }
+    .loan-title { font-size: 6.5pt !important; margin-bottom: 3pt !important; }
+    .loan-grid { gap: 2pt !important; }
+    .loan-item .k { font-size: 6pt !important; }
+    .loan-item .v { font-size: 6.5pt !important; }
+
+    /* Compact table - full width, same as screen */
+    .compact-table { font-size: 7pt !important; width: 100% !important; table-layout: fixed !important; }
+    .compact-table thead th { padding: 3pt 4pt !important; font-size: 6.5pt !important; }
+    .compact-table tbody td { padding: 3pt 4pt !important; font-size: 7pt !important; }
+    .compact-table tfoot td { padding: 3pt 4pt !important; font-size: 7pt !important; }
+    .compact-table { break-inside: avoid; }
+
+    /* Liquidity badges in table */
+    .liquidity-badge { font-size: 6pt !important; padding: 1pt 3pt !important; }
+
+    /* Bottom summary */
+    .bottom-summary {
+      margin-top: 6pt !important;
+      padding: 7pt 10pt !important;
+      break-inside: avoid !important;
+    }
+    .bs-label { font-size: 6.5pt !important; }
+    .bs-value { font-size: 13pt !important; }
+    .bs-sub { font-size: 6pt !important; }
+
+    /* Loans detail table */
+    .loans-table { font-size: 7pt !important; }
+    .loans-table thead th { padding: 3pt 4pt !important; font-size: 6.5pt !important; }
+    .loans-table tbody td { padding: 3pt 4pt !important; }
+
+    /* Footer */
+    .report-footer { margin-top: 5pt !important; padding-top: 5pt !important; }
+    .footer-note { font-size: 6pt !important; }
+    .agent-sig { font-size: 7pt !important; }
+
+    /* Saving card status badges */
+    .saving-card-status { font-size: 5.5pt !important; padding: 1pt 3pt !important; }
+  }
+
+  .btn-print {
+    background: var(--navy);
+    color: var(--gold);
+    border: none;
+    padding: 0.7rem 2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Heebo', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0 auto 1.5rem;
+    transition: all 0.2s;
+  }
+  .btn-print:hover { background: var(--navy-light); }
+
+  /* Loans Table */
+  .loans-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+    direction: rtl;
+  }
+  .loans-table thead tr { background: var(--navy); }
+  .loans-table thead th {
+    color: var(--gold);
+    font-weight: 600;
+    padding: 0.65rem 0.9rem;
+    text-align: right;
+    font-size: 0.75rem;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+  .loans-table tbody tr { border-bottom: 1px solid #f0f4fa; }
+  .loans-table tbody tr:hover { background: #fafbfd; }
+  .loans-table tbody td {
+    padding: 0.7rem 0.9rem;
+    color: var(--navy);
+    vertical-align: middle;
+  }
+  .loans-total-row {
+    background: #fff8ec !important;
+    border-top: 2px solid #f5dfa0 !important;
+    border-bottom: none !important;
+  }
+  .loans-total-row td { padding: 0.75rem 0.9rem !important; }
+
+  .yield-display {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    height: 40px;
+    padding: 0 0.8rem;
+    border-radius: 8px;
+    border: 1px solid #e0e8f0;
+    background: #f8fafd;
+    overflow: hidden;
+  }
+
+  .yield-value {
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #aaa;
+    white-space: nowrap;
+  }
+
+  .yield-value.positive { color: #27ae60; }
+  .yield-value.negative { color: #e74c3c; }
+  .yield-value.neutral { color: #f39c12; }
+
+  .yield-gain {
+    font-size: 0.65rem;
+    color: #8899aa;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .goal-chip {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(13,27,46,0.07);
+    color: var(--navy);
+    border-radius: 20px;
+    padding: 0.15rem 0.7rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+  }
+
+  .owner-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    background: rgba(201,168,76,0.12);
+    color: #8a6a1a;
+    border-radius: 6px;
+    padding: 0.2rem 0.6rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    margin-top: 0.4rem;
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- TABS -->
+  <div class="tabs-bar">
+    <button class="tab-btn active" onclick="switchTab('form')">✏️ הזנת נתונים</button>
+    <button class="tab-btn" onclick="switchTab('report')" id="tab-report">📊 תצוגת סיכום</button>
+    <div class="app-logo">💼 InvestSummary <span>| Smart CFP Tools</span></div>
+  </div>
+
+  <!-- FORM TAB -->
+  <div class="tab-content active" id="tab-form-content">
+  <div class="form-page">
+
+    <div class="form-header">
+      <h1>📋 הזנת פרטי לקוח ותיק חסכונות</h1>
+      <p>מלא את הפרטים ולחץ "צור דף סיכום" - הדף ייוצר אוטומטית</p>
+    </div>
+
+    <!-- CLIENT -->
+    <div class="section-card">
+      <h2><span class="section-icon">👤</span> פרטי לקוח</h2>
+      <div class="form-grid">
+        <div class="field">
+          <label>שם מלא</label>
+          <input type="text" id="client-name" placeholder="ישראל ישראלי">
+        </div>
+        <div class="field">
+          <label>תעודת זהות</label>
+          <input type="text" id="client-id" placeholder="000000000">
+        </div>
+        <div class="field">
+          <label>טלפון</label>
+          <input type="text" id="client-phone" placeholder="050-0000000">
+        </div>
+        <div class="field">
+          <label>שם הסוכן / יועץ</label>
+          <input type="text" id="agent-name" placeholder="שם הסוכן">
+        </div>
+      </div>
+    </div>
+
+    <!-- SAVINGS -->
+    <div class="section-card">
+      <h2><span class="section-icon">🏦</span> קופות / פוליסות / תיקים</h2>
+      <div class="savings-list" id="savings-list"></div>
+      <button class="btn-add" onclick="addSaving()">+ הוסף קופה / פוליסה / תיק</button>
+    </div>
+
+    <button class="btn-generate" onclick="generateReport()">✨ צור דף סיכום ללקוח</button>
+    <div class="csv-actions">
+      <button class="btn-csv-export" onclick="exportCSV()">⬇️ ייצוא CSV</button>
+      <label class="btn-csv-import" for="csv-upload-input">⬆️ ייבוא CSV</label>
+      <input type="file" id="csv-upload-input" accept=".csv" style="display:none" onchange="importCSV(this)">
+    </div>
+  </div>
+  </div>
+
+  <!-- REPORT TAB -->
+  <div class="tab-content" id="tab-report-content">
+    <div id="report-container">
+      <div class="report-empty">
+        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="1.5">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="16" y1="13" x2="8" y2="13"/>
+          <line x1="16" y1="17" x2="8" y2="17"/>
+        </svg>
+        <p style="font-size:1rem;font-weight:600;">עוד לא נוצר סיכום</p>
+        <p style="font-size:0.85rem;margin-top:0.3rem;">עבור ללשונית "הזנת נתונים" ולחץ "צור דף סיכום"</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+let savingCount = 0;
+
+function addSaving() {
+  savingCount++;
+  const id = `saving-${savingCount}`;
+  const list = document.getElementById('savings-list');
+
+  const block = document.createElement('div');
+  block.className = 'saving-block';
+  block.id = id;
+  block.innerHTML = `
+    <div class="saving-block-header">
+      <span class="saving-block-title">קופה / פוליסה #${savingCount}</span>
+      <button class="btn-remove" onclick="removeSaving('${id}')">✕ הסר</button>
+    </div>
+    <div class="form-grid cols-4">
+      <div class="field">
+        <label>על שם מי</label>
+        <input type="text" name="owner" placeholder="שם מלא + ת.ז.">
+      </div>
+      <div class="field">
+        <label>חברה מנהלת</label>
+        <input type="text" name="company" placeholder="הראל, פניקס...">
+      </div>
+      <div class="field">
+        <label>סוג מוצר</label>
+        <select name="product-type">
+          <option value="">-- בחר --</option>
+          <option>קופת גמל</option>
+          <option>גמל להשקעה</option>
+          <option>קרן פנסיה</option>
+          <option>ביטוח מנהלים</option>
+          <option>פוליסת חיסכון</option>
+          <option>קרן השתלמות</option>
+          <option>תיק מנוהל</option>
+          <option>תיק מיועץ</option>
+          <option>נדל"ן</option>
+          <option>השקעה אלטרנטיבית</option>
+          <option>אחר</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>מספר קופה / פוליסה</label>
+        <input type="text" name="policy-num" placeholder="מספר">
+      </div>
+      <div class="field">
+        <label>סטטוס</label>
+        <select name="status">
+          <option value="הופק">הופק ✅</option>
+          <option value="בהקמה">בהקמה 🔄</option>
+          <option value="בוטל">בוטל ❌</option>
+          <option value="נפדה">נפדה 💰</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>מטרת הקופה</label>
+        <input type="text" name="goal" placeholder="ילדים, פרישה, חירום...">
+      </div>
+      <div class="field">
+        <label>יתרה נוכחית (₪)</label>
+        <input type="number" name="balance" placeholder="0" oninput="calcLoanPayment('${savingCount}');calcYield('${savingCount}')">
+      </div>
+      <div class="field">
+        <label>תאריך עדכון יתרה</label>
+        <input type="date" name="balance-date">
+      </div>
+    </div>
+
+    <div class="form-grid cols-4" style="margin-top:0.8rem;">
+      <div class="field">
+        <label>תאריך פתיחת קופה</label>
+        <input type="date" name="open-date" oninput="calcYield('${savingCount}')">
+      </div>
+      <div class="field">
+        <label>תשואה כוללת <span style="font-size:0.65rem;color:#999;font-weight:400;">— מחושב אוטומטי</span></label>
+        <div class="yield-display" id="yield-display-${savingCount}">
+          <span class="yield-value" id="yield-value-${savingCount}">-</span>
+          <span class="yield-gain" id="yield-gain-${savingCount}"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-grid cols-4" style="margin-top:0.8rem;">
+      <div class="field">
+        <label>הפקדה חד-פעמית (₪)</label>
+        <input type="number" name="one-time" placeholder="0" oninput="toggleField(this,'one-time-date-wrap-${savingCount}');calcYield('${savingCount}')">
+      </div>
+      <div class="field" id="one-time-date-wrap-${savingCount}" style="display:none">
+        <label>תאריך הפקדה חד-פעמית</label>
+        <input type="date" name="one-time-date">
+      </div>
+      <div class="field">
+        <label>הפקדה חודשית (₪)</label>
+        <input type="number" name="monthly" placeholder="0" oninput="calcYield('${savingCount}')">
+      </div>
+      <div class="field">
+        <label>נזילות</label>
+        <select name="liquidity" onchange="toggleLiqDate(this,'liq-date-wrap-${savingCount}')">
+          <option value="נזיל">💧 נזיל</option>
+          <option value="לא נזיל">🔒 לא נזיל</option>
+        </select>
+      </div>
+      <div class="field" id="liq-date-wrap-${savingCount}" style="display:none">
+        <label>תאריך נזילות</label>
+        <input type="date" name="liquidity-date">
+      </div>
+    </div>
+
+    <!-- LOAN -->
+    <div class="toggle-section" style="margin-top:0.8rem;">
+      <div class="toggle-header" onclick="toggleLoanSection('loan-body-${savingCount}','has-loan-${savingCount}')">
+        <input type="checkbox" name="has-loan" id="has-loan-${savingCount}" onchange="toggleLoanSection('loan-body-${savingCount}','has-loan-${savingCount}')">
+        <label for="has-loan-${savingCount}" style="cursor:pointer;">💳 נלקחה הלוואה מקופה זו</label>
+      </div>
+      <div class="toggle-body" id="loan-body-${savingCount}">
+        <div class="form-grid cols-4">
+          <div class="field">
+            <label>תאריך הלוואה</label>
+            <input type="date" name="loan-date">
+          </div>
+          <div class="field">
+            <label>סכום הלוואה (₪)</label>
+            <input type="number" name="loan-amount" placeholder="0" oninput="calcLoanPayment('${savingCount}')">
+          </div>
+          <div class="field">
+            <label>ריבית שנתית (%)</label>
+            <input type="number" name="loan-rate" placeholder="0.00" step="0.01" oninput="calcLoanPayment('${savingCount}')">
+          </div>
+          <div class="field">
+            <label>תקופה (חודשים)</label>
+            <input type="number" name="loan-duration" placeholder="12" oninput="calcLoanPayment('${savingCount}')">
+          </div>
+          <div class="field">
+            <label>סוג הלוואה</label>
+            <select name="loan-type">
+              <option>קל"צ</option>
+              <option>צמודת מדד</option>
+              <option>פריים</option>
+              <option>קבועה לא צמודה</option>
+              <option>אחר</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>סוג החזר</label>
+            <select name="loan-repay" onchange="calcLoanPayment('${savingCount}')">
+              <option value="שפיצר">שפיצר</option>
+              <option value="בלון">בלון</option>
+              <option value="גרייס">גרייס</option>
+              <option value="קרן שווה">קרן שווה</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>החזר חודשי (₪) <span id="loan-auto-label-${savingCount}" style="color:#b7760d;font-size:0.68rem;font-weight:600;"></span></label>
+            <input type="number" name="loan-monthly" id="loan-monthly-${savingCount}" placeholder="0" style="font-weight:700;">
+          </div>
+          <div class="field">
+            <label>מטרת ההלוואה</label>
+            <input type="text" name="loan-goal" placeholder="למשל: שיפוץ, רכישת נכס...">
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  list.appendChild(block);
+}
+
+function calcYield(n) {
+  const block = document.getElementById(`saving-${n}`);
+  if (!block) return;
+  const balance = parseFloat(block.querySelector('[name="balance"]')?.value) || 0;
+  const openDate = block.querySelector('[name="open-date"]')?.value;
+  const monthly = parseFloat(block.querySelector('[name="monthly"]')?.value) || 0;
+  const oneTime = parseFloat(block.querySelector('[name="one-time"]')?.value) || 0;
+  const yieldVal = document.getElementById(`yield-value-${n}`);
+  const yieldGain = document.getElementById(`yield-gain-${n}`);
+  const yieldDisplay = document.getElementById(`yield-display-${n}`);
+
+  if (!balance || !openDate) {
+    if (yieldVal) { yieldVal.textContent = '-'; yieldVal.className = 'yield-value'; }
+    if (yieldGain) yieldGain.textContent = !openDate && balance ? 'יש להזין תאריך פתיחה' : '';
+    if (yieldDisplay) yieldDisplay.style.background = '#f8fafd';
+    return;
+  }
+
+  const open = new Date(openDate);
+  const now = new Date();
+  const months = Math.max(0, Math.round((now - open) / (1000 * 60 * 60 * 24 * 30.44)));
+  const deposits = oneTime + (monthly * months);
+
+  if (!deposits) {
+    if (yieldVal) { yieldVal.textContent = '-'; yieldVal.className = 'yield-value'; }
+    if (yieldGain) yieldGain.textContent = 'אין הפקדות מוזנות';
+    return;
+  }
+
+  const gain = balance - deposits;
+  const pct = (gain / deposits) * 100;
+  const sign = gain >= 0 ? '+' : '';
+
+  if (yieldVal) {
+    yieldVal.textContent = `${sign}${pct.toFixed(2)}%`;
+    yieldVal.className = 'yield-value ' + (pct > 2 ? 'positive' : pct < 0 ? 'negative' : 'neutral');
+  }
+  if (yieldGain) yieldGain.textContent = `· ${sign}${Number(Math.abs(gain)).toLocaleString('he-IL', {maximumFractionDigits:0})}₪`;
+  if (yieldDisplay) yieldDisplay.style.background = pct > 2 ? '#edfaf3' : pct < 0 ? '#fef0ef' : '#fffbec';
+}
+
+function calcLoanPayment(n) {
+  const block = document.getElementById(`saving-${n}`);
+  if (!block) return;
+  const amount = parseFloat(block.querySelector('[name="loan-amount"]')?.value) || 0;
+  const balance = parseFloat(block.querySelector('[name="balance"]')?.value) || 0;
+  const annualRate = parseFloat(block.querySelector('[name="loan-rate"]')?.value) || 0;
+  const months = parseInt(block.querySelector('[name="loan-duration"]')?.value) || 0;
+  const repayType = block.querySelector('[name="loan-repay"]')?.value || 'שפיצר';
+  const monthlyInput = document.getElementById(`loan-monthly-${n}`);
+  const label = document.getElementById(`loan-auto-label-${n}`);
+  const loanAmountInput = block.querySelector('[name="loan-amount"]');
+
+  // Validation: loan cannot exceed balance
+  if (amount > 0 && balance > 0 && amount > balance) {
+    loanAmountInput.style.borderColor = '#e74c3c';
+    loanAmountInput.style.background = '#fff5f5';
+    let warn = document.getElementById(`loan-warn-${n}`);
+    if (!warn) {
+      warn = document.createElement('div');
+      warn.id = `loan-warn-${n}`;
+      warn.style.cssText = 'color:#c0392b;font-size:0.72rem;font-weight:600;margin-top:0.3rem;grid-column:1/-1;';
+      loanAmountInput.closest('.field').insertAdjacentElement('afterend', warn);
+    }
+    warn.textContent = `⚠️ סכום ההלוואה (${fmtCurrency(amount)}) חורג מגובה החיסכון (${fmtCurrency(balance)})`;
+    if (label) label.textContent = '';
+    return;
+  } else {
+    if (loanAmountInput) { loanAmountInput.style.borderColor = ''; loanAmountInput.style.background = ''; }
+    const warn = document.getElementById(`loan-warn-${n}`);
+    if (warn) warn.remove();
+  }
+
+  if (!amount || !months) { if (label) label.textContent = ''; return; }
+
+  let monthly = 0;
+  const r = annualRate / 100 / 12;
+
+  if (repayType === 'בלון') {
+    monthly = r > 0 ? amount * r : 0;
+  } else if (repayType === 'קרן שווה') {
+    monthly = amount / months + (amount * r);
+  } else {
+    if (r === 0) { monthly = amount / months; }
+    else { monthly = amount * (r * Math.pow(1 + r, months)) / (Math.pow(1 + r, months) - 1); }
+  }
+
+  if (monthly > 0 && monthlyInput) {
+    monthlyInput.value = Math.round(monthly);
+    if (label) label.textContent = '(חושב אוטומטית)';
+    monthlyInput.style.background = '#fffbea';
+    monthlyInput.style.borderColor = '#c9a84c';
+  }
+}
+
+function removeSaving(id) {
+  document.getElementById(id).remove();
+}
+
+function toggleLoanSection(bodyId, cbId) {
+  const body = document.getElementById(bodyId);
+  const cb = document.getElementById(cbId);
+  if (!body) return;
+  // if called from onclick on header (not checkbox), toggle checkbox too
+  if (document.activeElement !== cb) {
+    cb.checked = !cb.checked;
+  }
+  if (cb.checked) {
+    body.classList.add('open');
+  } else {
+    body.classList.remove('open');
+  }
+}
+
+function toggleLiqDate(sel, wrapId) {
+  const wrap = document.getElementById(wrapId);
+  wrap.style.display = sel.value === 'לא נזיל' ? 'flex' : 'none';
+}
+
+function toggleField(input, wrapId) {
+  const wrap = document.getElementById(wrapId);
+  wrap.style.display = input.value && input.value > 0 ? 'flex' : 'none';
+}
+
+function switchTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+  if (tab === 'form') {
+    document.querySelectorAll('.tab-btn')[0].classList.add('active');
+    document.getElementById('tab-form-content').classList.add('active');
+  } else {
+    document.querySelectorAll('.tab-btn')[1].classList.add('active');
+    document.getElementById('tab-report-content').classList.add('active');
+  }
+}
+
+function fmtCurrency(n) {
+  if (!n || n == 0) return '-';
+  return '₪' + Number(n).toLocaleString('he-IL');
+}
+
+function fmtDate(d) {
+  if (!d) return '-';
+  const parts = d.split('-');
+  return parts[2] + '/' + parts[1] + '/' + parts[0];
+}
+
+function generateReport() {
+  const name = document.getElementById('client-name').value || 'לקוח';
+  const clientId = document.getElementById('client-id').value || '-';
+  const phone = document.getElementById('client-phone').value || '';
+  const agent = document.getElementById('agent-name').value || '';
+
+  const blocks = document.querySelectorAll('.saving-block');
+  const savings = [];
+
+  blocks.forEach(block => {
+    const g = (name) => block.querySelector(`[name="${name}"]`)?.value || '';
+    savings.push({
+      owner: g('owner'),
+      company: g('company'),
+      productType: g('product-type'),
+      policyNum: g('policy-num'),
+      status: g('status'),
+      goal: g('goal'),
+      balance: g('balance'),
+      balanceDate: g('balance-date'),
+      openDate: g('open-date'),
+      totalDeposits: g('total-deposits'),
+      oneTime: g('one-time'),
+      oneTimeDate: g('one-time-date'),
+      monthly: g('monthly'),
+      liquidity: g('liquidity'),
+      liquidityDate: g('liquidity-date'),
+      hasLoan: block.querySelector('[name="has-loan"]')?.checked,
+      loanDate: g('loan-date'),
+      loanAmount: g('loan-amount'),
+      loanRate: g('loan-rate'),
+      loanDuration: g('loan-duration'),
+      loanType: g('loan-type'),
+      loanRepay: g('loan-repay'),
+      loanMonthly: g('loan-monthly'),
+      loanGoal: g('loan-goal'),
+    });
+  });
+
+  // Totals
+  const liquidSavings = savings.filter(s => s.liquidity === 'נזיל');
+  const nonLiquidSavings = savings.filter(s => s.liquidity === 'לא נזיל');
+  const totalLiquidBalance = liquidSavings.reduce((sum, s) => sum + (Number(s.balance) || 0), 0);
+  const totalNonLiquidBalance = nonLiquidSavings.reduce((sum, s) => sum + (Number(s.balance) || 0), 0);
+  const totalLoans = savings.reduce((sum, s) => sum + (s.hasLoan ? Number(s.loanAmount) || 0 : 0), 0);
+  const totalLoanMonthly = savings.reduce((sum, s) => sum + (s.hasLoan ? Number(s.loanMonthly) || 0 : 0), 0);
+  const totalMonthly = savings.reduce((sum, s) => sum + (Number(s.monthly) || 0), 0);
+  const totalBalance = savings.reduce((sum, s) => sum + (Number(s.balance) || 0), 0);
+
+  const statusClass = (s) => {
+    if (s === 'הופק') return 'status-active';
+    if (s === 'בהקמה') return 'status-pending';
+    if (s === 'בוטל') return 'status-cancelled';
+    if (s === 'נפדה') return 'status-redeemed';
+    return 'status-active';
+  };
+
+  const calcYieldData = (s) => {
+    const bal = Number(s.balance) || 0;
+    if (!bal || !s.openDate) return null;
+    const open = new Date(s.openDate);
+    const now = new Date();
+    const months = Math.max(0, Math.round((now - open) / (1000 * 60 * 60 * 24 * 30.44)));
+    const dep = (Number(s.oneTime) || 0) + ((Number(s.monthly) || 0) * months);
+    if (!dep) return null;
+    const gain = bal - dep;
+    const pct = (gain / dep) * 100;
+    return { pct, gain, months, sign: gain >= 0 ? '+' : '' };
+  };
+
+  const today = new Date().toLocaleDateString('he-IL');
+
+  const html = `
+  <div class="report">
+    <button class="btn-print" onclick="window.print()">🖨️ הדפסה / שמירה כ-PDF (לרוחב A4)</button>
+
+    <div class="report-header">
+      <div class="report-header-top">
+        <div class="report-client-info">
+          <h1>${name}</h1>
+          <div class="report-client-id">ת.ז. ${clientId}${phone ? ` &nbsp;·&nbsp; ${phone}` : ''}</div>
+        </div>
+        <div class="report-date-badge">
+          <div class="date-label">תאריך הפקת הדוח</div>
+          <div class="date-value">${today}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="summary-banner">
+      <div class="summary-stat">
+        <div class="stat-label">סה"כ מוצרים</div>
+        <div class="stat-value">${savings.length}</div>
+        <div class="stat-sub">קופות / פוליסות / תיקים</div>
+      </div>
+      <div class="summary-stat">
+        <div class="stat-label">נזיל</div>
+        <div class="stat-value">${liquidSavings.length}</div>
+        <div class="stat-sub">מוצרים נזילים</div>
+      </div>
+      <div class="summary-stat">
+        <div class="stat-label">לא נזיל</div>
+        <div class="stat-value">${nonLiquidSavings.length}</div>
+        <div class="stat-sub">מוצרים לא נזילים</div>
+      </div>
+      <div class="summary-stat">
+        <div class="stat-label">סה"כ יתרות</div>
+        <div class="stat-value">${totalBalance ? fmtCurrency(totalBalance) : '-'}</div>
+        <div class="stat-sub">סה"כ נכסים מוזנים</div>
+      </div>
+      <div class="summary-stat">
+        <div class="stat-label">הפקדה חודשית</div>
+        <div class="stat-value">${totalMonthly ? fmtCurrency(totalMonthly) : '-'}</div>
+        <div class="stat-sub">סה"כ חודשי</div>
+      </div>
+    </div>
+
+    <div class="report-body">
+
+      <!-- SAVINGS CARDS GRID -->
+      <div class="report-section">
+        <div class="report-section-title">
+          <span class="dot" style="background:#3a7bd5;"></span>
+          פירוט קופות ופוליסות
+        </div>
+        <div class="cards-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;margin-top:0.8rem;">
+          ${savings.map((s, i) => {
+            const y = calcYieldData(s);
+            const yieldHtml = y
+              ? `<div class="card-row"><span class="key">תשואה כוללת</span><span class="val" style="color:${y.pct > 2 ? '#27ae60' : y.pct < 0 ? '#e74c3c' : '#f39c12'};font-weight:800;">${y.sign}${y.pct.toFixed(2)}% · ${y.sign}${fmtCurrency(Math.abs(y.gain))}</span></div>`
+              : '';
+            return `
+            <div class="saving-card">
+              <div class="saving-card-header">
+                <div>
+                  <div class="company">${s.company || '-'}</div>
+                  <div class="policy">${s.productType || ''}${s.policyNum ? ' · ' + s.policyNum : ''}</div>
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:flex-end;gap:0.3rem;">
+                  <span class="saving-card-status ${statusClass(s.status)}">${s.status}</span>
+                  <span class="liquidity-badge ${s.liquidity === 'נזיל' ? 'liquid' : 'not-liquid'}" style="font-size:0.62rem;">${s.liquidity === 'נזיל' ? '💧 נזיל' : '🔒 לא נזיל'}${s.liquidity === 'לא נזיל' && s.liquidityDate ? ' · ' + fmtDate(s.liquidityDate) : ''}</span>
+                </div>
+              </div>
+              <div class="saving-card-body">
+                ${s.owner ? `<div class="card-row"><span class="key">על שם</span><span class="val">${s.owner}</span></div>` : ''}
+                <div class="card-row"><span class="key">יתרה נוכחית</span><span class="val" style="color:#27ae60;font-weight:800;">${s.balance ? fmtCurrency(s.balance) : '-'}</span></div>
+                ${yieldHtml}
+                ${s.monthly ? `<div class="card-row"><span class="key">הפקדה חודשית</span><span class="val" style="color:#2980b9;">${fmtCurrency(s.monthly)}</span></div>` : ''}
+                ${s.oneTime ? `<div class="card-row"><span class="key">הפקדה חד-פעמית</span><span class="val">${fmtCurrency(s.oneTime)}</span></div>` : ''}
+                ${s.goal ? `<div class="card-row"><span class="key">מטרה</span><span class="val">${s.goal}</span></div>` : ''}
+                ${s.balanceDate ? `<div class="card-row"><span class="key">עדכון יתרה</span><span class="val" style="color:#8899aa;font-size:0.78rem;">${fmtDate(s.balanceDate)}</span></div>` : ''}
+                ${s.hasLoan ? `<div class="loan-block"><div class="loan-title">💳 הלוואה פעילה</div><div class="loan-grid"><div class="loan-item"><div class="k">סכום</div><div class="v">${fmtCurrency(s.loanAmount)}</div></div><div class="loan-item"><div class="k">ריבית</div><div class="v">${s.loanRate}%</div></div><div class="loan-item"><div class="k">החזר חודשי</div><div class="v">${fmtCurrency(s.loanMonthly)}</div></div></div></div>` : ''}
+              </div>
+            </div>`;
+          }).join('')}
+        </div>
+      </div>
+
+      <!-- TABLE SUMMARY -->
+      <div class="report-section" style="margin-top:1.5rem;">
+        <div class="report-section-title">
+          <span class="dot"></span>
+          סיכום קופות, פוליסות ותיקי השקעות
+        </div>
+        <div style="width:100%;">
+          <table class="compact-table" style="width:100%;table-layout:fixed;">
+            <colgroup>
+              <col style="width:3%">
+              <col style="width:11%">
+              <col style="width:9%">
+              <col style="width:9%">
+              <col style="width:8%">
+              <col style="width:6%">
+              <col style="width:9%">
+              <col style="width:9%">
+              <col style="width:9%">
+              <col style="width:7%">
+              <col style="width:9%">
+              <col style="width:11%">
+            </colgroup>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>על שם</th>
+                <th>חברה</th>
+                <th>סוג מוצר</th>
+                <th>פוליסה</th>
+                <th>סטטוס</th>
+                <th>יתרה</th>
+                <th>תשואה</th>
+                <th>ח. חודשית</th>
+                <th>נזילות</th>
+                <th>מטרה</th>
+                <th>הלוואה</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${savings.map((s, i) => `
+              <tr>
+                <td style="color:#8899aa;font-size:0.7rem;">${i + 1}</td>
+                <td style="font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${s.owner || ''}">${s.owner || '-'}</td>
+                <td style="font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${s.company || ''}">${s.company || '-'}</td>
+                <td style="color:#556;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${s.productType || ''}">${s.productType || '-'}</td>
+                <td style="font-family:monospace;font-size:0.7rem;color:#445;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${s.policyNum || '-'}</td>
+                <td><span class="saving-card-status ${statusClass(s.status)}" style="font-size:0.6rem;padding:0.1rem 0.3rem;">${s.status}</span></td>
+                <td style="font-weight:800;color:#27ae60;white-space:nowrap;">${s.balance ? fmtCurrency(s.balance) : '-'}</td>
+                <td style="white-space:nowrap;">${(() => { const y = calcYieldData(s); if (!y) return '<span style="color:#ccc">-</span>'; const col = y.pct > 2 ? '#27ae60' : y.pct < 0 ? '#e74c3c' : '#f39c12'; return `<span style="font-weight:800;font-size:0.85rem;color:${col};">${y.sign}${y.pct.toFixed(1)}%</span><br><span style="font-size:0.6rem;color:${col};">${y.sign}${fmtCurrency(Math.abs(y.gain))}</span>`; })()}</td>
+                <td style="color:#2980b9;">${s.monthly ? fmtCurrency(s.monthly) : '-'}</td>
+                <td><span class="liquidity-badge ${s.liquidity === 'נזיל' ? 'liquid' : 'not-liquid'}" style="font-size:0.6rem;padding:0.1rem 0.35rem;">${s.liquidity === 'נזיל' ? '💧 נזיל' : '🔒 לא נזיל'}</span>${s.liquidity === 'לא נזיל' && s.liquidityDate ? `<div style="font-size:0.6rem;color:#888;margin-top:0.1rem;">${fmtDate(s.liquidityDate)}</div>` : ''}</td>
+                <td style="color:#7a6a00;font-size:0.72rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${s.goal || ''}">${s.goal || '-'}</td>
+                <td>${s.hasLoan ? `<span class="loan-flag">💳 ${fmtCurrency(s.loanAmount)}</span><div style="font-size:0.62rem;color:#c0392b;margin-top:0.1rem;">החזר: ${fmtCurrency(s.loanMonthly)}/ח'</div>` : '<span style="color:#ccc;font-size:0.7rem;">-</span>'}</td>
+              </tr>`).join('')}
+            </tbody>
+            <tfoot>
+              <tr style="background:#f0f6ff;font-weight:700;border-top:2px solid #c3d6ed;">
+                <td colspan="6" style="text-align:right;color:#8899aa;font-size:0.72rem;padding-left:0.5rem;">סיכום כולל ↓</td>
+                <td style="color:#27ae60;font-size:0.88rem;font-weight:800;">${totalBalance ? fmtCurrency(totalBalance) : '-'}</td>
+                <td style="color:#8899aa;font-size:0.7rem;">—</td>
+                <td style="color:#2980b9;font-weight:700;">${totalMonthly ? fmtCurrency(totalMonthly) : '-'}</td>
+                <td style="color:#8899aa;font-size:0.7rem;">—</td>
+                <td style="color:#8899aa;font-size:0.7rem;">—</td>
+                <td style="color:#c0392b;font-weight:700;">${totalLoanMonthly ? fmtCurrency(totalLoanMonthly) + '/ח\'' : '—'}</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+
+      <!-- BOTTOM SUMMARY -->
+      <div class="report-section" style="margin-top:1.5rem;">
+        <div class="report-section-title">
+          <span class="dot"></span>
+          סיכום כספי
+        </div>
+        <div class="bottom-summary">
+          <div class="bottom-stat">
+            <div class="bs-label">💧 מוצרים נזילים</div>
+            <div class="bs-value green">${liquidSavings.length}</div>
+            <div class="bs-sub" style="font-weight:700;color:#27ae60;font-size:0.82rem;">${totalLiquidBalance ? fmtCurrency(totalLiquidBalance) : '₪0'}</div>
+            <div class="bs-sub">מתוך ${savings.length} מוצרים</div>
+          </div>
+          <div class="bottom-stat">
+            <div class="bs-label">🔒 מוצרים לא נזילים</div>
+            <div class="bs-value red">${nonLiquidSavings.length}</div>
+            <div class="bs-sub" style="font-weight:700;color:#c0392b;font-size:0.82rem;">${totalNonLiquidBalance ? fmtCurrency(totalNonLiquidBalance) : '₪0'}</div>
+            <div class="bs-sub">מתוך ${savings.length} מוצרים</div>
+          </div>
+          <div class="bottom-stat">
+            <div class="bs-label">סה"כ הלוואות</div>
+            <div class="bs-value gold">${totalLoans ? fmtCurrency(totalLoans) : '₪0'}</div>
+            <div class="bs-sub">${totalLoanMonthly ? 'החזר חודשי: ' + fmtCurrency(totalLoanMonthly) : 'ללא הלוואות פעילות'}</div>
+          </div>
+        </div>
+      </div>
+
+      ${savings.some(s => s.hasLoan) ? `
+      <!-- LOANS DETAIL TABLE -->
+      <div class="report-section" style="margin-top:1.5rem;">
+        <div class="report-section-title">
+          <span class="dot" style="background:#e67e22;"></span>
+          פירוט הלוואות פעילות
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="loans-table">
+            <thead>
+              <tr>
+                <th>קופה / חברה</th>
+                <th>תאריך</th>
+                <th>סכום</th>
+                <th>ריבית</th>
+                <th>תקופה</th>
+                <th>סוג הלוואה</th>
+                <th>סוג החזר</th>
+                <th>החזר חודשי</th>
+                <th>מטרה</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${savings.filter(s => s.hasLoan).map(s => `
+              <tr>
+                <td><strong>${s.company || '-'}</strong>${s.productType ? `<br><span style="font-size:0.7rem;color:#8899aa;">${s.productType}</span>` : ''}</td>
+                <td>${s.loanDate ? fmtDate(s.loanDate) : '-'}</td>
+                <td style="font-weight:700;color:var(--navy);">${s.loanAmount ? fmtCurrency(s.loanAmount) : '-'}</td>
+                <td>${s.loanRate ? s.loanRate + '%' : '-'}</td>
+                <td>${s.loanDuration ? s.loanDuration + ' חודשים' : '-'}</td>
+                <td>${s.loanType || '-'}</td>
+                <td>${s.loanRepay || '-'}</td>
+                <td style="font-weight:800;color:#c0392b;">${s.loanMonthly ? fmtCurrency(s.loanMonthly) : '-'}</td>
+                <td style="color:#8a6a1a;font-style:italic;">${s.loanGoal || '-'}</td>
+              </tr>`).join('')}
+              <tr class="loans-total-row">
+                <td colspan="7" style="text-align:left;font-size:0.8rem;color:#8899aa;">* החזר חודשי כולל</td>
+                <td style="font-weight:800;font-size:1rem;color:#c0392b;">${fmtCurrency(totalLoanMonthly)}</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>` : ''}
+
+      <div class="report-footer">
+        <div class="footer-note">מסמך זה הופק לצרכי מעקב ואינו מהווה ייעוץ השקעות או פנסיוני</div>
+        ${agent ? `<div class="agent-sig">הוכן ע"י: ${agent}</div>` : ''}
+      </div>
+    </div>
+  </div>
+  `;
+
+  document.getElementById('report-container').innerHTML = html;
+  switchTab('report');
+}
+
+// CSV Fields definition
+const CSV_CLIENT_FIELDS = ['client-name','client-id','client-phone','agent-name'];
+const CSV_SAVING_FIELDS = ['owner','company','product-type','policy-num','status','goal','balance','balance-date','open-date','total-deposits','one-time','one-time-date','monthly','liquidity','liquidity-date','has-loan','loan-date','loan-amount','loan-rate','loan-duration','loan-type','loan-repay','loan-monthly','loan-goal'];
+const CSV_HEADERS = ['client-name','client-id','client-phone','agent-name',...CSV_SAVING_FIELDS];
+
+function exportCSV() {
+  const rows = [];
+  // Header row
+  rows.push(CSV_HEADERS.join(','));
+
+  const clientVals = CSV_CLIENT_FIELDS.map(f => `"${(document.getElementById(f)?.value || '').replace(/"/g,'""')}"`);
+  const savingBlocks = document.querySelectorAll('.saving-block');
+
+  if (savingBlocks.length === 0) {
+    rows.push(clientVals.join(',') + ',' + CSV_SAVING_FIELDS.map(() => '""').join(','));
+  } else {
+    savingBlocks.forEach((block, idx) => {
+      const savingVals = CSV_SAVING_FIELDS.map(f => {
+        if (f === 'has-loan') {
+          return block.querySelector('[name="has-loan"]')?.checked ? '"1"' : '"0"';
+        }
+        const v = block.querySelector(`[name="${f}"]`)?.value || '';
+        return `"${v.replace(/"/g,'""')}"`;
+      });
+      // Only include client info on first row
+      const clientPart = idx === 0 ? clientVals : CSV_CLIENT_FIELDS.map(() => '""');
+      rows.push([...clientPart, ...savingVals].join(','));
+    });
+  }
+
+  const bom = '\uFEFF'; // UTF-8 BOM for Excel Hebrew support
+  const blob = new Blob([bom + rows.join('\n')], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const clientName = document.getElementById('client-name')?.value || 'client';
+  a.href = url;
+  a.download = `portfolio_${clientName}_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function importCSV(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const text = e.target.result.replace(/^\uFEFF/, ''); // strip BOM
+    const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
+    if (lines.length < 2) { alert('קובץ CSV ריק או לא תקין'); return; }
+
+    const headers = parseCSVRow(lines[0]);
+    const rows = lines.slice(1).map(l => parseCSVRow(l));
+
+    // Fill client info from first row
+    const firstRow = Object.fromEntries(headers.map((h,i) => [h, rows[0]?.[i] || '']));
+    CSV_CLIENT_FIELDS.forEach(f => {
+      const el = document.getElementById(f);
+      if (el && firstRow[f] !== undefined) el.value = firstRow[f];
+    });
+
+    // Clear existing savings
+    document.getElementById('savings-list').innerHTML = '';
+    savingCount = 0;
+
+    // Add savings from each row
+    rows.forEach(row => {
+      const data = Object.fromEntries(headers.map((h,i) => [h, row[i] || '']));
+      addSaving();
+      const block = document.getElementById(`saving-${savingCount}`);
+      CSV_SAVING_FIELDS.forEach(f => {
+        if (f === 'has-loan') {
+          const cb = block.querySelector('[name="has-loan"]');
+          if (cb) { cb.checked = data[f] === '1'; if (cb.checked) document.getElementById(`loan-body-${savingCount}`)?.classList.add('open'); }
+          return;
+        }
+        const el = block.querySelector(`[name="${f}"]`);
+        if (el && data[f] !== undefined) el.value = data[f];
+        // Trigger liquidity date toggle
+        if (f === 'liquidity') { toggleLiqDate(el, `liq-date-wrap-${savingCount}`); }
+      });
+      // Recalculate yield after import
+      calcYield(savingCount);
+    });
+
+    alert(`✅ יובאו ${rows.length} קופות בהצלחה`);
+    input.value = '';
+  };
+  reader.readAsText(file, 'UTF-8');
+}
+
+function parseCSVRow(row) {
+  const result = [];
+  let cur = '', inQuote = false;
+  for (let i = 0; i < row.length; i++) {
+    const ch = row[i];
+    if (ch === '"') {
+      if (inQuote && row[i+1] === '"') { cur += '"'; i++; }
+      else inQuote = !inQuote;
+    } else if (ch === ',' && !inQuote) {
+      result.push(cur); cur = '';
+    } else { cur += ch; }
+  }
+  result.push(cur);
+  return result;
+}
+
+// Init with one empty saving
+addSaving();
+</script>
+</body>
+</html>

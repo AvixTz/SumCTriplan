@@ -628,43 +628,34 @@
   .loan-item .v { font-size: 0.82rem; font-weight: 600; color: #6b4c12; }
 
   /* Bottom summary */
-  .bottom-summary {
-    background: linear-gradient(135deg, #f8fafc 0%, #eef2f8 100%);
-    border: 1.5px solid #e2e8f0;
-    border-radius: 12px;
-    padding: 1.5rem;
-    margin-top: 1.5rem;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
+  /* ===== COMPACT FINANCIAL SUMMARY BAR ===== */
+  .fin-summary-bar {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    background: linear-gradient(90deg, var(--navy) 0%, var(--navy-mid) 100%);
+    border-radius: 10px;
+    padding: 0.55rem 1.1rem;
+    margin-top: 0.6rem;
+    flex-wrap: wrap;
+    gap: 0.2rem 0;
   }
-
-  .bottom-stat {
-    text-align: center;
-    padding: 0.8rem;
+  .fsb-item {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.2rem 0.9rem;
+    font-size: 0.78rem;
+    color: var(--silver);
+    white-space: nowrap;
   }
+  .fsb-item strong { color: #fff; font-weight: 800; }
+  .fsb-item .fsb-amt { color: var(--gold-light); font-weight: 700; }
+  .fsb-sep { width: 1px; height: 1.6rem; background: rgba(255,255,255,0.12); flex-shrink: 0; }
 
-  .bottom-stat .bs-label {
-    font-size: 0.72rem;
-    color: #6b7e8f;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    margin-bottom: 0.5rem;
-  }
-
-  .bottom-stat .bs-value {
-    font-size: 1.6rem;
-    font-weight: 800;
-    color: var(--navy);
-    line-height: 1;
-    margin-bottom: 0.3rem;
-  }
-
-  .bottom-stat .bs-value.green { color: #27ae60; }
-  .bottom-stat .bs-value.red { color: #c0392b; }
-  .bottom-stat .bs-value.gold { color: var(--gold); }
-  .bottom-stat .bs-sub { font-size: 0.72rem; color: #8899aa; }
+  /* Legacy — keep for print @media overrides */
+  .bottom-summary { display: none; }
+  .bottom-stat { display: none; }
 
   .report-footer {
     margin-top: 1.5rem;
@@ -1115,6 +1106,468 @@
     font-weight: 600;
     margin-top: 0.4rem;
   }
+
+  /* ===== MISLAKA IMPORT SECTION ===== */
+  .mislaka-section {
+    margin-top: 2rem;
+    border: 2px dashed var(--gold);
+    border-radius: 14px;
+    padding: 1.5rem 1.8rem;
+    background: linear-gradient(135deg, rgba(201,168,76,0.05) 0%, rgba(13,27,46,0.02) 100%);
+  }
+  .mislaka-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.2rem;
+  }
+  .mislaka-icon-wrap {
+    width: 52px;
+    height: 52px;
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    flex-shrink: 0;
+    box-shadow: 0 2px 10px rgba(13,27,46,0.2);
+  }
+  .mislaka-title {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--navy);
+  }
+  .mislaka-subtitle {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+    line-height: 1.4;
+  }
+  .mislaka-upload-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .btn-mislaka {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+    color: var(--navy);
+    border: none;
+    border-radius: 10px;
+    padding: 0.75rem 1.5rem;
+    font-family: 'Heebo', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 2px 10px rgba(201,168,76,0.35);
+    white-space: nowrap;
+  }
+  .btn-mislaka:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 16px rgba(201,168,76,0.45);
+  }
+  .mislaka-status-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.87rem;
+    color: var(--text-muted);
+    min-height: 1.5em;
+  }
+  .mislaka-status-bar.success { color: var(--green); font-weight: 600; }
+  .mislaka-status-bar.error   { color: var(--red);   font-weight: 600; }
+  .mislaka-status-bar.loading { color: var(--gold);  font-weight: 600; }
+
+  /* ===== MISLAKA MODAL ===== */
+  .mislaka-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(8,18,35,0.72);
+    z-index: 9000;
+    align-items: center;
+    justify-content: center;
+    padding: 1.2rem;
+    backdrop-filter: blur(3px);
+  }
+  .mislaka-overlay.open { display: flex; }
+  .mislaka-modal {
+    background: #fff;
+    border-radius: 18px;
+    width: 100%;
+    max-width: 880px;
+    max-height: 88vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.38);
+  }
+  .mislaka-modal-head {
+    background: linear-gradient(90deg, var(--navy) 0%, var(--navy-light) 100%);
+    padding: 1.1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-shrink: 0;
+  }
+  .mislaka-modal-head h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--gold-light);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .mislaka-modal-head .client-chip {
+    background: rgba(201,168,76,0.18);
+    border: 1px solid rgba(201,168,76,0.4);
+    border-radius: 20px;
+    padding: 0.25rem 0.8rem;
+    font-size: 0.82rem;
+    color: var(--gold-light);
+    font-weight: 600;
+  }
+  .btn-modal-close {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: var(--silver);
+    font-size: 1.1rem;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+  .btn-modal-close:hover { background: rgba(255,255,255,0.18); color: #fff; }
+  .mislaka-modal-body {
+    overflow-y: auto;
+    padding: 1.4rem 1.5rem;
+    flex: 1;
+  }
+  .mislaka-client-banner {
+    background: linear-gradient(90deg, var(--navy) 0%, var(--navy-mid) 100%);
+    border-radius: 10px;
+    padding: 0.85rem 1.2rem;
+    margin-bottom: 1.3rem;
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+  }
+  .mislaka-client-banner .bcl { font-size: 0.62rem; color: var(--silver); font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.18rem; }
+  .mislaka-client-banner .bcv { font-size: 1rem; font-weight: 700; color: var(--gold-light); }
+  .mislaka-client-banner .bcv.small { font-size: 0.88rem; color: #c8d6e8; }
+  .mislaka-count-badge {
+    margin-right: auto;
+    background: rgba(201,168,76,0.15);
+    border: 1px solid rgba(201,168,76,0.35);
+    border-radius: 20px;
+    padding: 0.3rem 1rem;
+    font-size: 0.82rem;
+    color: var(--gold-light);
+    font-weight: 700;
+  }
+  /* Product card in modal */
+  .mp-card {
+    border: 1.5px solid #dde8f4;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+  .mp-card:hover { box-shadow: 0 4px 16px rgba(13,27,46,0.1); }
+  .mp-card-head {
+    background: linear-gradient(90deg, var(--navy) 0%, var(--navy-light) 100%);
+    padding: 0.7rem 1.1rem;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .mp-card-head .mpc-company { font-size: 0.95rem; font-weight: 700; color: var(--gold-light); }
+  .mp-card-head .mpc-plan { font-size: 0.75rem; color: var(--silver); margin-top: 0.18rem; }
+  .mp-card-head .mpc-policy { font-size: 0.68rem; color: rgba(168,181,196,0.8); margin-top: 0.12rem; font-family: monospace; }
+  .mpc-status {
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.22rem 0.7rem;
+    border-radius: 12px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .mpc-status.active   { background: rgba(46,204,113,0.18); color: #27ae60; border: 1px solid rgba(46,204,113,0.4); }
+  .mpc-status.inactive { background: rgba(231,76,60,0.15);  color: #e74c3c; border: 1px solid rgba(231,76,60,0.35); }
+  .mpc-status.pending  { background: rgba(243,156,18,0.15); color: #d68910; border: 1px solid rgba(243,156,18,0.35); }
+  .mp-card-body { padding: 1rem 1.1rem; }
+  .mp-fields {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 0.5rem 1.2rem;
+    margin-bottom: 0.8rem;
+  }
+  .mp-field .mpf-lbl { font-size: 0.65rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.12rem; }
+  .mp-field .mpf-val { font-size: 0.88rem; font-weight: 600; color: var(--navy); }
+  .mp-field .mpf-val.green { color: #27ae60; font-size: 0.98rem; font-weight: 800; }
+  .mp-field .mpf-val.blue  { color: #2980b9; }
+  .mp-field .mpf-val.gold  { color: #b7860d; }
+  /* Tracks section */
+  .mp-tracks { border-top: 1px solid #ecf0f5; padding-top: 0.75rem; margin-top: 0.2rem; }
+  .mp-tracks-title { font-size: 0.75rem; font-weight: 700; color: var(--navy); margin-bottom: 0.45rem; }
+  .mp-track-row {
+    display: grid;
+    grid-template-columns: 1fr auto auto auto;
+    gap: 0.5rem;
+    padding: 0.3rem 0.5rem;
+    background: #f5f8fc;
+    border-radius: 6px;
+    margin-bottom: 0.25rem;
+    font-size: 0.76rem;
+    align-items: center;
+  }
+  .mp-track-row .tr-name { color: #334455; }
+  .mp-track-row .tr-pct  { color: var(--gold); font-weight: 700; text-align: left; min-width: 40px; }
+  .mp-track-row .tr-amt  { color: #27ae60; font-weight: 700; text-align: left; min-width: 88px; }
+  .mp-track-row .tr-yld  { color: #2980b9; font-weight: 700; text-align: left; min-width: 44px; }
+  /* Loan section in modal */
+  .mp-loan {
+    border-top: 1px solid #ecf0f5;
+    padding-top: 0.7rem;
+    margin-top: 0.2rem;
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .mp-loan-title { font-size: 0.78rem; font-weight: 700; color: #c0392b; width: 100%; margin-bottom: 0.1rem; }
+  .mp-loan-item { font-size: 0.8rem; }
+  .mp-loan-item .k { color: #8899aa; }
+  .mp-loan-item .v { font-weight: 700; color: var(--navy); }
+  .mp-loan-item .v.red { color: #c0392b; }
+  /* Coverages */
+  .mp-coverages {
+    border-top: 1px solid #ecf0f5;
+    padding-top: 0.55rem;
+    margin-top: 0.2rem;
+    font-size: 0.74rem;
+    color: #667788;
+    line-height: 1.5;
+  }
+  .mp-coverages strong { color: var(--navy); }
+  /* Modal footer */
+  .mislaka-modal-foot {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid #e8edf4;
+    display: flex;
+    gap: 0.8rem;
+    justify-content: flex-end;
+    align-items: center;
+    flex-shrink: 0;
+    background: #fafbfd;
+  }
+  .mislaka-modal-foot .foot-note {
+    margin-right: auto;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+  .btn-confirm-import {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+    color: var(--gold-light);
+    border: none;
+    border-radius: 10px;
+    padding: 0.7rem 1.6rem;
+    font-family: 'Heebo', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 2px 8px rgba(13,27,46,0.2);
+  }
+  .btn-confirm-import:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(13,27,46,0.3); }
+  .btn-cancel-import {
+    background: none;
+    color: var(--text-muted);
+    border: 1.5px solid #d0dbe8;
+    border-radius: 10px;
+    padding: 0.7rem 1.2rem;
+    font-family: 'Heebo', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-cancel-import:hover { border-color: var(--navy); color: var(--navy); }
+
+  /* ===== INSURANCE-ONLY SAVING BLOCK ===== */
+  .saving-block.insurance-only {
+    border-color: rgba(192,57,43,0.4);
+    background: linear-gradient(180deg, rgba(231,76,60,0.04) 0%, #fff 40%);
+  }
+  .saving-block.insurance-only .saving-block-header {
+    background: linear-gradient(90deg, #5c1a18 0%, #7c2020 100%);
+    color: #f8d9d7;
+  }
+  .saving-block.insurance-only .saving-block-header .saving-block-title {
+    color: #f8d7d6;
+  }
+  /* Mixed product badge (savings + insurance coverages) */
+  .insurance-mixed-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    background: rgba(231,76,60,0.12);
+    border: 1px solid rgba(231,76,60,0.3);
+    border-radius: 10px;
+    padding: 0.15rem 0.5rem;
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: #c0392b;
+    margin-right: 0.4rem;
+  }
+  /* Insurance-only report card */
+  .saving-card.insurance-card .saving-card-header {
+    background: linear-gradient(90deg, #5c1a18 0%, #7c2020 100%);
+  }
+  .saving-card.insurance-card {
+    border-color: rgba(192,57,43,0.35);
+  }
+
+  /* ===== MISLAKA DEPOSITS SECTION ===== */
+  .mislaka-deposits-section { margin-top: 0.6rem; }
+  .deposits-header {
+    background: rgba(13,27,46,0.04);
+    border: 1.5px solid #dde8f2;
+    border-radius: 9px;
+    padding: 0.48rem 0.9rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #556677;
+    user-select: none;
+    transition: background 0.2s;
+  }
+  .deposits-header:hover { background: rgba(13,27,46,0.08); }
+  .deposits-header .toggle-arrow { margin-right: auto; font-size: 0.65rem; color: #8899aa; transition: transform 0.2s; display: inline-block; }
+  .deposits-header.open .toggle-arrow { transform: rotate(180deg); }
+  .deposits-body { display: none; padding: 0.7rem 0.3rem 0.3rem; }
+  .deposits-body.open { display: block; }
+  .deposits-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.74rem;
+  }
+  .deposits-table th {
+    background: #f0f4f9;
+    padding: 0.3rem 0.5rem;
+    font-weight: 700;
+    color: #445566;
+    text-align: right;
+    border-bottom: 1.5px solid #dde8f4;
+  }
+  .deposits-table td {
+    padding: 0.28rem 0.5rem;
+    color: #334455;
+    border-bottom: 1px solid #eef2f8;
+  }
+  .deposits-table tr:last-child td { border-bottom: none; }
+  .deposits-table tr:hover td { background: #f7fafd; }
+
+  /* ===== PENSION / MISLAKA DATA TOGGLE IN FORM ===== */
+  .pension-toggle { margin-top: 0.8rem; }
+  .pension-toggle .toggle-header {
+    background: linear-gradient(90deg, rgba(13,27,46,0.04) 0%, rgba(201,168,76,0.07) 100%);
+    border: 1.5px solid rgba(201,168,76,0.28);
+    border-radius: 10px;
+    padding: 0.55rem 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #445566;
+    user-select: none;
+    transition: background 0.2s;
+  }
+  .pension-toggle .toggle-header:hover { background: rgba(201,168,76,0.13); }
+  .pension-toggle .toggle-header .toggle-arrow {
+    font-size: 0.68rem;
+    margin-right: auto;
+    color: var(--gold);
+    transition: transform 0.25s;
+    display: inline-block;
+  }
+  .pension-toggle .toggle-header.open .toggle-arrow { transform: rotate(180deg); }
+  .pension-toggle .toggle-body { display: none; padding: 0.9rem 0.4rem 0.4rem; }
+  .pension-toggle .toggle-body.open { display: block; }
+  .pension-count-badge {
+    background: rgba(201,168,76,0.15);
+    border: 1px solid rgba(201,168,76,0.38);
+    border-radius: 12px;
+    padding: 0.1rem 0.55rem;
+    font-size: 0.63rem;
+    color: #a07820;
+    font-weight: 700;
+  }
+
+  /* ===== INSURANCE-ONLY BADGE ===== */
+  .insurance-only-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    background: rgba(231,76,60,0.1);
+    border: 1px solid rgba(231,76,60,0.3);
+    border-radius: 14px;
+    padding: 0.18rem 0.65rem;
+    font-size: 0.66rem;
+    font-weight: 700;
+    color: #c0392b;
+    margin-top: 0.3rem;
+  }
+
+  /* ===== RETIREMENT PROJECTION SECTION IN MODAL ===== */
+  .mp-retirement {
+    border-top: 1px solid #ecf0f5;
+    padding-top: 0.75rem;
+    margin-top: 0.3rem;
+  }
+  .mp-retirement-title {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .mp-ret-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
+    gap: 0.45rem 1rem;
+  }
+  .mp-ret-item .rk { font-size: 0.62rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; display: block; margin-bottom: 0.1rem; }
+  .mp-ret-item .rv { font-size: 0.85rem; font-weight: 700; color: var(--navy); }
+  .mp-ret-item .rv.gold  { color: #b7860d; }
+  .mp-ret-item .rv.green { color: #27ae60; }
+  .mp-ret-item .rv.blue  { color: #2471a3; }
+
+  /* Insurance card styling in modal */
+  .mp-card.insurance-card { border-color: rgba(231,76,60,0.28); }
+  .mp-card.insurance-card .mp-card-head {
+    background: linear-gradient(90deg, #5c1a18 0%, #7a2222 100%);
+  }
 </style>
 </head>
 <body>
@@ -1171,6 +1624,25 @@
       <label class="btn-csv-import" for="csv-upload-input">⬆️ ייבוא CSV</label>
       <input type="file" id="csv-upload-input" accept=".csv" style="display:none" onchange="importCSV(this)">
     </div>
+
+    <!-- ===== MISLAKA IMPORT ===== -->
+    <div class="mislaka-section">
+      <div class="mislaka-header">
+        <div class="mislaka-icon-wrap">🏛️</div>
+        <div>
+          <div class="mislaka-title">יבוא מסלקה פנסיונית</div>
+          <div class="mislaka-subtitle">העלה קובץ ZIP שהתקבל מהמסלקה — הנתונים יוזנו אוטומטית לממשק הסוכן ותוכל לצפות בכלל המידע המפורט</div>
+        </div>
+      </div>
+      <div class="mislaka-upload-row">
+        <label class="btn-mislaka" for="mislaka-zip-input">
+          📂 בחר קובץ ZIP מהמסלקה
+        </label>
+        <input type="file" id="mislaka-zip-input" accept=".zip" style="display:none" onchange="importMislaka(this)">
+        <div class="mislaka-status-bar" id="mislaka-status">ממתין לקובץ ZIP מהמסלקה...</div>
+      </div>
+    </div>
+
   </div>
   </div>
 
@@ -1187,6 +1659,26 @@
         <p style="font-size:1rem;font-weight:600;">עוד לא נוצר סיכום</p>
         <p style="font-size:0.85rem;margin-top:0.3rem;">עבור ללשונית "הזנת נתונים" ולחץ "צור דף סיכום"</p>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MISLAKA MODAL OVERLAY ===== -->
+<div class="mislaka-overlay" id="mislaka-overlay" onclick="handleOverlayClick(event)">
+  <div class="mislaka-modal" id="mislaka-modal">
+    <div class="mislaka-modal-head">
+      <h3>🏛️ תצוגת מסלקה — סקירת נתונים לפני ייבוא</h3>
+      <div style="display:flex;align-items:center;gap:0.7rem;">
+        <span class="client-chip" id="mislaka-modal-client-chip"></span>
+        <button class="btn-modal-close" onclick="closeMislakaModal()" title="סגור">✕</button>
+      </div>
+    </div>
+    <div class="mislaka-modal-body" id="mislaka-modal-body">
+    </div>
+    <div class="mislaka-modal-foot">
+      <span class="foot-note">* הנתונים יוזנו לטופס — ניתן לערוך לאחר הייבוא</span>
+      <button class="btn-cancel-import" onclick="closeMislakaModal()">ביטול</button>
+      <button class="btn-confirm-import" onclick="confirmMislakaImport()">✅ ייבא נתונים לטופס</button>
     </div>
   </div>
 </div>
@@ -1223,7 +1715,7 @@ function addSaving() {
       </div>
       <div class="field">
         <label>סוג מוצר</label>
-        <select name="product-type">
+        <select name="product-type" onchange="updateProductStyle(${savingCount})">
           <option value="">-- בחר --</option>
           <option>קופת גמל</option>
           <option>גמל להשקעה</option>
@@ -1235,6 +1727,10 @@ function addSaving() {
           <option>תיק מיועץ</option>
           <option>נדל"ן</option>
           <option>השקעה אלטרנטיבית</option>
+          <option>ריסק</option>
+          <option>ביטוח חיים</option>
+          <option>ביטוח משכנתא</option>
+          <option>אובדן כושר עבודה</option>
           <option>אחר</option>
         </select>
       </div>
@@ -1287,6 +1783,14 @@ function addSaving() {
       <div class="field">
         <label>הפקדה חודשית (₪)</label>
         <input type="number" name="monthly" placeholder="0" oninput="calcYield('${savingCount}')">
+      </div>
+      <div class="field">
+        <label>ד.נ. מהפקדה (%)</label>
+        <input type="number" name="fee-deposit" placeholder="0.00" step="0.01" min="0" max="6">
+      </div>
+      <div class="field">
+        <label>ד.נ. מצבירה (%)</label>
+        <input type="number" name="fee-accumulation" placeholder="0.00" step="0.01" min="0" max="3">
       </div>
       <div class="field" id="liq-date-wrap-${savingCount}" style="display:none">
         <label>תאריך נזילות</label>
@@ -1352,6 +1856,46 @@ function addSaving() {
         </div>
       </div>
     </div>
+    <!-- DEPOSITS FROM MISLAKA -->
+    <div class="mislaka-deposits-section" id="deposits-section-${savingCount}">
+      <div class="deposits-header" id="deposits-header-${savingCount}" onclick="toggleDepositsSection(${savingCount})">
+        📋 הפקדות מהמסלקה <span class="pension-count-badge">מסלקה</span>
+        <span class="toggle-arrow">▼</span>
+      </div>
+      <div class="deposits-body" id="deposits-body-${savingCount}">
+        <div id="deposits-content-${savingCount}" style="color:#8899aa;font-size:0.78rem;padding:0.3rem 0.2rem;">לא יובאו נתוני הפקדות</div>
+      </div>
+    </div>
+
+    <!-- PENSION / MISLAKA PROJECTIONS -->
+    <div class="pension-toggle" id="pension-toggle-${savingCount}">
+      <div class="toggle-header" id="pension-header-${savingCount}" onclick="togglePensionSection(${savingCount})">
+        🏛️ תחזיות פרישה ממסלקה <span class="pension-count-badge">מסלקה</span>
+        <span class="toggle-arrow">▼</span>
+      </div>
+      <div class="toggle-body" id="pension-body-${savingCount}">
+        <input type="hidden" name="retirement-age">
+        <div class="form-grid cols-4">
+          <div class="field">
+            <label>חיסכון צפוי עם הפקדות (₪)</label>
+            <input type="number" name="proj-savings-with" placeholder="0">
+          </div>
+          <div class="field">
+            <label>חיסכון צפוי ללא הפקדות (₪)</label>
+            <input type="number" name="proj-savings-without" placeholder="0">
+          </div>
+          <div class="field">
+            <label>קצבה חודשית עם הפקדות (₪)</label>
+            <input type="number" name="proj-pension-with" placeholder="0">
+          </div>
+          <div class="field">
+            <label>קצבה חודשית ללא הפקדות (₪)</label>
+            <input type="number" name="proj-pension-without" placeholder="0">
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- RECOMMENDATION -->
     <div class="rec-form-block">
       <div class="rec-form-header">📋 המלצה ותכנון לפגישה הבאה</div>
@@ -1512,6 +2056,67 @@ function toggleLoanSection(bodyId, cbId) {
   }
 }
 
+function togglePensionSection(n) {
+  const header = document.getElementById('pension-header-' + n);
+  const body   = document.getElementById('pension-body-'   + n);
+  if (!header || !body) return;
+  header.classList.toggle('open');
+  body.classList.toggle('open');
+}
+
+function toggleDepositsSection(n) {
+  const header = document.getElementById('deposits-header-' + n);
+  const body   = document.getElementById('deposits-body-'   + n);
+  if (!header || !body) return;
+  header.classList.toggle('open');
+  body.classList.toggle('open');
+}
+
+// Insurance-only product types
+const INSURANCE_TYPES = ['ריסק','ביטוח חיים','ביטוח משכנתא','אובדן כושר עבודה'];
+
+function updateProductStyle(n) {
+  const block = document.getElementById('saving-' + n);
+  if (!block) return;
+  const typeEl = block.querySelector('[name="product-type"]');
+  if (!typeEl) return;
+  const isIns = INSURANCE_TYPES.includes(typeEl.value);
+  block.classList.toggle('insurance-only', isIns);
+}
+
+// Map SUG-HAFRASHA code → Hebrew label
+function mapHafrashaType(code, depositorCode) {
+  const depositor = depositorCode === '3' ? 'מעסיק' : 'עמית';
+  const types = { '1': 'עובד', '2': 'מעסיק', '3': 'חד-פעמי', '4': 'פיצויים',
+                  '8': 'אחר', '9': 'אחר', '10': 'אחר' };
+  return (types[code] || ('סוג ' + code)) + (depositorCode && code !== '2' && code !== '4' ? ' (' + depositor + ')' : '');
+}
+
+// Render deposit history as an HTML table
+function renderDepositsTable(depositHistory) {
+  if (!depositHistory || !depositHistory.length) return '<div style="color:#aaa;font-size:0.75rem;">אין נתוני הפקדות</div>';
+  const rows = depositHistory
+    .filter(d => d.amt && parseFloat(d.amt) > 0)
+    .map(d => {
+      const dateStr = d.date && d.date.length >= 8
+        ? d.date.substring(0,4) + '-' + d.date.substring(4,6) + '-' + d.date.substring(6,8)
+        : d.date || '';
+      const fmtAmt = parseFloat(d.amt) ? '₪' + parseFloat(d.amt).toLocaleString('he-IL', {maximumFractionDigits:2}) : '-';
+      const fmtPct = d.pct && parseFloat(d.pct) > 0 ? parseFloat(d.pct).toFixed(1) + '%' : '';
+      return `<tr>
+        <td>${dateStr ? dateStr.substring(0,7) : '—'}</td>
+        <td>${mapHafrashaType(d.sug, d.depositor)}</td>
+        <td style="font-weight:700;color:#2471a3;">${fmtPct}</td>
+        <td style="font-weight:700;color:#27ae60;">${fmtAmt}</td>
+      </tr>`;
+    });
+  if (!rows.length) return '<div style="color:#aaa;font-size:0.75rem;">אין נתוני הפקדות</div>';
+  return `<table class="deposits-table">
+    <thead><tr><th>תאריך</th><th>סוג הפקדה</th><th>אחוז</th><th>סכום</th></tr></thead>
+    <tbody>${rows.join('')}</tbody>
+  </table>`;
+}
+
 function toggleLiqDate(sel, wrapId) {
   const wrap = document.getElementById(wrapId);
   wrap.style.display = sel.value === 'לא נזיל' ? 'flex' : 'none';
@@ -1602,6 +2207,13 @@ function generateReport() {
       loanRepay: g('loan-repay'),
       loanMonthly: g('loan-monthly'),
       loanGoal: g('loan-goal'),
+      feeDeposit:        g('fee-deposit'),
+      feeAccumulation:   g('fee-accumulation'),
+      retirementAge:     g('retirement-age'),
+      projSavingsWith:   g('proj-savings-with'),
+      projSavingsWithout:g('proj-savings-without'),
+      projPensionWith:   g('proj-pension-with'),
+      projPensionWithout:g('proj-pension-without'),
       recType: g('rec-type'),
       recPriority: g('rec-priority'),
       recDate: g('rec-date'),
@@ -1860,11 +2472,14 @@ function generateReport() {
         <div class="cards-grid" style="display:grid;grid-template-columns:repeat(${cardCols},1fr);gap:1rem;margin-top:0.8rem;" data-cols="${cardCols}">
           ${savings.map((s, i) => {
             const y = calcYieldData(s);
+            const insOnly = ['ריסק','ביטוח חיים','ביטוח משכנתא','אובדן כושר עבודה'].includes(s.productType);
             const yieldHtml = y
               ? `<div class="card-row"><span class="key">תשואה כוללת</span><span class="val" style="color:${y.pct > 2 ? '#27ae60' : y.pct < 0 ? '#e74c3c' : '#f39c12'};font-weight:800;">${y.sign}${y.pct.toFixed(2)}% · ${y.sign}${fmtCurrency(Math.abs(y.gain))}</span></div>`
               : '';
+            // 6-field mislaka projection block (no retirement age)
+            const hasMislakaData = s.feeDeposit || s.feeAccumulation || s.projSavingsWith || s.projSavingsWithout || s.projPensionWith || s.projPensionWithout;
             return `
-            <div class="saving-card">
+            <div class="saving-card${insOnly ? ' insurance-card' : ''}">
               <div class="saving-card-header">
                 <div>
                   <div class="company">${s.company || '-'}</div>
@@ -1872,18 +2487,31 @@ function generateReport() {
                 </div>
                 <div style="display:flex;flex-direction:column;align-items:flex-end;gap:0.3rem;">
                   <span class="saving-card-status ${statusClass(s.status)}">${s.status}</span>
-                  <span class="liquidity-badge ${s.liquidity === 'נזיל' ? 'liquid' : 'not-liquid'}" style="font-size:0.62rem;">${s.liquidity === 'נזיל' ? '💧 נזיל' : '🔒 לא נזיל'}${s.liquidity === 'לא נזיל' && s.liquidityDate ? ' · ' + fmtDate(s.liquidityDate) : ''}</span>
+                  ${!insOnly ? `<span class="liquidity-badge ${s.liquidity === 'נזיל' ? 'liquid' : 'not-liquid'}" style="font-size:0.62rem;">${s.liquidity === 'נזיל' ? '💧 נזיל' : '🔒 לא נזיל'}${s.liquidity === 'לא נזיל' && s.liquidityDate ? ' · ' + fmtDate(s.liquidityDate) : ''}</span>` : '<span style="font-size:0.6rem;color:rgba(248,215,214,0.8);">🛡️ כיסוי בלבד</span>'}
                 </div>
               </div>
               <div class="saving-card-body">
                 ${s.owner ? `<div class="card-row"><span class="key">על שם</span><span class="val">${s.owner}</span></div>` : ''}
-                <div class="card-row"><span class="key">יתרה נוכחית</span><span class="val" style="color:#27ae60;font-weight:800;">${s.balance ? fmtCurrency(s.balance) : '-'}</span></div>
+                ${!insOnly ? `<div class="card-row"><span class="key">יתרה נוכחית</span><span class="val" style="color:#27ae60;font-weight:800;">${s.balance ? fmtCurrency(s.balance) : '-'}</span></div>` : ''}
                 ${yieldHtml}
                 ${s.monthly ? `<div class="card-row"><span class="key">הפקדה חודשית</span><span class="val" style="color:#2980b9;">${fmtCurrency(s.monthly)}</span></div>` : ''}
                 ${s.oneTime ? `<div class="card-row"><span class="key">הפקדה חד-פעמית</span><span class="val">${fmtCurrency(s.oneTime)}</span></div>` : ''}
+                ${s.feeDeposit || s.feeAccumulation ? `<div class="card-row"><span class="key">דמי ניהול</span><span class="val" style="font-size:0.78rem;">${s.feeDeposit ? 'מהפקדה ' + parseFloat(s.feeDeposit).toFixed(2) + '%' : ''}${s.feeDeposit && s.feeAccumulation ? ' · ' : ''}${s.feeAccumulation ? 'מצבירה ' + parseFloat(s.feeAccumulation).toFixed(2) + '%' : ''}</span></div>` : ''}
                 ${s.goal ? `<div class="card-row"><span class="key">מטרה</span><span class="val">${s.goal}</span></div>` : ''}
                 ${s.balanceDate ? `<div class="card-row"><span class="key">עדכון יתרה</span><span class="val" style="color:#8899aa;font-size:0.78rem;">${fmtDate(s.balanceDate)}</span></div>` : ''}
                 ${s.hasLoan ? `<div class="loan-block"><div class="loan-title">💳 הלוואה פעילה</div><div class="loan-grid"><div class="loan-item"><div class="k">סכום</div><div class="v">${fmtCurrency(s.loanAmount)}</div></div><div class="loan-item"><div class="k">ריבית</div><div class="v">${s.loanRate}%</div></div><div class="loan-item"><div class="k">החזר חודשי</div><div class="v">${fmtCurrency(s.loanMonthly)}</div></div></div></div>` : ''}
+                ${hasMislakaData ? `
+                <div class="loan-block" style="border-top-color:#c9a84c;background:rgba(201,168,76,0.04);">
+                  <div class="loan-title" style="color:#8a6200;">🏛️ נתוני פרישה ממסלקה</div>
+                  <div class="loan-grid">
+                    ${s.projSavingsWith    ? `<div class="loan-item"><div class="k">חיסכון עם הפקדות</div><div class="v" style="color:#27ae60;">${fmtCurrency(s.projSavingsWith)}</div></div>` : ''}
+                    ${s.projSavingsWithout ? `<div class="loan-item"><div class="k">חיסכון ללא הפקדות</div><div class="v">${fmtCurrency(s.projSavingsWithout)}</div></div>` : ''}
+                    ${s.projPensionWith    ? `<div class="loan-item"><div class="k">קצבה עם הפקדות</div><div class="v" style="color:#2471a3;">${fmtCurrency(s.projPensionWith)}</div></div>` : ''}
+                    ${s.projPensionWithout ? `<div class="loan-item"><div class="k">קצבה ללא הפקדות</div><div class="v">${fmtCurrency(s.projPensionWithout)}</div></div>` : ''}
+                    ${s.feeAccumulation   ? `<div class="loan-item"><div class="k">ד.נ. מצבירה</div><div class="v">${parseFloat(s.feeAccumulation).toFixed(2)}%</div></div>` : ''}
+                    ${s.feeDeposit        ? `<div class="loan-item"><div class="k">ד.נ. מהפקדה</div><div class="v">${parseFloat(s.feeDeposit).toFixed(2)}%</div></div>` : ''}
+                  </div>
+                </div>` : ''}
                 ${s.recType && s.recType !== '' ? `
                 <div class="rec-card-block ${s.recPriority || 'none'}">
                   <div class="rec-card-pill ${s.recPriority || 'none'}">${s.recPriority === 'high' ? '🔴 דחוף' : s.recPriority === 'mid' ? '🟡 בינוני' : s.recPriority === 'low' ? '🟢 נמוך' : '📋'} ${s.recType}</div>
@@ -1899,31 +2527,15 @@ function generateReport() {
       <!-- TABLE SUMMARY -->
       <div class="report-section table-page-start" style="margin-top:1.5rem;">
 
-        <!-- BOTTOM SUMMARY (above table) -->
-        <div style="margin-bottom:1rem;">
-          <div class="report-section-title">
-            <span class="dot"></span>
-            סיכום כספי
-          </div>
-          <div class="bottom-summary">
-            <div class="bottom-stat">
-              <div class="bs-label">💧 מוצרים נזילים</div>
-              <div class="bs-value green">${liquidSavings.length}</div>
-              <div class="bs-sub" style="font-weight:700;color:#27ae60;font-size:0.82rem;">${totalLiquidBalance ? fmtCurrency(totalLiquidBalance) : '₪0'}</div>
-              <div class="bs-sub">מתוך ${savings.length} מוצרים</div>
-            </div>
-            <div class="bottom-stat">
-              <div class="bs-label">🔒 מוצרים לא נזילים</div>
-              <div class="bs-value red">${nonLiquidSavings.length}</div>
-              <div class="bs-sub" style="font-weight:700;color:#c0392b;font-size:0.82rem;">${totalNonLiquidBalance ? fmtCurrency(totalNonLiquidBalance) : '₪0'}</div>
-              <div class="bs-sub">מתוך ${savings.length} מוצרים</div>
-            </div>
-            <div class="bottom-stat">
-              <div class="bs-label">סה"כ הלוואות</div>
-              <div class="bs-value gold">${totalLoans ? fmtCurrency(totalLoans) : '₪0'}</div>
-              <div class="bs-sub">${totalLoanMonthly ? 'החזר חודשי: ' + fmtCurrency(totalLoanMonthly) : 'ללא הלוואות פעילות'}</div>
-            </div>
-          </div>
+        <!-- COMPACT FINANCIAL SUMMARY BAR -->
+        <div class="fin-summary-bar" style="margin-bottom:0.7rem;">
+          <div class="fsb-item">💧 <strong>${liquidSavings.length}</strong> נזיל · <span class="fsb-amt">${totalLiquidBalance ? fmtCurrency(totalLiquidBalance) : '₪0'}</span></div>
+          <div class="fsb-sep"></div>
+          <div class="fsb-item">🔒 <strong>${nonLiquidSavings.length}</strong> לא נזיל · <span class="fsb-amt">${totalNonLiquidBalance ? fmtCurrency(totalNonLiquidBalance) : '₪0'}</span></div>
+          <div class="fsb-sep"></div>
+          ${totalLoans ? `<div class="fsb-item">💳 הלוואות: <span class="fsb-amt">${fmtCurrency(totalLoans)}</span>${totalLoanMonthly ? ' · ' + fmtCurrency(totalLoanMonthly) + '/ח' : ''}</div><div class="fsb-sep"></div>` : ''}
+          <div class="fsb-item">📊 סה"כ: <span class="fsb-amt">${fmtCurrency(totalBalance)}</span></div>
+          ${totalMonthly ? `<div class="fsb-sep"></div><div class="fsb-item">📅 חודשי: <span class="fsb-amt">${fmtCurrency(totalMonthly)}</span></div>` : ''}
         </div>
 
         <div class="report-section-title">
@@ -2127,7 +2739,7 @@ function generateReport() {
 
 // CSV Fields definition
 const CSV_CLIENT_FIELDS = ['client-name','client-id','client-phone','agent-name'];
-const CSV_SAVING_FIELDS = ['owner','company','product-type','policy-num','status','goal','balance','balance-date','open-date','total-deposits','one-time','one-time-date','monthly','liquidity','liquidity-date','has-loan','loan-date','loan-amount','loan-rate','loan-duration','loan-type','loan-repay','loan-monthly','loan-goal','rec-type','rec-priority','rec-date','rec-notes'];
+const CSV_SAVING_FIELDS = ['owner','company','product-type','policy-num','status','goal','balance','balance-date','open-date','total-deposits','one-time','one-time-date','monthly','liquidity','liquidity-date','has-loan','loan-date','loan-amount','loan-rate','loan-duration','loan-type','loan-repay','loan-monthly','loan-goal','fee-deposit','fee-accumulation','retirement-age','proj-savings-with','proj-savings-without','proj-pension-with','proj-pension-without','rec-type','rec-priority','rec-date','rec-notes'];
 const CSV_HEADERS = ['client-name','client-id','client-phone','agent-name',...CSV_SAVING_FIELDS];
 
 function exportCSV() {
@@ -2233,6 +2845,765 @@ function parseCSVRow(row) {
 
 // Init with one empty saving
 addSaving();
+
+// =====================================================================
+// MISLAKA IMPORT — ZIP / XML processing
+// =====================================================================
+
+let mislakaData = null; // holds parsed import data pending confirmation
+
+// --- Load JSZip from CDN (lazy) ---
+function loadJSZip() {
+  return new Promise((resolve, reject) => {
+    if (window.JSZip) { resolve(window.JSZip); return; }
+    const s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js';
+    s.onload  = () => resolve(window.JSZip);
+    s.onerror = () => reject(new Error('לא ניתן לטעון ספריית ZIP — בדוק חיבור לאינטרנט'));
+    document.head.appendChild(s);
+  });
+}
+
+// --- Load SheetJS from CDN (lazy) ---
+function loadSheetJS() {
+  return new Promise((resolve, reject) => {
+    if (window.XLSX) { resolve(window.XLSX); return; }
+    const s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+    s.onload  = () => resolve(window.XLSX);
+    s.onerror = () => reject(new Error('לא ניתן לטעון ספריית XLS'));
+    document.head.appendChild(s);
+  });
+}
+
+// --- Parse XLS binary data → array of sheet rows (objects keyed by column header) ---
+function parseXlsData(arrayBuffer) {
+  if (!window.XLSX) return [];
+  try {
+    const wb = XLSX.read(arrayBuffer, { type: 'array' });
+    const allRows = [];
+    wb.SheetNames.forEach(sheetName => {
+      const ws = wb.Sheets[sheetName];
+      const rows = XLSX.utils.sheet_to_json(ws, { defval: '' });
+      rows.forEach(r => allRows.push(r));
+    });
+    return allRows;
+  } catch (e) {
+    return [];
+  }
+}
+
+// --- Try to supplement parsed products with data from XLS rows ---
+// Matches by policy number. Extracts management fees and retirement data.
+function enrichProductsFromXls(products, xlsRows) {
+  if (!xlsRows || !xlsRows.length) return;
+
+  // Hebrew column name patterns for known fields
+  const findCol = (row, patterns) => {
+    for (const key of Object.keys(row)) {
+      if (patterns.some(p => key.includes(p))) {
+        const v = String(row[key] || '').trim();
+        if (v && v !== '0') return v;
+      }
+    }
+    return '';
+  };
+
+  products.forEach(prod => {
+    if (!prod.policyNum) return;
+    // Find XLS row(s) matching this policy number
+    const matchRows = xlsRows.filter(r => {
+      return Object.values(r).some(v => String(v).includes(prod.policyNum));
+    });
+    if (!matchRows.length) return;
+
+    matchRows.forEach(row => {
+      if (!prod.feeDeposit)
+        prod.feeDeposit = findCol(row, ['דמי ניהול מהפקדה', 'ד.נ. מהפקדה', 'עמלת הפקדה']);
+      if (!prod.feeAccumulation)
+        prod.feeAccumulation = findCol(row, ['דמי ניהול מצבירה', 'ד.נ. מצבירה', 'דמי ניהול מחיסכון']);
+      if (!prod.retirementAge)
+        prod.retirementAge = findCol(row, ['גיל פרישה', 'גיל יציאה לפנסיה']);
+      if (!prod.projSavingsWith)
+        prod.projSavingsWith = findCol(row, ['חיסכון צפוי עם הפקדות', 'צבירה צפויה']);
+      if (!prod.projPensionWith)
+        prod.projPensionWith = findCol(row, ['קצבה חודשית', 'קצבה צפויה', 'גמלה חודשית']);
+      if (!prod.balance)
+        prod.balance = findCol(row, ['יתרה', 'צבירה', 'חיסכון צבור']);
+      if (!prod.monthly)
+        prod.monthly = findCol(row, ['הפקדה חודשית', 'סה"כ הפקדה']);
+    });
+  });
+}
+
+// --- Status bar helper ---
+function setMislakaStatus(msg, type) {
+  const el = document.getElementById('mislaka-status');
+  if (!el) return;
+  el.textContent = msg;
+  el.className = 'mislaka-status-bar' + (type ? ' ' + type : '');
+}
+
+// --- Main entry: called when user selects a ZIP file ---
+async function importMislaka(input) {
+  const file = input.files[0];
+  if (!file) return;
+  input.value = '';
+
+  setMislakaStatus('⏳ טוען ספריית ZIP...', 'loading');
+  try {
+    await loadJSZip();
+  } catch (e) {
+    setMislakaStatus('❌ ' + e.message, 'error');
+    return;
+  }
+
+  setMislakaStatus('⏳ פותח קובץ ZIP...', 'loading');
+  let zip;
+  try {
+    zip = await JSZip.loadAsync(file);
+  } catch (e) {
+    setMislakaStatus('❌ לא ניתן לפתוח את הקובץ: ' + e.message, 'error');
+    return;
+  }
+
+  // Collect XML and XLS entries
+  const xmlEntries = [];
+  const xlsEntries = [];
+  zip.forEach((path, entry) => {
+    if (entry.dir) return;
+    const lp = path.toLowerCase();
+    if (lp.endsWith('.xml')) xmlEntries.push(entry);
+    else if (lp.endsWith('.xls') || lp.endsWith('.xlsx')) xlsEntries.push(entry);
+  });
+
+  if (!xmlEntries.length && !xlsEntries.length) {
+    setMislakaStatus('❌ לא נמצאו קבצי XML או XLS בארכיב', 'error');
+    return;
+  }
+
+  setMislakaStatus('⏳ מעבד ' + xmlEntries.length + ' קבצי XML...', 'loading');
+
+  let clientInfo = null;
+  const allProducts = [];
+
+  for (const entry of xmlEntries) {
+    try {
+      const text = await entry.async('text');
+      const parsed = parseMislakaXml(text);
+      if (parsed.client && !clientInfo) clientInfo = parsed.client;
+      allProducts.push(...parsed.products);
+    } catch (e) {
+      // skip bad file
+    }
+  }
+
+  // Deduplicate by policyNum + company — keep the record with most data
+  const productMap = new Map();
+  allProducts.forEach(p => {
+    const key = (p.policyNum || '') + '|' + (p.company || '');
+    if (!key || key === '|') return;
+    const score = (p.balance ? 2 : 0) + (p.monthly ? 1 : 0) + (p.tracks.length > 0 ? 1 : 0) + (p.netYield ? 1 : 0);
+    const existing = productMap.get(key);
+    if (!existing) {
+      productMap.set(key, { product: p, score });
+    } else if (score > existing.score) {
+      productMap.set(key, { product: p, score });
+    }
+  });
+  const products = Array.from(productMap.values()).map(e => e.product);
+
+  // Parse XLS files and enrich products (if any XLS found)
+  if (xlsEntries.length) {
+    setMislakaStatus('⏳ מעבד ' + xlsEntries.length + ' קבצי XLS...', 'loading');
+    try {
+      await loadSheetJS();
+      const allXlsRows = [];
+      for (const entry of xlsEntries) {
+        try {
+          const buf = await entry.async('arraybuffer');
+          const rows = parseXlsData(buf);
+          allXlsRows.push(...rows);
+        } catch (e) { /* skip */ }
+      }
+      if (allXlsRows.length && products.length) {
+        enrichProductsFromXls(products, allXlsRows);
+      }
+    } catch (e) {
+      // SheetJS failed to load — continue without XLS data
+    }
+  }
+
+  if (!products.length) {
+    setMislakaStatus('❌ לא נמצאו מוצרים פנסיוניים בקובץ', 'error');
+    return;
+  }
+
+  const xlsNote = xlsEntries.length ? ' (כולל ' + xlsEntries.length + ' XLS)' : '';
+  mislakaData = { client: clientInfo, products };
+  setMislakaStatus(
+    '✅ נמצאו ' + products.length + ' מוצרים' +
+    (clientInfo ? ' עבור ' + clientInfo.name : '') + xlsNote,
+    'success'
+  );
+  showMislakaModal(mislakaData);
+}
+
+// --- XML helper: get text content of first matching tag ---
+function xmlVal(el, tag) {
+  if (!el) return '';
+  const found = el.getElementsByTagName(tag)[0];
+  if (!found) return '';
+  return (found.textContent || '').trim();
+}
+
+// --- Convert YYYYMMDD → YYYY-MM-DD for <input type="date"> ---
+function xmlDateToInput(raw) {
+  if (!raw || raw.length < 8) return '';
+  return raw.substring(0, 4) + '-' + raw.substring(4, 6) + '-' + raw.substring(6, 8);
+}
+
+// --- Map SUG-MUTZAR code to Hebrew product type ---
+function mapProductType(code, planName) {
+  const plan = planName || '';
+  // Insurance keywords take priority (check before code map)
+  if (plan.includes('ריסק') || code === '8') return 'ריסק';
+  if (plan.includes('אובדן כושר'))            return 'אובדן כושר עבודה';
+  if (plan.includes('ביטוח משכנתא'))          return 'ביטוח משכנתא';
+  if (plan.includes('ביטוח חיים'))            return 'ביטוח חיים';
+  const map = {
+    '1': 'קופת גמל',
+    '2': 'קרן פנסיה',
+    '3': 'קרן השתלמות',
+    '4': 'קרן השתלמות',
+    '5': 'ביטוח מנהלים',
+    '6': 'ביטוח מנהלים',
+    '7': 'פוליסת חיסכון',
+    '9': 'גמל להשקעה'
+  };
+  if (map[code]) return map[code];
+  // Fallback: guess from plan name
+  if (plan.includes('פנסיה'))   return 'קרן פנסיה';
+  if (plan.includes('השתלמות')) return 'קרן השתלמות';
+  if (plan.includes('גמל'))     return 'קופת גמל';
+  if (plan.includes('מנהלים'))  return 'ביטוח מנהלים';
+  if (plan.includes('חיסכון'))  return 'פוליסת חיסכון';
+  return 'אחר';
+}
+
+// --- Detect whether product is insurance-only (no savings component) ---
+function isInsuranceOnlyProduct(sugMutzar, planName) {
+  const insuranceCodes = ['8'];
+  const insuranceKeywords = ['ריסק', 'אובדן כושר', 'ביטוח משכנתא', 'ביטוח חיים'];
+  if (insuranceCodes.includes(sugMutzar)) return true;
+  return insuranceKeywords.some(kw => (planName || '').includes(kw));
+}
+
+// --- Map STATUS-POLISA code → Hebrew status ---
+// Israeli pension XML codes: 1=פעיל, 2=לא פעיל/מוקפא, 3=בהקמה, 4=בוטל, 5=נפדה
+// 7 = קרן השתלמות בוגרת (mature savings fund - still valid, eligible for withdrawal)
+function mapStatus(code) {
+  if (code === '1' || code === '2' || code === '7') return 'הופק';
+  if (code === '3') return 'בהקמה';
+  if (code === '4') return 'בוטל';
+  if (code === '5') return 'נפדה';
+  return 'הופק';
+}
+
+// --- Strip excess leading zeros from Israeli ID (XML pads to 16 chars) ---
+function cleanIsraeliId(raw) {
+  if (!raw) return '';
+  const digits = raw.replace(/\D/g, '');
+  // Israeli ID is 9 digits; keep last 9 if longer
+  return digits.length > 9 ? digits.slice(-9) : digits;
+}
+
+// --- Parse one XML file → { client, products[] } ---
+function parseMislakaXml(xmlText) {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(xmlText, 'application/xml');
+  if (doc.getElementsByTagName('parsererror').length) return { client: null, products: [] };
+
+  const root = doc.documentElement;
+
+  // Company name from YeshutYatzran
+  const yatzranEl = root.getElementsByTagName('YeshutYatzran')[0];
+  const companyName = xmlVal(yatzranEl, 'SHEM-YATZRAN');
+
+  const products = [];
+  let clientInfo = null;
+
+  const mutzarim = root.getElementsByTagName('Mutzar');
+  for (let mi = 0; mi < mutzarim.length; mi++) {
+    const mutzar = mutzarim[mi];
+
+    const netunei   = mutzar.getElementsByTagName('NetuneiMutzar')[0];
+    const sugMutzar = xmlVal(netunei, 'SUG-MUTZAR');
+    const misparMislaka = xmlVal(netunei, 'MISPAR-MISLAKA');
+
+    // Client info (from YeshutLakoach inside this Mutzar)
+    const lakoach = mutzar.getElementsByTagName('YeshutLakoach')[0];
+    if (lakoach && !clientInfo) {
+      clientInfo = {
+        name:  [xmlVal(lakoach, 'SHEM-PRATI'), xmlVal(lakoach, 'SHEM-MISHPACHA')].filter(Boolean).join(' '),
+        id:    cleanIsraeliId(xmlVal(lakoach, 'MISPAR-ZIHUY-LAKOACH')),
+        phone: xmlVal(lakoach, 'MISPAR-CELLULARI') || xmlVal(lakoach, 'MISPAR-TELEPHONE-KAVI') || ''
+      };
+    }
+
+    const ownerName = lakoach
+      ? [xmlVal(lakoach, 'SHEM-PRATI'), xmlVal(lakoach, 'SHEM-MISHPACHA')].filter(Boolean).join(' ')
+      : '';
+    const ownerId = lakoach ? cleanIsraeliId(xmlVal(lakoach, 'MISPAR-ZIHUY-LAKOACH')) : '';
+
+    // Iterate policies
+    const policies = mutzar.getElementsByTagName('HeshbonOPolisa');
+    for (let pi = 0; pi < policies.length; pi++) {
+      const policy = policies[pi];
+
+      const policyNum  = xmlVal(policy, 'MISPAR-POLISA-O-HESHBON');
+      const planName   = xmlVal(policy, 'SHEM-TOCHNIT');
+      const statusCode = xmlVal(policy, 'STATUS-POLISA-O-CHESHBON');
+      const openDate   = xmlDateToInput(xmlVal(policy, 'TAARICH-HITZTARFUT-RISHON'));
+      const insuranceOnly = isInsuranceOnlyProduct(sugMutzar, planName);
+
+      // ── BALANCE: sum SCHUM-TZVIRA-BAMASLUL from all investment tracks (CURRENT balance) ──
+      let balance = '';
+      let trackBalanceSum = 0;
+
+      // ── INVESTMENT TRACKS ──
+      const tracks = [];
+      const trackList = policy.getElementsByTagName('PerutMasluleiHashkaa');
+      for (let ti = 0; ti < trackList.length; ti++) {
+        const t = trackList[ti];
+        const tAmt = xmlVal(t, 'SCHUM-TZVIRA-BAMASLUL');
+        const tAmtNum = parseFloat(tAmt) || 0;
+        trackBalanceSum += tAmtNum;
+        tracks.push({
+          name:   xmlVal(t, 'SHEM-MASLUL-HASHKAA'),
+          pct:    xmlVal(t, 'ACHUZ-HAFKADA-LEHASHKAA'),
+          amount: tAmt,
+          yld:    xmlVal(t, 'TSUA-NETO')
+        });
+      }
+      if (trackBalanceSum > 0) balance = String(Math.round(trackBalanceSum));
+
+      // ── MANAGEMENT FEES (per-track first, then fallback to policy level) — max 2dp ──
+      const fmtFee = (v) => { const n = parseFloat(v); return isNaN(n) || n === 0 ? '' : n.toFixed(2); };
+      let feeDeposit = '';
+      let feeAccumulation = '';
+      for (let ti = 0; ti < trackList.length; ti++) {
+        const t = trackList[ti];
+        if (!feeDeposit)      feeDeposit     = fmtFee(xmlVal(t, 'SHEUR-DMEI-NIHUL-HAFKADA') || xmlVal(t, 'MEMOTZA-SHEUR-DMEI-NIHUL-HAFKADA'));
+        if (!feeAccumulation) feeAccumulation = fmtFee(xmlVal(t, 'SHEUR-DMEI-NIHUL-TZVIRA') || xmlVal(t, 'SHEUR-DMEI-NIHUL-HISACHON'));
+      }
+      // Fallback: policy-level fee fields
+      if (!feeDeposit)      feeDeposit     = fmtFee(xmlVal(policy, 'SHEUR-DMEI-NIHUL-HAFKADA') || xmlVal(netunei, 'SHEUR-DMEI-NIHUL-HAFKADA'));
+      if (!feeAccumulation) feeAccumulation = fmtFee(xmlVal(policy, 'SHEUR-DMEI-NIHUL-TZVIRA') || xmlVal(netunei, 'SHEUR-DMEI-NIHUL-TZVIRA') || xmlVal(policy, 'SHEUR-DMEI-NIHUL-HISACHON'));
+
+      // ── CONTRIBUTIONS: split periodic vs one-time (SUG-HAFRASHA=3 → one-time) ──
+      let monthlyTotal = 0;
+      let oneTimeTotal = 0;
+      const hafrashotList = policy.getElementsByTagName('PerutHafrashotLePolisa');
+      for (let hi = 0; hi < hafrashotList.length; hi++) {
+        const hf = hafrashotList[hi];
+        const sugHafrasha = xmlVal(hf, 'SUG-HAFRASHA');
+        const amt = parseFloat(xmlVal(hf, 'SCHUM-HAFRASHA')) || 0;
+        if (sugHafrasha === '3') {
+          oneTimeTotal += amt;
+        } else if (amt > 0) {
+          monthlyTotal += amt;
+        }
+      }
+      // Fallback for monthly: PirteiHafkadaAchrona
+      if (!monthlyTotal) {
+        const lastDep = policy.getElementsByTagName('PirteiHafkadaAchrona')[0];
+        const lastDepAmt = parseFloat(xmlVal(lastDep, 'TOTAL-HAFKADA')) || 0;
+        // Only use as monthly if not one-time (can't tell — treat as monthly)
+        if (lastDepAmt) monthlyTotal = lastDepAmt;
+      }
+      // Fallback for monthly: annual salary / 12
+      if (!monthlyTotal) {
+        const annualSalary = parseFloat(xmlVal(policy.getElementsByTagName('PirteiHaasaka')[0], 'SACHAR-POLISA')) || 0;
+        monthlyTotal = annualSalary / 12;
+      }
+      const monthly = monthlyTotal > 0 ? String(Math.round(monthlyTotal)) : '';
+      const oneTime = oneTimeTotal > 0 ? String(Math.round(oneTimeTotal)) : '';
+
+      // ── RETIREMENT PROJECTIONS (from YitraLefiGilPrisha) ──
+      const yitraEl = policy.getElementsByTagName('YitraLefiGilPrisha')[0];
+      const retirementAge  = xmlVal(yitraEl, 'GIL-PRISHA');
+
+      const projSavingsWithRaw    = xmlVal(yitraEl, 'TOTAL-CHISACHON-MITZTABER-TZAFUY');
+      const projSavingsWithoutRaw = xmlVal(yitraEl, 'TZVIRAT-CHISACHON-CHAZUYA-LELO-PREMIYOT');
+      const projSavingsWith    = projSavingsWithRaw    ? String(Math.round(parseFloat(projSavingsWithRaw)))    : '';
+      const projSavingsWithout = projSavingsWithoutRaw ? String(Math.round(parseFloat(projSavingsWithoutRaw))) : '';
+
+      const kupaEl = yitraEl ? yitraEl.getElementsByTagName('Kupa')[0] : null;
+      const projPensionWithRaw    = xmlVal(kupaEl, 'KITZVAT-HODSHIT-TZFUYA');
+      const projPensionWithoutRaw = xmlVal(kupaEl, 'KITZVAT-HODSHIT-TZFUYA-LELO-PREMIYOT') || xmlVal(kupaEl, 'SCHUM-KITZVAT-ZIKNA');
+      const projPensionWith    = projPensionWithRaw    ? String(Math.round(parseFloat(projPensionWithRaw)))    : '';
+      const projPensionWithout = projPensionWithoutRaw ? String(Math.round(parseFloat(projPensionWithoutRaw))) : '';
+
+      // ── LIQUIDITY: MOED-NEZILUT-TAGMULIM — if nearest date ≤ today → נזיל ──
+      const today = new Date(); today.setHours(0,0,0,0);
+      let liquidity = 'לא נזיל';
+      let liquidityDate = '';
+      const nezilutTags = policy.getElementsByTagName('MOED-NEZILUT-TAGMULIM');
+      for (let ni = 0; ni < nezilutTags.length; ni++) {
+        const raw = (nezilutTags[ni].textContent || '').trim();
+        if (!raw || raw.length < 8) continue;
+        const d = new Date(raw.substring(0,4) + '-' + raw.substring(4,6) + '-' + raw.substring(6,8));
+        if (isNaN(d)) continue;
+        if (d <= today) { liquidity = 'נזיל'; liquidityDate = xmlDateToInput(raw); break; }
+        // Keep track of nearest future date
+        if (!liquidityDate) liquidityDate = xmlDateToInput(raw);
+        else {
+          const prev = new Date(liquidityDate);
+          if (d < prev) liquidityDate = xmlDateToInput(raw);
+        }
+      }
+      // Insurance-only products are not savings — mark liquid by default (N/A)
+      if (insuranceOnly) { liquidity = 'נזיל'; liquidityDate = ''; }
+
+      // ── DEPOSIT HISTORY (from PerutHafrashotLePolisa) ──
+      const depositHistory = [];
+      for (let hi = 0; hi < hafrashotList.length; hi++) {
+        const hf = hafrashotList[hi];
+        const sug = xmlVal(hf, 'SUG-HAFRASHA');
+        const pct = xmlVal(hf, 'ACHUZ-HAFRASHA');
+        const amt = xmlVal(hf, 'SCHUM-HAFRASHA');
+        const depositor = xmlVal(hf, 'SUG-HAMAFKID');
+        const date = xmlVal(hf, 'TAARICH-MADAD');
+        if (sug || amt) depositHistory.push({ sug, pct, amt, depositor, date });
+      }
+
+      // ── YIELD DATA ──
+      const tsuaEl      = policy.getElementsByTagName('Tsua')[0];
+      const netYield    = xmlVal(tsuaEl, 'SHEUR-TSUA-NETO');
+      const profitLoss  = xmlVal(tsuaEl, 'REVACH-HEFSED-BENIKOI-HOZAHOT');
+      const expectedYield = xmlVal(tsuaEl, 'SHEUR-TSUA-MOVTACHAT-MEYOADOT');
+
+      // ── LOAN ──
+      const halvaaEl    = policy.getElementsByTagName('Halvaa')[0];
+      const hasLoanCode = halvaaEl ? xmlVal(halvaaEl, 'YESH-HALVAA-BAMUTZAR') : '2';
+      const hasLoan     = hasLoanCode === '1';
+      const loanAmountRaw  = hasLoan ? xmlVal(halvaaEl, 'SCHUM-HALVAA') : '';
+      const loanDateRaw    = hasLoan ? xmlVal(halvaaEl, 'TAARICH-KABALAT-HALVAA') : '';
+      const loanRate       = hasLoan ? xmlVal(halvaaEl, 'RIBIT') : '';
+      const loanPeriod     = hasLoan ? xmlVal(halvaaEl, 'TKUFAT-HALVAA') : '';
+      const loanMonthlyRaw = hasLoan ? xmlVal(halvaaEl, 'SCHUM-HECHZER-TKUFATI') : '';
+
+      // ── INSURANCE COVERAGES ──
+      const coverages = [];
+      const kisuyList = policy.getElementsByTagName('ZihuiKisui');
+      for (let ki = 0; ki < kisuyList.length; ki++) {
+        const name = xmlVal(kisuyList[ki], 'SHEM-KISUI-YATZRAN');
+        if (name) coverages.push(name);
+      }
+
+      products.push({
+        owner:       ownerName + (ownerId ? ' · ' + ownerId : ''),
+        company:     companyName,
+        productType: mapProductType(sugMutzar, planName),
+        policyNum,
+        planName,
+        status:      mapStatus(statusCode),
+        openDate,
+        balance,
+        monthly,
+        oneTime,
+        hasLoan,
+        loanAmount:  loanAmountRaw  ? String(Math.round(parseFloat(loanAmountRaw))) : '',
+        loanDate:    xmlDateToInput(loanDateRaw),
+        loanRate,
+        loanPeriod,
+        loanMonthly: loanMonthlyRaw ? String(Math.round(parseFloat(loanMonthlyRaw))) : '',
+        tracks,
+        netYield,
+        profitLoss,
+        expectedYield,
+        retirementAge,
+        projSavingsWith,
+        projSavingsWithout,
+        projPensionWith,
+        projPensionWithout,
+        feeDeposit,
+        feeAccumulation,
+        coverages,
+        insuranceOnly,
+        liquidity,
+        liquidityDate,
+        depositHistory,
+        sugMutzar,
+        misparMislaka
+      });
+    }
+  }
+
+  return { client: clientInfo, products };
+}
+
+// --- Render and open the preview modal ---
+function showMislakaModal(data) {
+  const { client, products } = data;
+
+  // Update chip in header
+  const chip = document.getElementById('mislaka-modal-client-chip');
+  if (chip) chip.textContent = client ? client.name : '';
+
+  const body = document.getElementById('mislaka-modal-body');
+  let html = '';
+
+  // Client summary banner
+  if (client) {
+    html += `
+    <div class="mislaka-client-banner">
+      <div>
+        <div class="bcl">לקוח</div>
+        <div class="bcv">${client.name || '—'}</div>
+      </div>
+      ${client.id ? `<div><div class="bcl">תעודת זהות</div><div class="bcv small">${client.id}</div></div>` : ''}
+      ${client.phone ? `<div><div class="bcl">טלפון</div><div class="bcv small">${client.phone}</div></div>` : ''}
+      <div class="mislaka-count-badge">${products.length} מוצרים</div>
+    </div>`;
+  }
+
+  // Product cards
+  products.forEach((p) => {
+    const statusCls = p.status === 'הופק' ? 'active' : p.status === 'בהקמה' ? 'pending' : 'inactive';
+    const fmt = (n) => n ? '₪' + Number(n).toLocaleString('he-IL') : '';
+
+    // Retirement / fees section — 6 compact data points, always show if any data
+    const hasMislakaData = p.projSavingsWith || p.projSavingsWithout || p.projPensionWith || p.projPensionWithout || p.feeDeposit || p.feeAccumulation;
+    const retirementHtml = hasMislakaData ? `
+    <div class="mp-retirement">
+      <div class="mp-retirement-title">🏛️ נתוני פרישה ממסלקה</div>
+      <div class="mp-ret-grid" style="grid-template-columns:repeat(2,1fr);gap:0.5rem 1.2rem;">
+        ${p.projSavingsWith    ? `<div class="mp-ret-item"><span class="rk">חיסכון עם הפקדות</span><span class="rv green">${fmt(p.projSavingsWith)}</span></div>` : '<div class="mp-ret-item"></div>'}
+        ${p.projPensionWith    ? `<div class="mp-ret-item"><span class="rk">קצבה עם הפקדות</span><span class="rv blue">${fmt(p.projPensionWith)}</span></div>` : '<div class="mp-ret-item"></div>'}
+        ${p.projSavingsWithout ? `<div class="mp-ret-item"><span class="rk">חיסכון ללא הפקדות</span><span class="rv">${fmt(p.projSavingsWithout)}</span></div>` : '<div class="mp-ret-item"></div>'}
+        ${p.projPensionWithout ? `<div class="mp-ret-item"><span class="rk">קצבה ללא הפקדות</span><span class="rv">${fmt(p.projPensionWithout)}</span></div>` : '<div class="mp-ret-item"></div>'}
+        ${p.feeAccumulation    ? `<div class="mp-ret-item"><span class="rk">ד.נ. מצבירה</span><span class="rv">${parseFloat(p.feeAccumulation).toFixed(2)}%</span></div>` : '<div class="mp-ret-item"></div>'}
+        ${p.feeDeposit         ? `<div class="mp-ret-item"><span class="rk">ד.נ. מהפקדה</span><span class="rv">${parseFloat(p.feeDeposit).toFixed(2)}%</span></div>` : '<div class="mp-ret-item"></div>'}
+      </div>
+    </div>` : '';
+
+    html += `
+    <div class="mp-card${p.insuranceOnly ? ' insurance-card' : ''}">
+      <div class="mp-card-head">
+        <div>
+          <div class="mpc-company">${p.company || '—'}</div>
+          <div class="mpc-plan">${p.planName || p.productType || ''}</div>
+          ${p.policyNum ? `<div class="mpc-policy">פוליסה: ${p.policyNum}</div>` : ''}
+          ${p.insuranceOnly ? `<div class="insurance-only-badge">🛡️ ביטוח בלבד</div>` : ''}
+        </div>
+        <span class="mpc-status ${statusCls}">${p.status}</span>
+      </div>
+      <div class="mp-card-body">
+        <div class="mp-fields">
+          ${!p.insuranceOnly ? `
+          <div class="mp-field">
+            <span class="mpf-lbl">יתרה צבורה</span>
+            <span class="mpf-val green">${p.balance ? '₪' + Number(p.balance).toLocaleString('he-IL') : '—'}</span>
+          </div>` : ''}
+          <div class="mp-field">
+            <span class="mpf-lbl">הפקדה חודשית</span>
+            <span class="mpf-val blue">${p.monthly ? '₪' + Number(p.monthly).toLocaleString('he-IL') : '—'}</span>
+          </div>
+          ${p.oneTime ? `
+          <div class="mp-field">
+            <span class="mpf-lbl">הפקדה חד-פעמית</span>
+            <span class="mpf-val">${fmt(p.oneTime)}</span>
+          </div>` : ''}
+          <div class="mp-field">
+            <span class="mpf-lbl">סוג מוצר</span>
+            <span class="mpf-val">${p.productType}</span>
+          </div>
+          <div class="mp-field">
+            <span class="mpf-lbl">תאריך פתיחה</span>
+            <span class="mpf-val">${p.openDate ? fmtDate(p.openDate) : '—'}</span>
+          </div>
+          ${p.owner ? `<div class="mp-field"><span class="mpf-lbl">על שם</span><span class="mpf-val">${p.owner}</span></div>` : ''}
+          ${p.netYield ? `<div class="mp-field"><span class="mpf-lbl">תשואה נטו</span><span class="mpf-val blue">${p.netYield}%</span></div>` : ''}
+          ${p.profitLoss ? `<div class="mp-field"><span class="mpf-lbl">רווח / הפסד</span><span class="mpf-val">${Number(p.profitLoss).toLocaleString('he-IL')} ₪</span></div>` : ''}
+          ${p.expectedYield ? `<div class="mp-field"><span class="mpf-lbl">תשואה צפויה</span><span class="mpf-val gold">${p.expectedYield}%</span></div>` : ''}
+        </div>
+
+        ${p.tracks.length ? `
+        <div class="mp-tracks">
+          <div class="mp-tracks-title">📊 מסלולי השקעה</div>
+          ${p.tracks.map(t => `
+          <div class="mp-track-row">
+            <span class="tr-name">${t.name || '—'}</span>
+            <span class="tr-pct">${t.pct ? t.pct + '%' : ''}</span>
+            <span class="tr-amt">${t.amount ? '₪' + Number(t.amount).toLocaleString('he-IL') : ''}</span>
+            <span class="tr-yld">${t.yld ? t.yld + '%' : ''}</span>
+          </div>`).join('')}
+        </div>` : ''}
+
+        ${p.hasLoan ? `
+        <div class="mp-loan">
+          <div class="mp-loan-title">💳 הלוואה פעילה</div>
+          ${p.loanAmount  ? `<div class="mp-loan-item"><span class="k">סכום: </span><span class="v">₪${Number(p.loanAmount).toLocaleString('he-IL')}</span></div>` : ''}
+          ${p.loanRate    ? `<div class="mp-loan-item"><span class="k">ריבית: </span><span class="v">${p.loanRate}%</span></div>` : ''}
+          ${p.loanPeriod  ? `<div class="mp-loan-item"><span class="k">תקופה: </span><span class="v">${p.loanPeriod} חודשים</span></div>` : ''}
+          ${p.loanMonthly ? `<div class="mp-loan-item"><span class="k">החזר חודשי: </span><span class="v red">₪${Number(p.loanMonthly).toLocaleString('he-IL')}</span></div>` : ''}
+          ${p.loanDate    ? `<div class="mp-loan-item"><span class="k">תאריך: </span><span class="v">${fmtDate(p.loanDate)}</span></div>` : ''}
+        </div>` : ''}
+
+        ${retirementHtml}
+
+        ${p.coverages.length ? `
+        <div class="mp-coverages">
+          <strong>כיסויים ביטוחיים: </strong>${p.coverages.join(' · ')}
+        </div>` : ''}
+      </div>
+    </div>`;
+  });
+
+  body.innerHTML = html;
+  document.getElementById('mislaka-overlay').classList.add('open');
+}
+
+// --- Close modal ---
+function closeMislakaModal() {
+  document.getElementById('mislaka-overlay').classList.remove('open');
+}
+
+// --- Close when clicking outside the modal box ---
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('mislaka-overlay')) closeMislakaModal();
+}
+
+// --- ESC key closes modal ---
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeMislakaModal();
+});
+
+// --- Confirm import: populate form fields ---
+function confirmMislakaImport() {
+  if (!mislakaData) return;
+  const { client, products } = mislakaData;
+
+  // Fill client info
+  if (client) {
+    const n = document.getElementById('client-name');
+    const i = document.getElementById('client-id');
+    const p = document.getElementById('client-phone');
+    if (n && client.name) n.value = client.name;
+    if (i && client.id)   i.value = client.id;
+    if (p && client.phone) p.value = client.phone;
+  }
+
+  // Clear savings list
+  document.getElementById('savings-list').innerHTML = '';
+  savingCount = 0;
+
+  products.forEach(prod => {
+    addSaving();
+    const n = savingCount;
+    const block = document.getElementById('saving-' + n);
+    if (!block) return;
+
+    const setVal = (name, val) => {
+      if (!val && val !== 0) return;
+      const el = block.querySelector('[name="' + name + '"]');
+      if (el) el.value = val;
+    };
+
+    setVal('owner',      prod.owner);
+    setVal('company',    prod.company);
+    setVal('policy-num', prod.policyNum);
+    setVal('open-date',  prod.openDate);
+    setVal('balance',    prod.balance);
+    setVal('monthly',    prod.monthly);
+    // NOTE: 'goal' field is intentionally NOT set — manual entry only
+
+    // One-time contribution
+    if (prod.oneTime) {
+      setVal('one-time', prod.oneTime);
+      const otWrap = document.getElementById('one-time-date-wrap-' + n);
+      if (otWrap) otWrap.style.display = 'flex';
+    }
+
+    // Product type select — match or fallback to אחר
+    const typeEl = block.querySelector('[name="product-type"]');
+    if (typeEl) {
+      const opts = Array.from(typeEl.options).map(o => o.value);
+      typeEl.value = opts.includes(prod.productType) ? prod.productType : 'אחר';
+    }
+
+    // Status select
+    const statusEl = block.querySelector('[name="status"]');
+    if (statusEl) statusEl.value = prod.status;
+
+    // Loan
+    if (prod.hasLoan && (prod.loanAmount || prod.loanRate)) {
+      const cb = block.querySelector('[name="has-loan"]');
+      if (cb) {
+        cb.checked = true;
+        const loanBody = document.getElementById('loan-body-' + n);
+        if (loanBody) loanBody.classList.add('open');
+      }
+      setVal('loan-amount',   prod.loanAmount);
+      setVal('loan-date',     prod.loanDate);
+      setVal('loan-rate',     prod.loanRate);
+      setVal('loan-duration', prod.loanPeriod);
+      setVal('loan-monthly',  prod.loanMonthly);
+    }
+
+    // Management fees (now in main form row)
+    setVal('fee-deposit',      prod.feeDeposit);
+    setVal('fee-accumulation', prod.feeAccumulation);
+
+    // Liquidity — from XML withdrawal date analysis
+    if (prod.liquidity) {
+      const liqEl = block.querySelector('[name="liquidity"]');
+      if (liqEl) liqEl.value = prod.liquidity;
+      if (prod.liquidity === 'לא נזיל' && prod.liquidityDate) {
+        setVal('liquidity-date', prod.liquidityDate);
+        const liqWrap = document.getElementById('liq-date-wrap-' + n);
+        if (liqWrap) liqWrap.style.display = 'flex';
+      }
+    }
+
+    // Pension projections — open section if any data present
+    const hasPensionData = prod.projSavingsWith || prod.projSavingsWithout ||
+                           prod.projPensionWith  || prod.projPensionWithout;
+    if (hasPensionData) {
+      setVal('retirement-age',      prod.retirementAge);
+      setVal('proj-savings-with',   prod.projSavingsWith);
+      setVal('proj-savings-without',prod.projSavingsWithout);
+      setVal('proj-pension-with',   prod.projPensionWith);
+      setVal('proj-pension-without',prod.projPensionWithout);
+      const pensionHeader = document.getElementById('pension-header-' + n);
+      const pensionBody   = document.getElementById('pension-body-'   + n);
+      if (pensionHeader && pensionBody) {
+        pensionHeader.classList.add('open');
+        pensionBody.classList.add('open');
+      }
+    }
+
+    // Deposit history — render table in deposits section
+    if (prod.depositHistory && prod.depositHistory.length) {
+      const contentEl = document.getElementById('deposits-content-' + n);
+      if (contentEl) {
+        contentEl.innerHTML = renderDepositsTable(prod.depositHistory);
+      }
+    }
+
+    calcYield(n);
+    calcLoanPayment(n);
+  });
+
+  closeMislakaModal();
+  setMislakaStatus('✅ יובאו ' + products.length + ' מוצרים בהצלחה — ניתן לעריכה לפני יצירת הסיכום', 'success');
+
+  // Smooth scroll to savings
+  const list = document.getElementById('savings-list');
+  if (list) list.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
 </script>
 </body>
 </html>

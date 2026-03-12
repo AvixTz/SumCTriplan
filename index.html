@@ -4549,13 +4549,18 @@ function generateReport(reportVariant = 'summary') {
   const actionWindowBalance = totalLiquidBalance + lockedSoonBalance;
   const longLockedBalance = Math.max(0, totalNonLiquidBalance - lockedSoonBalance);
   const actionWindowPct = totalBalance ? Math.round((actionWindowBalance / totalBalance) * 100) : 0;
+  const hasNoLiquidMoney = totalBalance > 0 && totalLiquidBalance <= 0 && totalNonLiquidBalance > 0;
   const actionWindowNote = !totalBalance
     ? 'עדיין אין מספיק נתונים להצגת חלון פעולה.'
-    : (!actionWindowBalance
-        ? 'כרגע עיקר הכסף נשאר במסלול ארוך, ולכן שינוי דורש תכנון מוקדם ולא משיכה מיידית.'
-        : (longLockedBalance
-            ? `${fmtCurrency(actionWindowBalance)} זמינים עכשיו או בתוך שנה, מול ${fmtCurrency(longLockedBalance)} שנשארים מחוץ לחלון הפעולה הקרוב.`
-            : 'רוב הכסף בתיק זמין לפעולה מיידית או קרובה, ולכן אפשר לבצע התאמות בלי להמתין לנקודות יציאה.'));
+    : (hasNoLiquidMoney
+        ? (lockedSoonBalance
+            ? `כרגע אין כסף נזיל. ${fmtCurrency(lockedSoonBalance)} צפויים להיפתח עד שנה, ו-${fmtCurrency(longLockedBalance)} נוספים נשארים מחוץ לחלון הפעולה הקרוב.`
+            : `כרגע אין כסף נזיל. כל ${fmtCurrency(totalNonLiquidBalance)} שמופיעים בדוח מסומנים כלא זמינים למשיכה מיידית.`)
+        : (!actionWindowBalance
+            ? 'כרגע עיקר הכסף נשאר במסלול ארוך, ולכן שינוי דורש תכנון מוקדם ולא משיכה מיידית.'
+            : (longLockedBalance
+                ? `${fmtCurrency(actionWindowBalance)} זמינים עכשיו או בתוך שנה, מול ${fmtCurrency(longLockedBalance)} שנשארים מחוץ לחלון הפעולה הקרוב.`
+                : 'רוב הכסף בתיק זמין לפעולה מיידית או קרובה, ולכן אפשר לבצע התאמות בלי להמתין לנקודות יציאה.')));
 
   const loanRateBase = mislakaProducts.filter(p => p.hasLoan && (Number(p.loanAmount) || 0) > 0 && (Number(p.loanRate) || 0) > 0);
   const avgLoanRate = loanRateBase.length
@@ -4606,7 +4611,7 @@ function generateReport(reportVariant = 'summary') {
 
   const overviewKpis = [
     { label: 'מה כבר נבנה', value: totalBalance ? fmtCurrency(totalBalance) : '-', note: `${savings.length} מוצרים בתמונה אחת` },
-    { label: 'מה זמין באמת', value: totalLiquidBalance ? fmtCurrency(totalLiquidBalance) : '₪0', note: nonLiquidSavings.length ? `${fmtCurrency(totalNonLiquidBalance || 0)} עדיין לא נזילים` : 'כרגע אין שכבת נעילה מהותית' },
+    { label: 'מה זמין באמת', value: totalLiquidBalance ? fmtCurrency(totalLiquidBalance) : '₪0', note: hasNoLiquidMoney ? `אין כרגע כסף נזיל. ${fmtCurrency(totalNonLiquidBalance || 0)} עדיין לא זמינים למשיכה מיידית` : (nonLiquidSavings.length ? `${fmtCurrency(totalNonLiquidBalance || 0)} עדיין לא נזילים` : 'כרגע אין שכבת נעילה מהותית') },
     { label: 'מה ממשיך להצטבר', value: totalMonthly ? fmtCurrency(totalMonthly) : '—', note: totalMonthly ? `${employerDependencyPct}% תלויי מעסיק` : 'אין קצב חיסכון שוטף מדווח' },
   ];
 
@@ -4619,9 +4624,11 @@ function generateReport(reportVariant = 'summary') {
     {
       icon: '02',
       title: 'מה באמת זמין',
-      value: nonLiquidSavings.length
-        ? `${fmtCurrency(totalLiquidBalance || 0)} נזילים היום, מול ${fmtCurrency(totalNonLiquidBalance || 0)} שלא זמינים מיידית`
-        : 'כרגע רוב הכסף שמופיע בדוח מסומן כנזיל',
+      value: hasNoLiquidMoney
+        ? `נזילים היום: ₪0. כל ${fmtCurrency(totalNonLiquidBalance || 0)} שמופיעים בדוח אינם זמינים למשיכה מיידית`
+        : (nonLiquidSavings.length
+            ? `${fmtCurrency(totalLiquidBalance || 0)} נזילים היום, מול ${fmtCurrency(totalNonLiquidBalance || 0)} שלא זמינים מיידית`
+            : 'כרגע רוב הכסף שמופיע בדוח מסומן כנזיל'),
     },
     {
       icon: '03',

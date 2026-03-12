@@ -1,0 +1,10 @@
+﻿.claude/
+extracted_*/
+
+*.pdf
+*.zip
+*.xls
+
+index.html.bak*
+index.swap*
+temp_*

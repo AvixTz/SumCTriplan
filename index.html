@@ -6863,7 +6863,7 @@ function generateReport(reportVariant = 'summary') {
 
 // CSV Fields definition
 const CSV_CLIENT_FIELDS = ['client-name','client-id','client-phone','agent-name'];
-const CSV_SAVING_FIELDS = ['owner','company','product-type','policy-num','status','goal','balance','balance-date','open-date','total-deposits','one-time','one-time-date','monthly','liquidity','liquidity-date','has-loan','loan-date','loan-amount','loan-rate','loan-duration','loan-type','loan-repay','loan-monthly','loan-goal','rec-type','rec-priority','rec-date','rec-notes'];
+const CSV_SAVING_FIELDS = ['member-id','member-role','owner','company','product-type','policy-num','status','goal','balance','balance-date','open-date','total-deposits','one-time','one-time-date','monthly','liquidity','liquidity-date','has-loan','loan-date','loan-amount','loan-rate','loan-duration','loan-type','loan-repay','loan-monthly','loan-goal','rec-type','rec-priority','rec-date','rec-notes'];
 const CSV_HEADERS = ['client-name','client-id','client-phone','agent-name',...CSV_SAVING_FIELDS];
 
 function exportCSV() {
@@ -6882,7 +6882,9 @@ function exportCSV() {
         if (f === 'has-loan') {
           return block.querySelector('[name="has-loan"]')?.checked ? '"1"' : '"0"';
         }
-        const v = block.querySelector(`[name="${f}"]`)?.value || '';
+        const v = f === 'member-id'
+          ? (block.querySelector(`[name="${f}"]`)?.value || block.dataset.memberId || 'primary')
+          : (block.querySelector(`[name="${f}"]`)?.value || '');
         return `"${v.replace(/"/g,'""')}"`;
       });
       // Only include client info on first row
@@ -6928,7 +6930,7 @@ function importCSV(input) {
     // Add savings from each row
     rows.forEach(row => {
       const data = Object.fromEntries(headers.map((h,i) => [h, row[i] || '']));
-      addSaving();
+      addSaving({ memberId: data['member-id'] || 'primary' });
       const block = document.getElementById(`saving-${savingCount}`);
       CSV_SAVING_FIELDS.forEach(f => {
         if (f === 'has-loan') {
@@ -6941,6 +6943,7 @@ function importCSV(input) {
         // Trigger liquidity date toggle
         if (f === 'liquidity') { toggleLiqDate(el, `liq-date-wrap-${savingCount}`); }
       });
+      applySavingMemberContext(block, data['member-id'] || 'primary');
       // Recalculate yield after import
       calcYield(savingCount);
     });

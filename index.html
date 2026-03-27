@@ -218,6 +218,30 @@
     align-items: center;
     justify-content: space-between;
     margin-bottom: 0.8rem;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+  }
+
+  .saving-block-header-main {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .saving-block-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .saving-block-title-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    flex-wrap: wrap;
   }
 
   .saving-block-title {
@@ -228,6 +252,50 @@
     color: var(--gold);
     padding: 0.2rem 0.7rem;
     border-radius: 20px;
+  }
+
+  .saving-member-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.18rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    border: 1px solid #d8e5f3;
+    background: #edf5ff;
+    color: #1b4d7a;
+  }
+
+  .saving-member-badge.spouse {
+    background: #fff4e8;
+    color: #a85f00;
+    border-color: #f3d1a8;
+  }
+
+  .saving-member-picker {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: #fff;
+    border: 1.5px solid #e0e8f0;
+    border-radius: 999px;
+    padding: 0.2rem 0.3rem 0.2rem 0.65rem;
+  }
+
+  .saving-member-picker label {
+    font-size: 0.72rem;
+    color: #6f8195;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .saving-member-picker select {
+    min-width: 110px;
+    padding: 0.25rem 0.65rem;
+    border-radius: 999px;
+    background: #f7fbff;
+    font-size: 0.78rem;
   }
 
   .btn-remove {
@@ -2152,7 +2220,7 @@
 
     body { background: white !important; font-size: 9pt; }
 
-    .tabs-bar, .report-actions, .btn-print, #tab-form-content, #tab-mislaka-content { display: none !important; }
+    .tabs-bar, .report-actions, .btn-print, .view-mode-switch, #tab-form-content, #tab-mislaka-content { display: none !important; }
     .tab-content { display: none !important; }
     #tab-report-content { display: block !important; }
     .portrait-print-only { display: none !important; }
@@ -3002,6 +3070,334 @@
   .mph-stat .n { font-size: 1.3rem; font-weight: 800; color: white; line-height: 1; }
   .mph-stat .l { font-size: 0.62rem; color: var(--silver); }
 
+  .mislaka-target-switch {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .mislaka-target-btn {
+    border: 1.5px solid #d6e1ee;
+    background: #f7fbff;
+    border-radius: 12px;
+    padding: 0.8rem 1rem;
+    cursor: pointer;
+    text-align: right;
+    transition: all 0.2s ease;
+  }
+
+  .mislaka-target-btn.active {
+    border-color: var(--gold);
+    background: linear-gradient(135deg, rgba(201,168,76,0.14), rgba(24,50,83,0.04));
+    box-shadow: 0 10px 24px rgba(24,50,83,0.08);
+  }
+
+  .mislaka-target-btn strong {
+    display: block;
+    color: var(--navy);
+    font-size: 0.9rem;
+    margin-bottom: 0.15rem;
+  }
+
+  .mislaka-target-btn span {
+    display: block;
+    color: #708399;
+    font-size: 0.76rem;
+    line-height: 1.4;
+  }
+
+  .mislaka-modal-context {
+    margin-bottom: 1rem;
+    padding: 0.8rem 1rem;
+    border-radius: 12px;
+    background: #f7fbff;
+    border: 1px solid #dde8f3;
+    color: #4d6176;
+    font-size: 0.82rem;
+    line-height: 1.55;
+  }
+
+  .mislaka-household-summary {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.9rem;
+    margin-bottom: 1rem;
+  }
+
+  .mislaka-member-strip {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.9rem;
+    margin-bottom: 1rem;
+  }
+
+  .mislaka-member-card {
+    background: white;
+    border: 1px solid #dde7f1;
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 10px 24px rgba(17, 41, 69, 0.06);
+  }
+
+  .mislaka-member-card.spouse {
+    border-top: 4px solid #d98f1f;
+  }
+
+  .mislaka-member-card.primary {
+    border-top: 4px solid #235888;
+  }
+
+  .mislaka-member-card h3 {
+    color: var(--navy);
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .mislaka-member-card .meta {
+    color: #6d8197;
+    font-size: 0.8rem;
+    line-height: 1.45;
+    margin-bottom: 0.9rem;
+  }
+
+  .mislaka-member-card .metrics {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.7rem;
+  }
+
+  .mislaka-member-card .metric {
+    border-radius: 10px;
+    padding: 0.7rem 0.8rem;
+    background: #f8fbff;
+    border: 1px solid #e0ebf7;
+  }
+
+  .mislaka-member-card .metric .k {
+    display: block;
+    font-size: 0.7rem;
+    color: #7a90a7;
+    margin-bottom: 0.15rem;
+  }
+
+  .mislaka-member-card .metric .v {
+    display: block;
+    font-size: 0.92rem;
+    color: var(--navy);
+    font-weight: 800;
+  }
+
+  .view-mode-switch {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.25rem;
+    border-radius: 999px;
+    background: #eef4fa;
+    border: 1px solid #d9e4ef;
+    margin-bottom: 0.95rem;
+    flex-wrap: wrap;
+  }
+
+  .view-mode-btn {
+    border: none;
+    background: transparent;
+    color: #60758a;
+    font-size: 0.8rem;
+    font-weight: 800;
+    border-radius: 999px;
+    padding: 0.45rem 0.95rem;
+    cursor: pointer;
+    transition: all 0.18s ease;
+  }
+
+  .view-mode-btn.active {
+    background: linear-gradient(135deg, #183253 0%, #235888 100%);
+    color: white;
+    box-shadow: 0 8px 18px rgba(24,50,83,0.16);
+  }
+
+  .household-view-shell {
+    display: block;
+  }
+
+  .view-mode-pane[hidden] {
+    display: none !important;
+  }
+
+  .household-family-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(260px, 0.85fr);
+    gap: 0.9rem;
+    margin-bottom: 0.9rem;
+  }
+
+  .household-family-message {
+    border-radius: 16px;
+    padding: 1rem 1.1rem;
+    border: 1px solid #dbe6f1;
+    background: linear-gradient(135deg, #fdfcf8 0%, #f7fbff 100%);
+    box-shadow: 0 10px 24px rgba(18, 40, 68, 0.06);
+  }
+
+  .household-family-message .k {
+    display: block;
+    color: #8c6c1f;
+    font-size: 0.74rem;
+    font-weight: 800;
+    margin-bottom: 0.35rem;
+  }
+
+  .household-family-message .v {
+    display: block;
+    color: var(--navy);
+    font-size: 1.08rem;
+    font-weight: 800;
+    line-height: 1.45;
+    margin-bottom: 0.3rem;
+  }
+
+  .household-family-message .n {
+    display: block;
+    color: #607489;
+    font-size: 0.8rem;
+    line-height: 1.6;
+  }
+
+  .household-split-note {
+    margin-bottom: 0.85rem;
+  }
+
+  .household-snapshot-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.8rem;
+    margin-bottom: 0.9rem;
+  }
+
+  .household-snapshot-card {
+    border-radius: 14px;
+    padding: 0.95rem 1rem;
+    border: 1px solid #dbe5ef;
+    background: linear-gradient(180deg, #fbfdff 0%, #f4f8fc 100%);
+    box-shadow: 0 14px 32px rgba(19, 39, 63, 0.06);
+  }
+
+  .household-snapshot-card .k {
+    display: block;
+    color: #6f8499;
+    font-size: 0.76rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .household-snapshot-card .v {
+    display: block;
+    color: var(--navy);
+    font-size: 1.1rem;
+    font-weight: 800;
+    margin-bottom: 0.25rem;
+  }
+
+  .household-snapshot-card .n {
+    display: block;
+    color: #6f8499;
+    font-size: 0.76rem;
+    line-height: 1.45;
+  }
+
+  .household-member-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.85rem;
+  }
+
+  .household-member-panel {
+    border-radius: 14px;
+    border: 1px solid #dde8f2;
+    background: #f9fbfe;
+    padding: 1rem;
+  }
+
+  .household-member-panel.primary { border-top: 4px solid #235888; }
+  .household-member-panel.spouse { border-top: 4px solid #d98f1f; }
+
+  .household-member-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.8rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .household-member-head strong {
+    color: var(--navy);
+    font-size: 1rem;
+  }
+
+  .household-member-head span {
+    display: block;
+    color: #6f8398;
+    font-size: 0.78rem;
+    margin-top: 0.15rem;
+  }
+
+  .household-member-mini {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.65rem;
+  }
+
+  .household-member-mini .mini {
+    border-radius: 10px;
+    background: white;
+    border: 1px solid #e2ebf4;
+    padding: 0.65rem 0.75rem;
+  }
+
+  .household-member-mini .mini b {
+    display: block;
+    font-size: 0.68rem;
+    color: #71869c;
+    margin-bottom: 0.12rem;
+  }
+
+  .household-member-mini .mini em {
+    display: block;
+    color: var(--navy);
+    font-style: normal;
+    font-size: 0.88rem;
+    font-weight: 800;
+  }
+
+  @media (max-width: 960px) {
+    .mislaka-target-switch,
+    .mislaka-member-strip,
+    .household-member-grid,
+    .household-member-mini {
+      grid-template-columns: 1fr;
+    }
+
+    .household-family-hero {
+      grid-template-columns: 1fr;
+    }
+
+    .household-snapshot-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 640px) {
+    .household-snapshot-grid,
+    .mislaka-household-summary {
+      grid-template-columns: 1fr;
+    }
+
+    .household-member-head {
+      flex-direction: column;
+    }
+  }
+
   .mislaka-banner {
     background: var(--navy-mid);
     padding: 1rem 2rem;
@@ -3181,7 +3577,8 @@
       <button class="btn-csv-export" onclick="exportCSV()">⬇️ ייצוא CSV</button>
       <label class="btn-csv-import" for="csv-upload-input">⬆️ ייבוא CSV</label>
       <input type="file" id="csv-upload-input" accept=".csv" style="display:none" onchange="importCSV(this)">
-      <button class="btn-mislaka" onclick="openMislakaModal()">🏛️ העלאת מסלקה פנסיונית</button>
+      <button class="btn-mislaka" onclick="openMislakaModal('primary')">🏛️ מסלקה ללקוח הראשי</button>
+      <button class="btn-mislaka" onclick="openMislakaModal('spouse')">👥 מסלקה לבן/בת הזוג</button>
     </div>
   </div>
   </div>
@@ -3192,8 +3589,11 @@
       <div class="mislaka-banner" id="mislaka-empty-banner">
         <div style="font-size:3rem;margin-bottom:0.8rem;">🏛️</div>
         <h2 style="color:var(--gold);font-size:1.4rem;font-weight:800;margin-bottom:0.5rem;">מסלקה פנסיונית</h2>
-        <p style="color:var(--silver);font-size:0.95rem;">העלה קובץ ZIP של המסלקה הפנסיונית לקבלת תמונה מלאה על תיק הלקוח</p>
-        <button class="btn-mislaka" style="margin-top:1.5rem;font-size:1rem;padding:0.8rem 2rem;" onclick="openMislakaModal()">🏛️ העלאת קובץ מסלקה</button>
+        <p style="color:var(--silver);font-size:0.95rem;">העלה קובצי ZIP של המסלקה ללקוח הראשי ולבן/בת הזוג כדי לקבל תמונה יחידנית או משפחתית מלאה</p>
+        <div style="display:flex;gap:0.8rem;justify-content:center;flex-wrap:wrap;margin-top:1.5rem;">
+          <button class="btn-mislaka" style="font-size:1rem;padding:0.8rem 2rem;" onclick="openMislakaModal('primary')">🏛️ העלאת מסלקה ללקוח</button>
+          <button class="btn-mislaka" style="font-size:1rem;padding:0.8rem 2rem;" onclick="openMislakaModal('spouse')">👥 העלאת מסלקה לבן/בת זוג</button>
+        </div>
       </div>
       <div id="mislaka-client-view" style="display:none;"></div>
     </div>
@@ -3224,6 +3624,17 @@
       <button onclick="closeMislakaModal()" style="background:none;border:none;color:var(--silver);font-size:1.3rem;cursor:pointer;padding:0.2rem 0.5rem;">✕</button>
     </div>
     <div style="padding:1.5rem;">
+      <div class="mislaka-target-switch">
+        <button type="button" class="mislaka-target-btn active" id="mislaka-target-primary" onclick="setMislakaTarget('primary')">
+          <strong>לקוח ראשי</strong>
+          <span>משמש לדוח היחידני ולצד הראשי בדוח המשפחתי.</span>
+        </button>
+        <button type="button" class="mislaka-target-btn" id="mislaka-target-spouse" onclick="setMislakaTarget('spouse')">
+          <strong>בן/בת זוג</strong>
+        <span>נשמר בנפרד ומצטרף לתמונה משפחתית מלאה.</span>
+        </button>
+      </div>
+      <div class="mislaka-modal-context" id="mislaka-modal-context"></div>
       <div class="upload-zone" id="mislaka-drop-zone"
            ondragover="event.preventDefault();this.classList.add('drag-over')"
            ondragleave="this.classList.remove('drag-over')"
@@ -3246,24 +3657,130 @@
 
 <script>
 let savingCount = 0;
+let pendingMislakaData = null;
+let activeMislakaTarget = 'primary';
+let householdData = {
+  primary: null,
+  spouse: null,
+};
 
-function addSaving() {
+const HOUSEHOLD_TARGET_META = {
+  primary: {
+    memberId: 'primary',
+    role: 'primary',
+    label: 'לקוח ראשי',
+    shortLabel: 'לקוח',
+    buttonLabel: 'ייבא ללקוח הראשי',
+    toneClass: 'primary',
+  },
+  spouse: {
+    memberId: 'spouse',
+    role: 'spouse',
+    label: 'בן/בת זוג',
+    shortLabel: 'בן/בת זוג',
+    buttonLabel: 'ייבא לבן/בת הזוג',
+    toneClass: 'spouse',
+  },
+};
+
+function normalizeHouseholdTarget(target) {
+  return target === 'spouse' ? 'spouse' : 'primary';
+}
+
+function getHouseholdTargetMeta(target) {
+  return HOUSEHOLD_TARGET_META[normalizeHouseholdTarget(target)];
+}
+
+function formatClientFullName(clientInfo) {
+  if (!clientInfo) return '';
+  return `${clientInfo.firstName || ''} ${clientInfo.lastName || ''}`.trim();
+}
+
+function setMislakaTarget(target) {
+  activeMislakaTarget = normalizeHouseholdTarget(target);
+  const meta = getHouseholdTargetMeta(activeMislakaTarget);
+  const currentMember = householdData[activeMislakaTarget];
+  document.getElementById('mislaka-target-primary')?.classList.toggle('active', activeMislakaTarget === 'primary');
+  document.getElementById('mislaka-target-spouse')?.classList.toggle('active', activeMislakaTarget === 'spouse');
+  const contextEl = document.getElementById('mislaka-modal-context');
+  if (contextEl) {
+    const existingName = formatClientFullName(currentMember?.clientInfo);
+    contextEl.innerHTML = existingName
+      ? `המסלקה שתעלה עכשיו תישמר תחת <strong>${meta.label}</strong> ותעדכן את ${existingName}. אפשר להחליף רק צד אחד במשפחה בלי למחוק את הצד השני.`
+      : `המסלקה שתעלה עכשיו תישמר תחת <strong>${meta.label}</strong>. אם כבר הועלתה מסלקה לצד זה, הייבוא יחליף רק את הצד הזה וישאיר את שאר המשפחה כפי שהיא.`;
+  }
+  const importBtn = document.getElementById('btn-import-mislaka');
+  if (importBtn) importBtn.textContent = `✅ ${meta.buttonLabel}`;
+}
+
+function applySavingMemberContext(block, target) {
+  if (!block) return;
+  const meta = getHouseholdTargetMeta(target);
+  block.dataset.memberId = meta.memberId;
+  const memberSelect = block.querySelector('[name="member-id"]');
+  const roleInput = block.querySelector('[name="member-role"]');
+  if (memberSelect) memberSelect.value = meta.memberId;
+  if (roleInput) roleInput.value = meta.role;
+  const badge = block.querySelector('[data-member-badge]');
+  if (badge) {
+    badge.textContent = meta.shortLabel;
+    badge.className = `saving-member-badge ${meta.toneClass}`;
+  }
+}
+
+function updateSavingMemberContext(input) {
+  const block = input?.closest('.saving-block');
+  if (!block) return;
+  applySavingMemberContext(block, input.value);
+}
+
+function setHouseholdViewMode(scope, mode) {
+  const root = document.querySelector(`[data-view-scope="${scope}"]`);
+  if (!root) return;
+  const normalizedMode = mode === 'split' ? 'split' : 'family';
+  root.dataset.viewMode = normalizedMode;
+  root.querySelectorAll('[data-view-pane]').forEach(pane => {
+    pane.hidden = pane.dataset.viewPane !== normalizedMode;
+  });
+  document.querySelectorAll(`[data-view-control="${scope}"] .view-mode-btn`).forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.viewModeBtn === normalizedMode);
+  });
+}
+
+function addSaving(options = {}) {
   savingCount++;
   const id = `saving-${savingCount}`;
   const list = document.getElementById('savings-list');
+  const memberTarget = normalizeHouseholdTarget(options.memberId || 'primary');
+  const memberMeta = getHouseholdTargetMeta(memberTarget);
 
   const block = document.createElement('div');
   block.className = 'saving-block';
   block.id = id;
   block.innerHTML = `
     <div class="saving-block-header">
-      <span class="saving-block-title">קופה / פוליסה #${savingCount}</span>
-      <div id="yield-display-${savingCount}" style="display:flex;align-items:center;gap:0.45rem;padding:0.22rem 0.9rem;border-radius:20px;border:1.5px solid #dde8f2;background:#f5faff;min-width:88px;justify-content:center;transition:background 0.3s,border-color 0.3s;">
-        <span style="font-size:0.65rem;color:#aab5c8;font-weight:500;">תשואה</span>
-        <span class="yield-value" id="yield-value-${savingCount}" style="font-size:0.95rem;font-weight:800;letter-spacing:-0.01em;">-</span>
-        <span id="yield-gain-${savingCount}" style="font-size:0.59rem;color:#8899aa;white-space:nowrap;"></span>
+      <div class="saving-block-header-main">
+        <div class="saving-block-title-wrap">
+          <span class="saving-block-title">קופה / פוליסה #${savingCount}</span>
+          <span class="saving-member-badge ${memberMeta.toneClass}" data-member-badge>${memberMeta.shortLabel}</span>
+        </div>
       </div>
-      <button class="btn-remove" onclick="removeSaving('${id}')">✕ הסר</button>
+      <div class="saving-block-header-actions">
+        <div class="saving-member-picker">
+          <label>שייך ל</label>
+          <select name="member-id" onchange="updateSavingMemberContext(this)">
+            <option value="primary"${memberTarget === 'primary' ? ' selected' : ''}>לקוח</option>
+            <option value="spouse"${memberTarget === 'spouse' ? ' selected' : ''}>בן/בת זוג</option>
+          </select>
+          <input type="hidden" name="member-role" value="${memberMeta.role}">
+        </div>
+        <div id="yield-display-${savingCount}" style="display:flex;align-items:center;gap:0.45rem;padding:0.22rem 0.9rem;border-radius:20px;border:1.5px solid #dde8f2;background:#f5faff;min-width:88px;justify-content:center;transition:background 0.3s,border-color 0.3s;">
+          <span style="font-size:0.65rem;color:#aab5c8;font-weight:500;">תשואה</span>
+          <span class="yield-value" id="yield-value-${savingCount}" style="font-size:0.95rem;font-weight:800;letter-spacing:-0.01em;">-</span>
+          <span id="yield-gain-${savingCount}" style="font-size:0.59rem;color:#8899aa;white-space:nowrap;"></span>
+        </div>
+        <button class="btn-remove" onclick="removeSaving('${id}')">✕ הסר</button>
+      </div>
     </div>
     <div class="form-grid cols-5">
       <div class="field">
@@ -3447,6 +3964,7 @@ function addSaving() {
     </div>
   `;
   list.appendChild(block);
+  applySavingMemberContext(block, memberTarget);
 }
 
 function calcYield(n) {
@@ -3717,19 +4235,21 @@ applyPrintMode('landscape');
 function generateReport(reportVariant = 'summary') {
   currentReportVariant = reportVariant === 'deep' ? 'deep' : 'summary';
   const isDeepReport = currentReportVariant === 'deep';
-  const reportTitle = isDeepReport ? 'דוח מעמיק לחיסכון, עלויות ופרישה' : 'סיכום תיק השקעות';
-  const reportSubtitle = isDeepReport
+  let reportTitle = isDeepReport ? 'דוח מעמיק לחיסכון, עלויות ופרישה' : 'סיכום תיק השקעות';
+  let reportSubtitle = isDeepReport
     ? 'שכבת עומק הכוללת הפקדות, דמי ניהול, אחוזי חיסכון, תרחישי הגדלה וחיזוי פרישה.'
     : 'תמונת מצב תכליתית לפגישה, לקריאה מהירה ולקבלת החלטות.';
-  const mislakaClient = mislakaData?.clientInfo || null;
-  const mislakaFullName = mislakaClient ? `${mislakaClient.firstName || ''} ${mislakaClient.lastName || ''}`.trim() : '';
+  const primaryMislakaClient = householdData.primary?.clientInfo || mislakaData?.clientInfo || null;
+  const spouseMislakaClient = householdData.spouse?.clientInfo || null;
+  const mislakaFullName = formatClientFullName(primaryMislakaClient);
+  const spouseFullName = formatClientFullName(spouseMislakaClient);
   const name = document.getElementById('client-name').value.trim() || mislakaFullName || 'לקוח';
-  const clientId = document.getElementById('client-id').value.trim() || mislakaClient?.id || '-';
-  const phone = document.getElementById('client-phone').value.trim() || mislakaClient?.phone || '';
+  const clientId = document.getElementById('client-id').value.trim() || primaryMislakaClient?.id || '-';
+  const phone = document.getElementById('client-phone').value.trim() || primaryMislakaClient?.phone || '';
   const agent = document.getElementById('agent-name').value || '';
-  const clientEmail = mislakaClient?.email || '';
-  const clientCity = mislakaClient?.city || '';
-  const clientDobRaw = mislakaClient?.dob || '';
+  const clientEmail = primaryMislakaClient?.email || '';
+  const clientCity = primaryMislakaClient?.city || '';
+  const clientDobRaw = primaryMislakaClient?.dob || '';
   const manualPensionFactor = normalizePensionFactor(document.getElementById('manual-pension-factor')?.value, 200);
   const useManualPensionFactor = Boolean(document.getElementById('manual-pension-factor-enabled')?.checked);
 
@@ -3739,6 +4259,8 @@ function generateReport(reportVariant = 'summary') {
   blocks.forEach(block => {
     const g = (name) => block.querySelector(`[name="${name}"]`)?.value || '';
     savings.push({
+      memberId: normalizeHouseholdTarget(g('member-id') || block.dataset.memberId || 'primary'),
+      memberRole: g('member-role') || normalizeHouseholdTarget(g('member-id') || block.dataset.memberId || 'primary'),
       owner: g('owner'),
       company: g('company'),
       productType: g('product-type'),
@@ -3770,6 +4292,19 @@ function generateReport(reportVariant = 'summary') {
     });
   });
 
+  const familyMode = savings.some(s => s.memberId === 'spouse') || Boolean(householdData.spouse);
+  const reportDisplayName = familyMode ? [name, spouseFullName].filter(Boolean).join(' + ') : name;
+  reportTitle = familyMode
+    ? (isDeepReport ? 'סקירה משפחתית מעמיקה לחיסכון, עלויות ופרישה' : 'סקירה משפחתית ללקוח קיים')
+    : (isDeepReport ? 'סקירת עומק ללקוח קיים' : 'סקירת התקדמות ללקוח קיים');
+  reportSubtitle = familyMode
+    ? (isDeepReport
+        ? 'תמונה משפחתית מלאה: שני בני הזוג, חיסכון שוטף, עלויות, נזילות ועתיד פרישתי משולב.'
+        : 'תמונה משפחתית שמציגה איפה אתם עומדים היום, מה זמין, ומה צפוי קדימה אם ממשיכים כך.')
+    : (isDeepReport
+        ? 'דוח עומק ללקוח קיים: חיסכון שוטף, עלויות, נזילות, פרישה והחלטות לבקרה שוטפת.'
+        : 'סקירת לקוח קיים שמרכזת מצב נוכחי, כיוון עתידי ומה נכון לכוון עכשיו.');
+
   const hasLoanExposure = (s) => Boolean(s.hasLoan) || ((Number(s.loanAmount) || 0) > 0) || ((Number(s.loanMonthly) || 0) > 0);
 
   // Totals
@@ -3782,6 +4317,27 @@ function generateReport(reportVariant = 'summary') {
   const totalMonthly = savings.reduce((sum, s) => sum + (Number(s.monthly) || 0), 0);
   const totalBalance = savings.reduce((sum, s) => sum + (Number(s.balance) || 0), 0);
   const loanProducts = savings.filter(hasLoanExposure);
+  const memberSummaries = ['primary', 'spouse']
+    .filter(memberId => memberId === 'primary' || familyMode)
+    .map(memberId => {
+      const meta = getHouseholdTargetMeta(memberId);
+      const memberClient = householdData[memberId]?.clientInfo || null;
+      const memberSavings = savings.filter(s => s.memberId === memberId);
+      return {
+        memberId,
+        toneClass: meta.toneClass,
+        label: meta.label,
+        shortLabel: meta.shortLabel,
+        name: memberId === 'primary'
+          ? (formatClientFullName(memberClient) || name)
+          : (formatClientFullName(memberClient) || 'בן/בת זוג'),
+        productCount: memberSavings.length,
+        totalBalance: memberSavings.reduce((sum, s) => sum + (Number(s.balance) || 0), 0),
+        totalMonthly: memberSavings.reduce((sum, s) => sum + (Number(s.monthly) || 0), 0),
+        liquidBalance: memberSavings.filter(s => s.liquidity === 'נזיל').reduce((sum, s) => sum + (Number(s.balance) || 0), 0),
+        loans: memberSavings.filter(hasLoanExposure).reduce((sum, s) => sum + (Number(s.loanAmount) || 0), 0),
+      };
+    });
 
   const statusClass = (s) => {
     if (s === 'הופק') return 'status-active';
@@ -4194,13 +4750,13 @@ function generateReport(reportVariant = 'summary') {
       families,
       hasGroupedMembers: groupedTrainingFunds > 0,
       note: trainingFamily
-        ? `משפחת ההשתלמות מציגה ${trainingFamily.members.length} קרנות${groupedTrainingFunds ? `, מהן ${groupedTrainingFunds} נכללו במקבץ "אחרות" לשמירת קריאות` : ''}.`
-        : 'המפה מאחדת את התיק לשלוש משפחות מוצר ברורות: פנסיוני, חיסכון נזיל והשתלמות.',
+        ? `קבוצת ההשתלמות מציגה ${trainingFamily.members.length} קרנות${groupedTrainingFunds ? `, מהן ${groupedTrainingFunds} נכללו במקבץ "אחרות" לשמירת קריאות` : ''}.`
+        : 'המפה מאחדת את התיק לשלוש קבוצות מוצר ברורות: פנסיוני, חיסכון נזיל והשתלמות.',
     };
   };
 
   const renderFamilySunburst = (model) => {
-    if (!model || !model.total || !model.families.length) return `<div class="mini-callout">אין מספיק יתרות להצגת מפת משפחות המוצר.</div>`;
+    if (!model || !model.total || !model.families.length) return `<div class="mini-callout">אין מספיק יתרות להצגת מפת סוגי המוצר.</div>`;
     const familyPaths = model.families.map(family => `
       <path ${buildTooltipAttrs(family.label, [fmtCurrency(family.total), `${family.pct}% מהתיק`, family.note])} d="${describeRingArc(160, 160, 68, 112, family.startAngle, family.endAngle)}" fill="${family.familyColor}" stroke="#ffffff" stroke-width="2"></path>`).join('');
     const memberPaths = model.families.flatMap(family => family.graphMembers.map(member => `
@@ -4214,9 +4770,9 @@ function generateReport(reportVariant = 'summary') {
       <div class="family-map-layout">
         <div class="family-map-tooltip" role="tooltip" hidden></div>
         <div class="family-sunburst-panel">
-          <div class="side-card-kicker">מבנה התיק בשלוש משפחות</div>
+          <div class="side-card-kicker">מבנה התיק בשלוש קבוצות</div>
           <div class="family-sunburst-shell">
-            <svg class="family-sunburst-svg" viewBox="0 0 320 320" role="img" aria-label="מפת משפחות מוצר">
+            <svg class="family-sunburst-svg" viewBox="0 0 320 320" role="img" aria-label="מפת סוגי מוצר">
               <circle cx="160" cy="160" r="154" fill="#f5f8fc"></circle>
               <circle cx="160" cy="160" r="112" fill="#eef4fa"></circle>
               ${memberPaths}
@@ -4226,7 +4782,7 @@ function generateReport(reportVariant = 'summary') {
             </svg>
             <div class="family-sunburst-center">
               <strong>${fmtCurrency(model.total)}</strong>
-              <span>סה"כ הון בשלוש המשפחות</span>
+              <span>סה"כ הון בשלוש הקבוצות</span>
             </div>
           </div>
           <div class="family-map-caption">${model.note}</div>
@@ -4587,39 +5143,45 @@ function generateReport(reportVariant = 'summary') {
   const topCompany = companyMixRows[0] || null;
   const topType = typeMixRows[0] || null;
 
-  const hookHeadline = totalBalance
-    ? `יש כאן כבר ${fmtCurrency(totalBalance)} שעובדים בשביל ${name}, אבל לא בטוח שהם עובדים נכון.`
-    : 'יש כאן מידע, מוצרים והחלטות שעד היום לא רוכזו לתמונה אחת שאפשר באמת לפעול לפיה.';
+  const hookHeadline = familyMode
+    ? (totalBalance
+        ? `כך נראית התמונה המשפחתית של ${reportDisplayName}: ${fmtCurrency(totalBalance)} כבר נבנו, ועכשיו צריך לוודא שהמסלול עדיין משרת את שני בני הזוג יחד.`
+        : 'כדי לנהל משק בית נכון צריך לראות שני בני זוג, לא שני תיקים מנותקים.')
+    : (totalBalance
+        ? `זו סקירת ההתקדמות של ${name}: ${fmtCurrency(totalBalance)} כבר נבנו, ועכשיו בודקים אם המסלול עדיין נכון.`
+        : 'הסקירה הזו נועדה לרכז את התיק הקיים לתמונה אחת שאפשר לכוון לפיה.');
 
-  const serviceLeadTitle = totalBalance
-    ? 'הכסף כבר קיים. עכשיו צריך לגרום לו לשרת מטרה אחת ברורה.'
-    : 'האתגר איננו רק לראות את המידע, אלא להבין מה נכון לעשות איתו.';
+  const serviceLeadTitle = familyMode
+    ? 'המטרה היא לא רק לדעת מה יש, אלא לראות אם שני בני הזוג באמת מתקדמים לאותו יעד.'
+    : 'המטרה היא לבדוק אם התוכנית עדיין עובדת בפועל, לא רק אם המוצרים ממשיכים לרוץ.';
 
   const serviceLeadText = totalBalance
     ? (totalMonthly
-        ? `כשכבר נצברו ${fmtCurrency(totalBalance)} ונכנסים ${fmtCurrency(totalMonthly)} בכל חודש, גם חוסר דיוק קטן במבנה, בנזילות או בפרישה עלול להפוך לפער של שנים.`
-        : `כשכבר נצברו ${fmtCurrency(totalBalance)}, צריך לבדוק אם כל המוצרים, כל הגופים וכל השכבות עובדים יחד ולא ממשיכים על אוטומט.`)
-    : 'הדוח הזה מחבר בין גופים, מוצרים, נזילות והתחייבויות כדי להפוך מידע מפוזר להחלטה אחת ברורה.';
+        ? `נכון לעכשיו נצברו ${fmtCurrency(totalBalance)} וממשיכים להיכנס ${fmtCurrency(totalMonthly)} בכל חודש. בדוח הזה בוחנים אם הנזילות, ההפקדות והפרישה נשארו מסונכרנים עם התוכנית.`
+        : `נכון לעכשיו נצברו ${fmtCurrency(totalBalance)}. זה השלב לבדוק אם המבנה, הפיזור והנזילות עדיין עובדים נכון מול היעדים.`)
+    : 'הסקירה הזו מרכזת את כל מה שכבר קיים, כדי להבין איפה אתם עומדים ומה דורש כיוון.';
 
-  const mainMessage = totalBalance
-    ? 'הדוח הזה לא בא רק להראות כמה כסף יש. הוא בא לחשוף מה מתוך התיק בנוי טוב, מה נשאר על אוטומט, ואיפה החלטה מקצועית אחת יכולה לשנות את התוצאה שנים קדימה.'
-    : 'הדוח הזה לא נועד להיות עוד רשימת מוצרים. הוא נועד ליצור בהירות: מה קיים, מה חסר, ומה דורש החלטה לפני שממשיכים כרגיל.';
+  const mainMessage = familyMode
+    ? 'זה איננו דוח מכירתי. זו סקירה משפחתית ללקוחות קיימים: מה כבר נבנה, מה זמין באמת, ומה צפוי קדימה אם ממשיכים לפי המבנה הנוכחי.'
+    : 'זה איננו דוח של מכירה ראשונה. זו סקירת התקדמות ללקוח קיים: מה כבר נבנה, מה עובד, ומה צריך כיוון לפני שממשיכים באוטומט.';
 
   const secondaryMessage = totalMonthly
-    ? `כרגע ממשיכים להיכנס ${fmtCurrency(totalMonthly)} בכל חודש${employerDependencyPct ? `, מהם ${employerDependencyPct}% תלויי מעסיק` : ''}. לכן המטרה כאן היא לא עוד טבלה, אלא שורות תחתונות שאפשר לקבל עליהן החלטה.`
-    : 'גם בלי קצב הפקדה שוטף מדווח, כבר עכשיו אפשר לראות איפה הכסף מרוכז, מה זמין באמת, ומה מחייב בדיקה מקצועית.';
+    ? `${fmtCurrency(totalMonthly)} ממשיכים להיכנס בכל חודש${employerDependencyPct ? `, מהם ${employerDependencyPct}% תלויי מעסיק` : ''}. לכן המבחן כאן הוא לא כמות המוצרים, אלא האם הקצב, הנזילות והעתיד הפרישתי עדיין מסונכרנים עם היעד.`
+    : 'גם בלי קצב חיסכון חודשי מדווח, אפשר כבר לראות אם הנכסים, הנזילות וההתחייבויות תומכים בכיוון התכנוני.';
 
   const overviewKpis = [
-    { label: 'מה כבר נבנה', value: totalBalance ? fmtCurrency(totalBalance) : '-', note: `${savings.length} מוצרים בתמונה אחת` },
+    { label: familyMode ? 'הון משפחתי' : 'מה כבר נבנה', value: totalBalance ? fmtCurrency(totalBalance) : '-', note: familyMode ? `${memberSummaries.length} בני משפחה · ${savings.length} מוצרים` : `${savings.length} מוצרים בתמונה אחת` },
     { label: 'מה זמין באמת', value: totalLiquidBalance ? fmtCurrency(totalLiquidBalance) : '₪0', note: hasNoLiquidMoney ? `אין כרגע כסף נזיל. ${fmtCurrency(totalNonLiquidBalance || 0)} עדיין לא זמינים למשיכה מיידית` : (nonLiquidSavings.length ? `${fmtCurrency(totalNonLiquidBalance || 0)} עדיין לא נזילים` : 'כרגע אין שכבת נעילה מהותית') },
-    { label: 'מה ממשיך להצטבר', value: totalMonthly ? fmtCurrency(totalMonthly) : '—', note: totalMonthly ? `${employerDependencyPct}% תלויי מעסיק` : 'אין קצב חיסכון שוטף מדווח' },
+    { label: familyMode ? 'חיסכון משפחתי חודשי' : 'מה ממשיך להצטבר', value: totalMonthly ? fmtCurrency(totalMonthly) : '—', note: totalMonthly ? `${employerDependencyPct}% תלויי מעסיק` : 'אין קצב חיסכון שוטף מדווח' },
   ];
 
   const focusRows = [
     {
       icon: '01',
-      title: 'איפה הכסף מרוכז',
-      value: topCompany ? `${topCompany.label} מחזיק ${topCompany.pct}% מהתיק` : 'הכסף מפוזר יחסית בין כמה גופים',
+      title: familyMode ? 'התמונה המשפחתית' : 'איפה הכסף מרוכז',
+      value: familyMode
+        ? memberSummaries.map(member => `${member.shortLabel}: ${fmtCurrency(member.totalBalance || 0)}`).join(' · ')
+        : (topCompany ? `${topCompany.label} מחזיק ${topCompany.pct}% מהתיק` : 'הכסף מפוזר יחסית בין כמה גופים'),
     },
     {
       icon: '02',
@@ -4632,81 +5194,154 @@ function generateReport(reportVariant = 'summary') {
     },
     {
       icon: '03',
-      title: 'מה ממשיך לבנות עתיד',
+      title: familyMode ? 'מה בונה את העתיד המשפחתי' : 'מה ממשיך לבנות עתיד',
       value: totalMonthly
         ? `${fmtCurrency(totalMonthly)} ממשיכים להיכנס בכל חודש${employerDependencyPct ? `, מהם ${employerDependencyPct}% תלויי מעסיק` : ''}`
         : 'אין כרגע קצב חיסכון חודשי מדווח שעליו אפשר לבנות יעד',
     },
     {
       icon: '04',
-      title: 'מה דורש החלטה',
+      title: 'מה דורש כיוון',
       value: totalLoans
         ? `במקביל לחיסכון קיימות התחייבויות של ${fmtCurrency(totalLoans)}${totalLoanMonthly ? ` והחזר של ${fmtCurrency(totalLoanMonthly)} לחודש` : ''}`
         : (weightedReturn !== null
-            ? `התשואה המשוקללת היא ${weightedReturn.toFixed(2)}%, אבל השאלה היא אם המבנה כולו עדיין נכון`
+            ? `התשואה המשוקללת היא ${weightedReturn.toFixed(2)}%, ועכשיו צריך לוודא שגם המבנה כולו עדיין נכון`
             : 'יש כאן כמה שכבות מידע שצריך לחבר להחלטה אחת ולא לעוד רשימה'),
     },
   ];
 
   let storyCards = [
     {
-      kicker: 'השורה התחתונה',
+      kicker: familyMode ? 'מבט משפחתי' : 'השורה התחתונה',
       value: totalBalance ? fmtCurrency(totalBalance) : '—',
-      title: totalBalance ? 'יש כאן בסיס חיסכון משמעותי' : 'המידע כבר מתחיל להיאסף לתמונה אחת',
-      note: totalMonthly ? `ובנוסף נכנסים לתיק ${fmtCurrency(totalMonthly)} בכל חודש.` : 'השלב הבא הוא להבין מה המבנה הזה באמת אומר.',
+      title: familyMode ? 'זה ההון שעומד היום מאחורי התוכנית המשפחתית' : 'זה בסיס החיסכון שעומד היום מאחורי התוכנית',
+      note: totalMonthly ? `ובנוסף ממשיכים להיכנס ${fmtCurrency(totalMonthly)} בכל חודש.` : 'השלב הבא הוא להבין אם המבנה הזה עדיין משרת נכון את היעד.',
       accent: 'accent',
     },
     {
       kicker: 'מה לא רואים ביום יום',
       value: nonLiquidSavings.length ? fmtCurrency(totalNonLiquidBalance || 0) : (topCompany ? `${topCompany.pct}%` : '—'),
-      title: nonLiquidSavings.length ? 'לא כל הכסף באמת פנוי כשצריכים אותו' : 'הריכוז במבנה התיק משנה את רמת הסיכון',
+      title: nonLiquidSavings.length ? 'לא כל הכסף באמת פנוי כשצריכים אותו' : 'הריכוז במבנה התיק משנה את רמת הגמישות',
       note: nonLiquidSavings.length
         ? `${lockedSoonCount ? `${lockedSoonCount} מוצרים עשויים להיפתח עד שנה.` : 'חלק מהכסף יישאר מחוץ ליד המיידית.'}`
         : (topCompany ? `${topCompany.label} מרכז גוף משמעותי מתוך התיק.` : 'אין כרגע נקודת ריכוז אחת דומיננטית.'),
       accent: '',
     },
     {
-      kicker: 'מה יכריע את העתיד',
+      kicker: 'מה צפוי קדימה',
       value: retirementProjectionTotal ? fmtCurrency(retirementProjectionTotal) : (totalMonthly ? fmtCurrency(totalMonthly) : '—'),
-      title: retirementProjectionTotal ? 'הפרישה כבר מתחילה מהמבנה של היום' : 'גם לקצב ההפקדה יש מחיר מצטבר של שנים',
+      title: retirementProjectionTotal ? (familyMode ? 'העתיד הפרישתי נבנה כבר מהמבנה המשפחתי של היום' : 'הפרישה כבר מתחילה מהמבנה של היום') : 'גם לקצב ההפקדה יש מחיר מצטבר של שנים',
       note: retirementProjectionTotal
-        ? 'ככל שהמבנה מדויק יותר היום, כך הפרישה פחות תלויה במזל ויותר בתכנון.'
+        ? 'ככל שהמבנה מדויק יותר היום, כך השנים הבאות פחות תלויות במזל ויותר בתכנון.'
         : (totalMonthly ? `כל חודש של ${fmtCurrency(totalMonthly)} שממשיך על אוטומט הוא החלטה שמצטברת.` : 'בלי הפקדה שוטפת מדווחת, כל החלטה על המבנה חשובה אפילו יותר.'),
       accent: '',
     },
     {
-      kicker: 'איפה השירות משנה תוצאה',
+      kicker: 'מה נבחן בפגישה',
       value: totalLoans ? fmtCurrency(totalLoans) : (topCompany ? `${topCompany.pct}%` : `${activeProducts}`),
-      title: totalLoans ? 'חיסכון והתחייבויות חייבים להיבדק יחד' : 'בלי יד אחת על כל התמונה, קל להמשיך על אוטומט',
+      title: totalLoans ? 'חיסכון והתחייבויות חייבים להיבדק יחד' : 'הפגישה נועדה לכוון את המבנה, לא רק לקרוא את הדוח',
       note: totalLoans
-        ? 'כשיש גם חיסכון וגם חוב, הערך הוא לא רק במספרים אלא בסדר הפעולות הנכון ביניהם.'
-        : 'כאן בדיוק נכנס ליווי מקצועי: לחבר בין כל המוצרים, לסנן רעש, ולהוציא החלטה אחת ברורה.',
+        ? 'כשיש גם חיסכון וגם חוב, סדר הפעולות משפיע לא פחות מהמספרים עצמם.'
+        : 'כאן מתרגמים את התמונה הזו להחלטות: מה לשמר, מה לעדכן, ומה לא להעמיס על התיק סתם.',
       accent: '',
     },
   ];
 
-  const closingLead = totalBalance
-    ? `אם כבר נצברו כאן ${fmtCurrency(totalBalance)}, האם נכון שהתיק הזה ימשיך להתנהל כמוצרים נפרדים במקום כתוכנית אחת?`
-    : 'אם גם אחרי כל הנתונים עדיין לא ברור מה נכון לעשות ראשון, זו בדיוק הנקודה שבה צריך יד מקצועית.';
+  const householdSnapshotHtml = familyMode ? `
+      <div class="report-section report-section-opening" style="margin-top:1.1rem;">
+        <div class="report-section-title">
+          <span class="dot" style="background:#235888;"></span>
+          תמונת משק הבית
+        </div>
+        <div class="view-mode-switch" data-view-control="report-household">
+          <button type="button" class="view-mode-btn active" data-view-mode-btn="family" onclick="setHouseholdViewMode('report-household', 'family')">מסך משפחתי</button>
+          <button type="button" class="view-mode-btn" data-view-mode-btn="split" onclick="setHouseholdViewMode('report-household', 'split')">מסך מפוצל</button>
+        </div>
+        <div class="household-view-shell" data-view-scope="report-household" data-view-mode="family">
+          <div class="view-mode-pane" data-view-pane="family">
+            <div class="household-family-hero">
+              <div class="household-family-message">
+                <span class="k">תמונת על</span>
+                <span class="v">${reportDisplayName} פועלים כרגע דרך ${savings.length} מוצרים, עם הון כולל של ${totalBalance ? fmtCurrency(totalBalance) : '—'}.</span>
+                <span class="n">${hasNoLiquidMoney ? 'כרגע אין רזרבה נזילה זמינה למשפחה, ולכן חשוב לבחון החלטות ברמת משק הבית ולא רק ברמת מוצר בודד.' : actionWindowNote}</span>
+              </div>
+              <div class="household-family-message">
+                <span class="k">למה לעבור למבט מפוצל</span>
+                <span class="v">כשרוצים לאתר פער בין בני הזוג, לזהות מי מייצר את ההפקדה, או מי נושא את שכבת ההלוואה.</span>
+                <span class="n">מעבר ל־"מסך מפוצל" יפרק את אותה תמונה לשני צדדים כדי למקד את הבדיקה.</span>
+              </div>
+            </div>
+            <div class="household-snapshot-grid">
+              <div class="household-snapshot-card">
+                <span class="k">הון משפחתי נוכחי</span>
+                <span class="v">${totalBalance ? fmtCurrency(totalBalance) : '—'}</span>
+                <span class="n">${savings.length} מוצרים פעילים ומדווחים</span>
+              </div>
+              <div class="household-snapshot-card">
+                <span class="k">רזרבה נזילה</span>
+                <span class="v">${totalLiquidBalance ? fmtCurrency(totalLiquidBalance) : '₪0'}</span>
+                <span class="n">${actionWindowNote}</span>
+              </div>
+              <div class="household-snapshot-card">
+                <span class="k">חיסכון חודשי משפחתי</span>
+                <span class="v">${totalMonthly ? fmtCurrency(totalMonthly) : '—'}</span>
+                <span class="n">${employerDependencyPct ? `${employerDependencyPct}% תלויי מעסיק` : 'ללא תלות מהותית במעסיק'}</span>
+              </div>
+              <div class="household-snapshot-card">
+                <span class="k">תחזית הון עתידי</span>
+                <span class="v">${retirementProjectionTotal ? fmtCurrency(retirementProjectionTotal) : '—'}</span>
+                <span class="n">${retirementProjectionTotal ? 'סך חיזוי משולב לפי נתוני מסלקה וחישוב' : 'אין עדיין תחזית מסלקה מספקת לכל בני המשפחה'}</span>
+              </div>
+            </div>
+          </div>
+          <div class="view-mode-pane" data-view-pane="split" hidden>
+            <div class="mini-callout household-split-note">המסך המפוצל מציג כל צד בנפרד כדי להבין מי מחזיק את עיקר ההון, מי מפקיד, למי יש נזילות, והיכן מרוכזות ההלוואות.</div>
+            <div class="household-member-grid">
+              ${memberSummaries.map(member => `
+                <div class="household-member-panel ${member.toneClass}">
+                  <div class="household-member-head">
+                    <div>
+                      <strong>${member.label}</strong>
+                      <span>${member.name}</span>
+                    </div>
+                    <span class="saving-member-badge ${member.toneClass}">${member.productCount} מוצרים</span>
+                  </div>
+                  <div class="household-member-mini">
+                    <div class="mini"><b>יתרה</b><em>${member.totalBalance ? fmtCurrency(member.totalBalance) : '—'}</em></div>
+                    <div class="mini"><b>חיסכון/חודש</b><em>${member.totalMonthly ? fmtCurrency(member.totalMonthly) : '—'}</em></div>
+                    <div class="mini"><b>נזיל</b><em>${member.liquidBalance ? fmtCurrency(member.liquidBalance) : '₪0'}</em></div>
+                    <div class="mini"><b>הלוואות</b><em>${member.loans ? fmtCurrency(member.loans) : 'ללא'}</em></div>
+                  </div>
+                </div>`).join('')}
+            </div>
+          </div>
+        </div>
+      </div>` : '';
 
-  const closingServiceText = 'הערך של ליווי מקצועי איננו בעוד דוח. הוא בחיבור בין נזילות, הפקדות, דמי ניהול, פרישה וכיסויים לסדר פעולות אחד שמשרת את הלקוח ולא את ההרגל.';
+  const closingLead = familyMode
+    ? `בפגישה הקרובה צריך להכריע אם המבנה המשפחתי הנוכחי באמת משרת את שני בני הזוג יחד.`
+    : `בפגישה הקרובה צריך להכריע אם המבנה הנוכחי עדיין משרת את התוכנית ולא רק ממשיך מתוך הרגל.`;
+
+  const closingServiceText = familyMode
+    ? 'הערך של הפגישה הבאה הוא בחיבור בין שני בני הזוג, הנזילות, החיסכון והעתיד הפרישתי למהלך אחד ברור שאפשר לנהל ולמדוד.'
+    : 'הערך של הפגישה הבאה הוא בחיבור בין הנזילות, החיסכון, העלויות והעתיד הפרישתי למהלך אחד שאפשר לנהל ולעקוב אחריו.';
 
   const closingQuestions = [
-    topCompany ? `האם היית בוחר היום מחדש לרכז ${topCompany.pct}% מהתיק ב-${topCompany.label}?` : 'האם יש היום גורם אחד שרואה את כל התמונה כמקשה אחת?',
-    nonLiquidSavings.length ? 'האם ברור אילו כספים באמת זמינים, ואילו יישארו מחוץ ליד גם כשיהיה בהם צורך?' : 'האם מבנה הנזילות הנוכחי באמת מתאים לשנים הקרובות?',
-    totalMonthly ? `האם ${fmtCurrency(totalMonthly)} שנכנסים בכל חודש בונים את היעד שאתה רוצה, או רק ממשיכים להתפזר בין מוצרים?` : 'האם יש היום תוכנית ברורה למה להשאיר, מה לשפר, ומה לא לגעת?',
-    totalLoans ? 'האם נכון להחזיק חיסכון והלוואה במקביל בלי לבדוק אם המבנה הזה באמת עובד לטובתך?' : 'אם מחר היית צריך לקבל החלטה אחת על כל התיק הזה, האם היה ברור לך מהי?',
+    familyMode ? 'האם החלוקה בין שני בני הזוג עדיין נכונה, או שנוצר פער שמצדיק כיוון מחדש?' : (topCompany ? `האם נכון להשאיר ${topCompany.pct}% מהתיק ב-${topCompany.label}?` : 'האם פיזור הגופים בתיק עדיין נכון?'),
+    nonLiquidSavings.length ? 'האם מבנה הנזילות מתאים לשנה-שנתיים הקרובות של משק הבית?' : 'האם מבנה הנזילות הקיים תומך בתוכנית ולא רק נראה נוח על הנייר?',
+    totalMonthly ? `האם ${fmtCurrency(totalMonthly)} שנכנסים בכל חודש באמת בונים את היעד, או רק ממשיכים במסלול בלי בקרה?` : 'האם יש היום קצב חיסכון שמשרת יעד ברור?',
+    totalLoans ? 'האם נכון להחזיק חיסכון והלוואה במקביל במבנה הנוכחי?' : 'מהי ההחלטה האחת שצריך לקבל עכשיו כדי לחדד את הכיוון?'
   ];
 
   const marketingCtaHtml = `
       <div class="report-section report-section-followup" style="margin-top:1.5rem;">
         <div class="report-section-title">
           <span class="dot" style="background:#8b6914;"></span>
-          השאלה שנשארת אחרי שקוראים את הדוח
+          מה נבחן בפגישה הקרובה
         </div>
         <div class="marketing-cta">
           <div>
-            <div class="marketing-cta-kicker">כאן עוברים ממידע להחלטה</div>
+            <div class="marketing-cta-kicker">עוברים מסקירה להחלטות</div>
             <div class="marketing-cta-title">${closingLead}</div>
             <div class="marketing-cta-text">${closingServiceText}</div>
           </div>
@@ -4716,7 +5351,7 @@ function generateReport(reportVariant = 'summary') {
         </div>
       </div>`;
   const analyticsSourceNote = mislakaProducts.length
-    ? `מבוסס על ${mislakaProducts.length} מוצרים מתוך המסלקה`
+    ? `מבוסס על ${mislakaProducts.length} מוצרים מדווחים מתוך מסלקה משפחתית`
     : 'מבוסס על הנתונים שהוזנו ידנית';
 
   let futureMetricBoxes = [];
@@ -5737,8 +6372,8 @@ function generateReport(reportVariant = 'summary') {
   const html = `
   <div class="report">
     <div class="report-actions">
-      <button class="btn-print" onclick="savePDF('${name}', 'landscape')">🖨️ PDF לרוחב A4</button>
-      <button class="btn-print secondary" onclick="savePDF('${name}', 'portrait')">📄 PDF לאורך A4</button>
+      <button class="btn-print" onclick="savePDF(${JSON.stringify(reportDisplayName)}, 'landscape')">🖨️ PDF לרוחב A4</button>
+      <button class="btn-print secondary" onclick="savePDF(${JSON.stringify(reportDisplayName)}, 'portrait')">📄 PDF לאורך A4</button>
       <div class="report-factor-controls">
         <label class="report-factor-toggle"><input type="checkbox" id="report-manual-pension-factor-enabled" ${useManualPensionFactor ? 'checked' : ''} onchange="syncReportPensionFactorFromView()"> השתמש במקדם ידני בדוח</label>
         <div class="report-factor-field">
@@ -5754,7 +6389,7 @@ function generateReport(reportVariant = 'summary') {
       <div class="report-header-top">
         <div class="report-client-info">
           <div class="report-type-chip ${isDeepReport ? 'deep' : ''}">${reportTitle}</div>
-          <h1>${name}</h1>
+          <h1>${reportDisplayName}</h1>
           <div class="report-client-id">${clientId && clientId !== '-' ? `ת.ז. ${clientId}` : 'פרטי זיהוי חלקיים'}</div>
           <div class="report-type-note">${reportSubtitle}</div>
           ${clientMetaItems.length ? `
@@ -5805,6 +6440,7 @@ function generateReport(reportVariant = 'summary') {
     <div class="report-body">
 
       <div class="report-print-intro-flow">
+      ${householdSnapshotHtml}
       <!-- OPENING PAGES -->
       <div class="report-section report-section-opening">
         <div class="report-section-title">
@@ -5960,8 +6596,8 @@ function generateReport(reportVariant = 'summary') {
           <div class="visual-card wide indicator-map-card">
             <div class="visual-card-head">
               <div>
-                <div class="visual-card-title">מפת משפחות מוצר ונזילות</div>
-                <div class="visual-card-note">הגרף מאחד את התיק לשלוש משפחות ברורות: פנסיוני, חיסכון נזיל והשתלמות. בתוך ההשתלמות כל קרן מסומנת גם לפי מצב הנזילות שלה.</div>
+                <div class="visual-card-title">מפת סוגי מוצר ונזילות</div>
+                <div class="visual-card-note">הגרף מאחד את התיק לשלוש קבוצות ברורות: פנסיוני, חיסכון נזיל והשתלמות. בתוך קבוצת ההשתלמות כל קרן מסומנת גם לפי מצב הנזילות שלה.</div>
               </div>
               <div class="visual-card-note">${analyticsSourceNote}</div>
             </div>
@@ -6220,6 +6856,7 @@ function generateReport(reportVariant = 'summary') {
   `;
 
   document.getElementById('report-container').innerHTML = html;
+  if (familyMode) setHouseholdViewMode('report-household', 'family');
   initFamilyMapTooltips(document.getElementById('report-container'));
   switchTab('report');
 }
@@ -6335,7 +6972,7 @@ addSaving();
 
 // ===== MISLAKA פנסיונית =====
 
-let mislakaData = null; // parsed data ready to import
+let mislakaData = null; // combined household data for report generation
 
 const SUG_MUTZAR_NAME = {
   '1': 'ביטוח מנהלים',
@@ -6414,13 +7051,96 @@ function inferProductTypeName(sugMutzar, filePrefix, planName) {
 
   return fallback;
 }
-function openMislakaModal() {
+
+function buildHouseholdMemberPayload(parsed, target) {
+  if (!parsed) return null;
+  const meta = getHouseholdTargetMeta(target);
+  const clientInfo = parsed.clientInfo ? { ...parsed.clientInfo } : null;
+  const ownerName = formatClientFullName(clientInfo);
+  const ownerId = clientInfo?.id || '';
+  return {
+    memberId: meta.memberId,
+    role: meta.role,
+    label: meta.label,
+    shortLabel: meta.shortLabel,
+    buttonLabel: meta.buttonLabel,
+    clientInfo,
+    reportDate: parsed.reportDate || '',
+    importedAt: new Date().toISOString(),
+    products: (parsed.products || []).map(product => ({
+      ...product,
+      memberId: meta.memberId,
+      memberRole: meta.role,
+      householdLabel: meta.shortLabel,
+      ownerName: product.ownerName || ownerName,
+      ownerId: product.ownerId || ownerId,
+    })),
+  };
+}
+
+function getHouseholdMembers() {
+  return ['primary', 'spouse']
+    .map(key => householdData[key])
+    .filter(Boolean);
+}
+
+function rebuildCombinedMislakaData() {
+  const members = getHouseholdMembers();
+  if (!members.length) {
+    mislakaData = null;
+    return null;
+  }
+  const primaryMember = householdData.primary || members[0];
+  mislakaData = {
+    clientInfo: primaryMember?.clientInfo || null,
+    reportDate: members.map(member => member.reportDate).filter(Boolean).sort().pop() || '',
+    products: members.flatMap(member => member.products || []),
+    household: {
+      mode: members.length > 1 ? 'family' : 'individual',
+      members: members.map(member => ({
+        memberId: member.memberId,
+        role: member.role,
+        label: member.label,
+        shortLabel: member.shortLabel,
+        clientInfo: member.clientInfo || null,
+        reportDate: member.reportDate || '',
+        products: member.products || [],
+      })),
+    },
+  };
+  return mislakaData;
+}
+
+function getHouseholdMemberStats(member) {
+  const products = member?.products || [];
+  return {
+    productCount: products.length,
+    activeCount: products.filter(p => p.status === '1').length,
+    totalBalance: products.reduce((sum, p) => sum + (Number(p.totalBalance) || 0), 0),
+    monthly: products.reduce((sum, p) => sum + (Number(buildMislakaContributionProfile(p).total) || 0), 0),
+    loans: products.filter(p => p.hasLoan).reduce((sum, p) => sum + (Number(p.loanAmount) || 0), 0),
+    liquid: products.reduce((sum, p) => sum + (resolveLiquidityByDate(normalizeMislakaRawDate(p.liquidityDateRaw)) === 'נזיל' ? (Number(p.totalBalance) || 0) : 0), 0),
+  };
+}
+
+function removeSavingsByMember(target) {
+  const normalizedTarget = normalizeHouseholdTarget(target);
+  const list = document.getElementById('savings-list');
+  Array.from(list.querySelectorAll('.saving-block')).forEach(block => {
+    const memberId = normalizeHouseholdTarget(block.querySelector('[name="member-id"]')?.value || block.dataset.memberId || 'primary');
+    if (memberId === normalizedTarget) block.remove();
+  });
+}
+
+function openMislakaModal(target = 'primary') {
+  activeMislakaTarget = normalizeHouseholdTarget(target);
   document.getElementById('mislaka-modal').style.display = 'flex';
   document.getElementById('mislaka-status').innerHTML = '';
   document.getElementById('mislaka-preview').innerHTML = '';
   document.getElementById('mislaka-modal-footer').style.display = 'none';
   document.getElementById('mislaka-file-input').value = '';
-  mislakaData = null;
+  pendingMislakaData = null;
+  setMislakaTarget(activeMislakaTarget);
 }
 
 function closeMislakaModal(e) {
@@ -6451,7 +7171,7 @@ async function processMislakaFile(file) {
   setMislakaStatus('⏳ מעבד קובץ...', 'loading');
   document.getElementById('mislaka-preview').innerHTML = '';
   document.getElementById('mislaka-modal-footer').style.display = 'none';
-  mislakaData = null;
+  pendingMislakaData = null;
 
   try {
     let xmlFiles = []; // [{name, text}]
@@ -6497,9 +7217,9 @@ async function processMislakaFile(file) {
       return;
     }
 
-    mislakaData = { clientInfo, reportDate, products: allProducts };
-    setMislakaStatus(`✅ נמצאו <strong>${allProducts.length}</strong> מוצרים`, 'success');
-    renderMislakaPreview(mislakaData);
+    pendingMislakaData = buildHouseholdMemberPayload({ clientInfo, reportDate, products: allProducts }, activeMislakaTarget);
+    setMislakaStatus(`✅ נמצאו <strong>${allProducts.length}</strong> מוצרים עבור ${getHouseholdTargetMeta(activeMislakaTarget).label}`, 'success');
+    renderMislakaPreview(pendingMislakaData);
     document.getElementById('mislaka-modal-footer').style.display = 'flex';
 
   } catch (err) {
@@ -7140,13 +7860,24 @@ function fmtAmt(n) {
 }
 
 function renderMislakaPreview(data) {
+  if (!data) {
+    document.getElementById('mislaka-preview').innerHTML = '';
+    return;
+  }
   const { clientInfo, reportDate, products } = data;
+  const memberMeta = getHouseholdTargetMeta(data.memberId);
   let html = '';
+  const existingCounterparty = householdData[data.memberId];
+
+  html += `<div style="background:#f7fbff;border-radius:12px;padding:0.85rem 1rem;margin-bottom:0.9rem;border:1px solid #dce7f2;display:flex;gap:1rem;flex-wrap:wrap;align-items:center;">
+    <div style="font-weight:800;font-size:0.95rem;color:var(--navy);">העלאה עבור ${memberMeta.label}</div>
+    ${existingCounterparty ? `<div style="font-size:0.78rem;color:#6f8195;">כבר קיימת מסלקה לצד זה. הייבוא יחליף רק את ${memberMeta.shortLabel}.</div>` : `<div style="font-size:0.78rem;color:#6f8195;">לאחר הייבוא הנתונים יצטרפו לתמונה ${householdData.primary && householdData.spouse ? 'המשפחתית' : 'הנוכחית'}.</div>`}
+  </div>`;
 
   if (clientInfo) {
-    const fullName = (clientInfo.firstName + ' ' + clientInfo.lastName).trim();
+    const fullName = formatClientFullName(clientInfo);
     html += `<div style="background:#f0f6ff;border-radius:10px;padding:0.8rem 1rem;margin-bottom:1rem;display:flex;gap:1.5rem;flex-wrap:wrap;align-items:center;">
-      <div style="font-weight:700;font-size:1rem;color:var(--navy);">👤 ${fullName || 'לקוח'}</div>
+      <div style="font-weight:700;font-size:1rem;color:var(--navy);">👤 ${fullName || memberMeta.label}</div>
       ${clientInfo.id ? `<div style="font-size:0.8rem;color:#555;">ת.ז.: <strong>${clientInfo.id}</strong></div>` : ''}
       ${clientInfo.phone ? `<div style="font-size:0.8rem;color:#555;">📱 ${clientInfo.phone}</div>` : ''}
       ${clientInfo.email ? `<div style="font-size:0.8rem;color:#555;">✉️ ${clientInfo.email}</div>` : ''}
@@ -7177,109 +7908,164 @@ function renderMislakaPreview(data) {
   document.getElementById('mislaka-preview').innerHTML = html;
 }
 
-function renderMislakaTab(data) {
-  if (!data) return;
-  const { clientInfo, reportDate, products } = data;
-
-  const fullName = clientInfo ? (clientInfo.firstName + ' ' + clientInfo.lastName).trim() : '';
-  const totalBal = products.reduce((s, p) => s + p.totalBalance, 0);
-  const totalMonthly = products.reduce((sum, p) => sum + buildMislakaContributionProfile(p).total, 0);
-  const activeCount = products.filter(p => p.status === '1').length;
-  const hasLoanCount = products.filter(p => p.hasLoan).length;
-
-  let html = `
-  <div class="mislaka-page-header">
-    <div>
-      <h2>🏛️ מסלקה פנסיונית — ${fullName || 'לקוח'}</h2>
-      ${clientInfo ? `<div class="mph-sub">
-        ${clientInfo.id ? `ת.ז.: ${clientInfo.id} &nbsp;|&nbsp;` : ''}
-        ${clientInfo.phone ? `📱 ${clientInfo.phone} &nbsp;|&nbsp;` : ''}
-        ${clientInfo.email ? `✉️ ${clientInfo.email}` : ''}
-        ${reportDate ? ` &nbsp;|&nbsp; תאריך דוח: ${fmtMislakaDate(reportDate.replace(/[-T:]/g,'').slice(0,8))}` : ''}
-      </div>` : ''}
-    </div>
-    <div class="mph-stats">
-      <div class="mph-stat"><div class="n">${products.length}</div><div style="font-size:0.7rem;color:var(--silver);">מוצרים</div></div>
-      <div class="mph-stat"><div class="n">${activeCount}</div><div style="font-size:0.7rem;color:var(--silver);">פעילים</div></div>
-      <div class="mph-stat"><div class="n" style="font-size:1rem;">${fmtAmt(totalBal)}</div><div style="font-size:0.7rem;color:var(--silver);">סה"כ יתרה</div></div>
-      ${totalMonthly ? `<div class="mph-stat"><div class="n" style="font-size:1rem;">${fmtAmt(totalMonthly)}</div><div style="font-size:0.7rem;color:var(--silver);">הפקדה/חודש</div></div>` : ''}
-    </div>
-  </div>`;
-
-  // Group by insurer
-  const byInsurer = {};
-  for (const p of products) {
-    if (!byInsurer[p.insurer]) byInsurer[p.insurer] = [];
-    byInsurer[p.insurer].push(p);
+function renderMislakaTab() {
+  const members = getHouseholdMembers();
+  if (!members.length) {
+    document.getElementById('mislaka-empty-banner').style.display = 'block';
+    document.getElementById('mislaka-client-view').style.display = 'none';
+    document.getElementById('mislaka-client-view').innerHTML = '';
+    return;
   }
 
-  for (const [insurer, prods] of Object.entries(byInsurer)) {
-    html += `<div style="margin-top:1.5rem;">
-      <div style="background:var(--navy-mid);color:var(--gold);font-weight:700;font-size:0.9rem;padding:0.6rem 1rem;border-radius:10px 10px 0 0;display:flex;align-items:center;gap:0.5rem;">
-        🏢 ${insurer}
-        <span style="font-size:0.75rem;color:var(--silver);font-weight:400;">(${prods.length} מוצרים)</span>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:0.8rem;padding:0.8rem;background:white;border-radius:0 0 10px 10px;border:1px solid #e0e8f0;border-top:none;">`;
+  const combined = rebuildCombinedMislakaData();
+  const products = combined?.products || [];
+  const totalBal = products.reduce((sum, p) => sum + (Number(p.totalBalance) || 0), 0);
+  const totalMonthly = products.reduce((sum, p) => sum + (Number(buildMislakaContributionProfile(p).total) || 0), 0);
+  const activeCount = products.filter(p => p.status === '1').length;
+  const householdTitle = members.length > 1
+    ? `🏛️ מסלקה משפחתית — ${members.map(member => formatClientFullName(member.clientInfo) || member.label).join(' + ')}`
+    : `🏛️ מסלקה פנסיונית — ${formatClientFullName(members[0].clientInfo) || members[0].label}`;
 
-    for (const p of prods) {
-      const isActive = p.status === '1';
-      const contributionProfile = buildMislakaContributionProfile(p);
-      html += `<div class="mislaka-product-card">
-        <div class="mpc-header">
-          <span class="saving-card-status ${isActive ? 'active' : 'inactive'}">${isActive ? 'פעיל' : 'לא פעיל'}</span>
-          <span style="font-weight:800;font-size:1rem;">${p.productType}</span>
-          ${p.planName ? `<span style="color:var(--silver);font-size:0.82rem;">— ${p.planName}</span>` : ''}
-          <span style="font-family:monospace;font-size:0.78rem;color:#888;margin-right:auto;">פוליסה: ${p.policyNum}</span>
-        </div>
-        <div class="mpc-body">
-          <div class="mpc-grid">
-            <div class="mpc-item"><span class="mpc-label">יתרה כוללת</span><span class="mpc-value" style="color:#27ae60;font-size:1.1rem;">${fmtAmt(p.totalBalance)}</span></div>
-            ${p.empBalance ? `<div class="mpc-item"><span class="mpc-label">יתרה עובד</span><span class="mpc-value">${fmtAmt(p.empBalance)}</span></div>` : ''}
-            ${p.emplrBalance ? `<div class="mpc-item"><span class="mpc-label">יתרה מעביד</span><span class="mpc-value">${fmtAmt(p.emplrBalance)}</span></div>` : ''}
-            ${p.sevBalance ? `<div class="mpc-item"><span class="mpc-label">פיצויים</span><span class="mpc-value">${fmtAmt(p.sevBalance)}</span></div>` : ''}
-            ${p.salary ? `<div class="mpc-item"><span class="mpc-label">שכר</span><span class="mpc-value">${fmtAmt(p.salary)}</span></div>` : ''}
-            ${p.monthlyEmployee ? `<div class="mpc-item"><span class="mpc-label">הפקדת עובד</span><span class="mpc-value">${fmtAmt(p.monthlyEmployee)}</span></div>` : ''}
-            ${p.monthlyEmployer ? `<div class="mpc-item"><span class="mpc-label">הפקדת מעביד</span><span class="mpc-value">${fmtAmt(p.monthlyEmployer)}</span></div>` : ''}
-            ${p.monthlySeverance ? `<div class="mpc-item"><span class="mpc-label">פיצויים/חודש</span><span class="mpc-value">${fmtAmt(p.monthlySeverance)}</span></div>` : ''}
-            ${p.joinDate ? `<div class="mpc-item"><span class="mpc-label">תאריך הצטרפות</span><span class="mpc-value">${fmtMislakaDate(p.joinDate)}</span></div>` : ''}
-            ${p.balanceDate ? `<div class="mpc-item"><span class="mpc-label">תאריך יתרה</span><span class="mpc-value">${fmtMislakaDate(p.balanceDate)}</span></div>` : ''}
-            ${p.returnPct ? `<div class="mpc-item"><span class="mpc-label">תשואה נטו</span><span class="mpc-value" style="color:${p.returnSign==='2'?'#e74c3c':'#27ae60'};">${p.returnSign==='2'?'-':''}${p.returnPct}%</span></div>` : ''}
-            ${p.retirementBalance ? `<div class="mpc-item"><span class="mpc-label">יתרה בגיל פרישה</span><span class="mpc-value" style="color:#8B6914;">${fmtAmt(p.retirementBalance)}</span></div>` : ''}
-          </div>
-          ${p.hasLoan ? `<div class="mpc-halvaa">
-            <span style="font-weight:700;color:#c0392b;">💳 הלוואה פעילה</span>
-            <span>סכום: ${fmtAmt(p.loanAmount)}</span>
-            <span>ריבית: ${p.loanRate}%</span>
-            ${p.loanMonthly ? `<span>החזר חודשי: ${fmtAmt(p.loanMonthly)}</span>` : ''}
-            ${p.loanPeriod ? `<span>תקופה: ${p.loanPeriod} חודשים</span>` : ''}
-          </div>` : ''}
-          ${p.coverages.length ? `<div class="mpc-kisui">
-            <strong style="color:var(--navy-mid);">כיסויים ביטוחיים:</strong>
-            ${p.coverages.map(c => `<span class="kisui-badge">${c.name}</span>`).join('')}
-          </div>` : ''}
-        </div>
-      </div>`;
+  const renderProductsByInsurer = (productsList) => {
+    const byInsurer = {};
+    for (const p of productsList) {
+      if (!byInsurer[p.insurer]) byInsurer[p.insurer] = [];
+      byInsurer[p.insurer].push(p);
     }
 
-    html += '</div></div>';
-  }
+    return Object.entries(byInsurer).map(([insurer, prods]) => `
+      <div style="margin-top:1.25rem;">
+        <div style="background:var(--navy-mid);color:var(--gold);font-weight:700;font-size:0.9rem;padding:0.6rem 1rem;border-radius:10px 10px 0 0;display:flex;align-items:center;gap:0.5rem;">
+          🏢 ${insurer}
+          <span style="font-size:0.75rem;color:var(--silver);font-weight:400;">(${prods.length} מוצרים)</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:0.8rem;padding:0.8rem;background:white;border-radius:0 0 10px 10px;border:1px solid #e0e8f0;border-top:none;">
+          ${prods.map(p => {
+            const isActive = p.status === '1';
+            return `<div class="mislaka-product-card">
+              <div class="mpc-header">
+                <span class="saving-card-status ${isActive ? 'active' : 'inactive'}">${isActive ? 'פעיל' : 'לא פעיל'}</span>
+                <span style="font-weight:800;font-size:1rem;">${p.productType}</span>
+                ${p.planName ? `<span style="color:var(--silver);font-size:0.82rem;">— ${p.planName}</span>` : ''}
+                <span style="font-family:monospace;font-size:0.78rem;color:#888;margin-right:auto;">פוליסה: ${p.policyNum}</span>
+              </div>
+              <div class="mpc-body">
+                <div class="mpc-grid">
+                  <div class="mpc-item"><span class="mpc-label">יתרה כוללת</span><span class="mpc-value" style="color:#27ae60;font-size:1.1rem;">${fmtAmt(p.totalBalance)}</span></div>
+                  ${p.empBalance ? `<div class="mpc-item"><span class="mpc-label">יתרה עובד</span><span class="mpc-value">${fmtAmt(p.empBalance)}</span></div>` : ''}
+                  ${p.emplrBalance ? `<div class="mpc-item"><span class="mpc-label">יתרה מעביד</span><span class="mpc-value">${fmtAmt(p.emplrBalance)}</span></div>` : ''}
+                  ${p.sevBalance ? `<div class="mpc-item"><span class="mpc-label">פיצויים</span><span class="mpc-value">${fmtAmt(p.sevBalance)}</span></div>` : ''}
+                  ${p.salary ? `<div class="mpc-item"><span class="mpc-label">שכר</span><span class="mpc-value">${fmtAmt(p.salary)}</span></div>` : ''}
+                  ${p.monthlyEmployee ? `<div class="mpc-item"><span class="mpc-label">הפקדת עובד</span><span class="mpc-value">${fmtAmt(p.monthlyEmployee)}</span></div>` : ''}
+                  ${p.monthlyEmployer ? `<div class="mpc-item"><span class="mpc-label">הפקדת מעביד</span><span class="mpc-value">${fmtAmt(p.monthlyEmployer)}</span></div>` : ''}
+                  ${p.monthlySeverance ? `<div class="mpc-item"><span class="mpc-label">פיצויים/חודש</span><span class="mpc-value">${fmtAmt(p.monthlySeverance)}</span></div>` : ''}
+                  ${p.joinDate ? `<div class="mpc-item"><span class="mpc-label">תאריך הצטרפות</span><span class="mpc-value">${fmtMislakaDate(p.joinDate)}</span></div>` : ''}
+                  ${p.balanceDate ? `<div class="mpc-item"><span class="mpc-label">תאריך יתרה</span><span class="mpc-value">${fmtMislakaDate(p.balanceDate)}</span></div>` : ''}
+                  ${p.returnPct ? `<div class="mpc-item"><span class="mpc-label">תשואה נטו</span><span class="mpc-value" style="color:${p.returnSign==='2'?'#e74c3c':'#27ae60'};">${p.returnSign==='2'?'-':''}${p.returnPct}%</span></div>` : ''}
+                  ${p.retirementBalance ? `<div class="mpc-item"><span class="mpc-label">יתרה בגיל פרישה</span><span class="mpc-value" style="color:#8B6914;">${fmtAmt(p.retirementBalance)}</span></div>` : ''}
+                </div>
+                ${p.hasLoan ? `<div class="mpc-halvaa">
+                  <span style="font-weight:700;color:#c0392b;">💳 הלוואה פעילה</span>
+                  <span>סכום: ${fmtAmt(p.loanAmount)}</span>
+                  <span>ריבית: ${p.loanRate}%</span>
+                  ${p.loanMonthly ? `<span>החזר חודשי: ${fmtAmt(p.loanMonthly)}</span>` : ''}
+                  ${p.loanPeriod ? `<span>תקופה: ${p.loanPeriod} חודשים</span>` : ''}
+                </div>` : ''}
+                ${p.coverages.length ? `<div class="mpc-kisui">
+                  <strong style="color:var(--navy-mid);">כיסויים ביטוחיים:</strong>
+                  ${p.coverages.map(c => `<span class="kisui-badge">${c.name}</span>`).join('')}
+                </div>` : ''}
+              </div>
+            </div>`;
+          }).join('')}
+        </div>
+      </div>`).join('');
+  };
 
-  html += `<div style="text-align:center;margin-top:2rem;">
-    <button class="btn-mislaka" onclick="importMislakaToForm()" style="font-size:1rem;padding:0.8rem 2.5rem;">✅ ייבא את כל המוצרים לטופס</button>
+  const renderMemberSection = (member) => {
+    const fullName = formatClientFullName(member.clientInfo) || member.label;
+    return `
+      <div style="margin-top:1.2rem;">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:0.8rem;margin-bottom:0.55rem;">
+          <div style="font-weight:800;color:var(--navy);font-size:1.05rem;">${member.label} — ${fullName}</div>
+          <button class="btn-mislaka" style="padding:0.55rem 1rem;font-size:0.82rem;" onclick="openMislakaModal('${member.memberId}')">החלף מסלקה לצד זה</button>
+        </div>
+        ${renderProductsByInsurer(member.products || [])}
+      </div>
+    `;
+  };
+
+  let html = `
+    <div class="mislaka-page-header">
+      <div>
+        <h2>${householdTitle}</h2>
+        <div class="mph-sub">${members.length > 1 ? 'התצוגה מאחדת שני בני זוג לאותה תמונה משפחתית, בלי לאבד בעלות או מסלקה נפרדת.' : 'המסלקה נשמרת במבנה שמוכן גם להתרחבות לתמונה זוגית.'}</div>
+      </div>
+      <div class="mph-stats">
+        <div class="mph-stat"><div class="n">${products.length}</div><div style="font-size:0.7rem;color:var(--silver);">מוצרים</div></div>
+        <div class="mph-stat"><div class="n">${activeCount}</div><div style="font-size:0.7rem;color:var(--silver);">פעילים</div></div>
+        <div class="mph-stat"><div class="n" style="font-size:1rem;">${fmtAmt(totalBal)}</div><div style="font-size:0.7rem;color:var(--silver);">הון משפחתי</div></div>
+        <div class="mph-stat"><div class="n" style="font-size:1rem;">${fmtAmt(totalMonthly)}</div><div style="font-size:0.7rem;color:var(--silver);">חיסכון/חודש</div></div>
+      </div>
+    </div>
+  `;
+
+  html += `<div class="view-mode-switch" data-view-control="mislaka-household">
+    <button type="button" class="view-mode-btn active" data-view-mode-btn="family" onclick="setHouseholdViewMode('mislaka-household', 'family')">מסך משפחתי</button>
+    <button type="button" class="view-mode-btn" data-view-mode-btn="split" onclick="setHouseholdViewMode('mislaka-household', 'split')">מסך מפוצל</button>
+  </div>`;
+
+  html += `<div class="household-view-shell" data-view-scope="mislaka-household" data-view-mode="family">
+    <div class="view-mode-pane" data-view-pane="family">
+      <div class="mini-callout" style="margin-bottom:0.9rem;">התצוגה המשפחתית מרכזת את כל המוצרים יחד כדי להבין את משק הבית כיחידה אחת לפני שיורדים להפרדה בין בני הזוג.</div>
+      <div class="mislaka-household-summary">
+        <div class="mph-stat" style="background:white;border:1px solid #dde6f0;"><div class="n" style="color:var(--navy);font-size:1rem;">${fmtAmt(totalBal)}</div><div class="l" style="color:#6d8197;">סך חיסכון משפחתי</div></div>
+        <div class="mph-stat" style="background:white;border:1px solid #dde6f0;"><div class="n" style="color:var(--navy);font-size:1rem;">${fmtAmt(totalMonthly)}</div><div class="l" style="color:#6d8197;">קצב חיסכון חודשי</div></div>
+        <div class="mph-stat" style="background:white;border:1px solid #dde6f0;"><div class="n" style="color:var(--navy);font-size:1rem;">${members.length}</div><div class="l" style="color:#6d8197;">בני משפחה בדוח</div></div>
+        <div class="mph-stat" style="background:white;border:1px solid #dde6f0;"><div class="n" style="color:var(--navy);font-size:1rem;">${products.filter(p => p.hasLoan).length}</div><div class="l" style="color:#6d8197;">מוצרים עם הלוואה</div></div>
+      </div>
+      ${renderProductsByInsurer(products)}
+    </div>
+    <div class="view-mode-pane" data-view-pane="split" hidden>
+      <div class="mini-callout" style="margin-bottom:0.9rem;">התצוגה המפוצלת מפרידה בין בני הזוג כדי למקד את הבדיקה: למי שייך כל מוצר, מי מפקיד, ואצל מי מרוכזים נזילות או חוב.</div>
+      <div class="mislaka-member-strip">
+        ${members.map(member => {
+          const stats = getHouseholdMemberStats(member);
+          const fullName = formatClientFullName(member.clientInfo) || member.label;
+          return `<div class="mislaka-member-card ${member.memberId}">
+            <h3>${member.label} — ${fullName}</h3>
+            <div class="meta">
+              ${member.clientInfo?.id ? `ת.ז. ${member.clientInfo.id}` : 'ללא ת.ז. מדווחת'}
+              ${member.reportDate ? ` · דוח ${fmtMislakaDate(String(member.reportDate).replace(/[-T:]/g,'').slice(0,8))}` : ''}
+            </div>
+            <div class="metrics">
+              <div class="metric"><span class="k">מוצרים</span><span class="v">${stats.productCount}</span></div>
+              <div class="metric"><span class="k">הון נוכחי</span><span class="v">${fmtAmt(stats.totalBalance)}</span></div>
+              <div class="metric"><span class="k">חיסכון/חודש</span><span class="v">${fmtAmt(stats.monthly)}</span></div>
+              <div class="metric"><span class="k">נזיל כרגע</span><span class="v">${fmtAmt(stats.liquid)}</span></div>
+            </div>
+          </div>`;
+        }).join('')}
+      </div>
+      ${members.map(renderMemberSection).join('')}
+    </div>
   </div>`;
 
   document.getElementById('mislaka-empty-banner').style.display = 'none';
   document.getElementById('mislaka-client-view').style.display = 'block';
   document.getElementById('mislaka-client-view').innerHTML = html;
+  setHouseholdViewMode('mislaka-household', 'family');
 }
 
 function importMislakaToForm() {
-  if (!mislakaData) return;
+  if (!pendingMislakaData) return;
 
-  const { clientInfo, products } = mislakaData;
+  const memberTarget = normalizeHouseholdTarget(pendingMislakaData.memberId);
+  const memberMeta = getHouseholdTargetMeta(memberTarget);
+  const { clientInfo, products } = pendingMislakaData;
 
   // Fill client personal data if fields exist
-  if (clientInfo) {
+  if (clientInfo && memberTarget === 'primary') {
     const fullName = `${clientInfo.firstName || ''} ${clientInfo.lastName || ''}`.trim();
     const setFieldValue = (selectors, value) => {
       if (!value) return;
@@ -7300,14 +8086,13 @@ function importMislakaToForm() {
     }
   }
 
-  // Remove all existing savings blocks
-  const list = document.getElementById('savings-list');
-  list.innerHTML = '';
-  savingCount = 0;
+  householdData[memberTarget] = pendingMislakaData;
+  rebuildCombinedMislakaData();
+  removeSavingsByMember(memberTarget);
 
   // Add one block per product
   for (const p of products) {
-    addSaving();
+    addSaving({ memberId: memberTarget });
     const block = document.getElementById(`saving-${savingCount}`);
 
     const set = (name, value) => {
@@ -7335,6 +8120,8 @@ function importMislakaToForm() {
 
     // Owner name
     set('owner', p.ownerName || (clientInfo ? (clientInfo.firstName + ' ' + clientInfo.lastName).trim() : ''));
+    set('member-id', memberTarget);
+    set('member-role', memberMeta.role);
     set('company', p.insurer);
     set('policy-num', p.policyNum);
     set('balance', p.totalBalance ? String(Math.round(p.totalBalance)) : '');
@@ -7390,6 +8177,8 @@ function importMislakaToForm() {
       if (p.loanMonthly) set('loan-monthly', String(Math.round(p.loanMonthly)));
       if (p.loanPeriod) set('loan-duration', String(p.loanPeriod));
     }
+
+    applySavingMemberContext(block, memberTarget);
   }
 
   // Close modal, switch to form tab, render mislaka tab
@@ -7397,12 +8186,12 @@ function importMislakaToForm() {
   switchTab('form');
 
   // Also render the full mislaka tab
-  renderMislakaTab(mislakaData);
+  renderMislakaTab();
 
   // Show success notification
   const notice = document.createElement('div');
   notice.style.cssText = 'position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:#27ae60;color:white;padding:0.8rem 2rem;border-radius:10px;font-weight:700;font-size:0.95rem;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,0.2);';
-  notice.textContent = `✅ יובאו ${products.length} מוצרים מהמסלקה`;
+  notice.textContent = `✅ יובאו ${products.length} מוצרים עבור ${memberMeta.label}`;
   document.body.appendChild(notice);
   setTimeout(() => notice.remove(), 3500);
 }
